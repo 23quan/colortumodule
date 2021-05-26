@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_study.viewmodel.StudyIntegralViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/integral_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <TextView
+            android:id="@+id/integral_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:layout_weight="1"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"></TextView>
+
+        <TextView
+            android:id="@+id/integral_shop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_90"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:background="@mipmap/icon_colortu_btnbg"
+            android:gravity="center"
+            android:onClick="@{()->viewmodel.onJumpShop()}"
+            android:text="元气商城"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_listen.viewmodel.ListenAnswerViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/answer_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/answer_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:paddingTop="@dimen/dimen_20"
+            android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+</layout>

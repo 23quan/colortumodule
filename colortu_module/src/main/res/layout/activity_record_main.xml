@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_record.viewmodel.RecordMainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/recordmain_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <TextView
+            android:id="@+id/recordmain_sujectrecord"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_15"
+            android:background="@mipmap/icon_colortu_btnbg"
+            android:gravity="center"
+            android:lines="1"
+            android:onClick="@{()->viewmodel.onJumpRecordSubject()}"
+            android:paddingLeft="@dimen/dimen_20"
+            android:paddingRight="@dimen/dimen_20"
+            android:text="@string/recordwork2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_30"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/recordmain_history"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:background="@mipmap/icon_colortu_btnbg"
+            android:gravity="center"
+            android:lines="1"
+            android:onClick="@{()->viewmodel.onJumpHistory()}"
+            android:paddingLeft="@dimen/dimen_20"
+            android:paddingRight="@dimen/dimen_20"
+            android:text="@string/work_history"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+</layout>

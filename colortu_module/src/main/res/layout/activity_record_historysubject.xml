@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_record.viewmodel.RecordHistorySubjectViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/historysubject_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70">
+
+            <TextView
+                android:id="@+id/historysubject_yearmonth"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:gravity="center"
+                android:text="@{viewmodel.datemonth}"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_25"></TextView>
+
+            <TextView
+                android:id="@+id/historysubject_day"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@{viewmodel.day}"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_30"></TextView>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/historysubject_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+</layout>

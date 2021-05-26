@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/choosedate_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_15"
+            android:lines="1"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_28"></TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/choosedate_monthlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_20"></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <RelativeLayout
+        android:id="@+id/teach_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_110"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:background="@mipmap/icon_colortu_btnbg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/teach_bookname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_35"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/teach_grade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_25"></TextView>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/teach_delete"
+            android:layout_width="@dimen/dimen_50"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_colortu_delete"
+            android:visibility="gone"></ImageView>
+    </RelativeLayout>
+</layout>

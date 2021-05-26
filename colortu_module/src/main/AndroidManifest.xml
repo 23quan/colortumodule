@@ -1,0 +1,310 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.colortu.colortu_module">
+
+    <application>
+
+        <!--友盟统计配置Appkey与Channel-->
+        <!--value的值填写你在友盟后台申请的应用Appkey-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="${UMENG_KEY}" />
+        <!--value的值填写渠道名称，例如yingyongbao。这里设置动态渠道变量-->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${CHANNEL}" />
+
+        <!--***********************************Base界面模块*************************************-->
+        <!--隐私/用户协议界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_base.core.activity.AgreementActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--休息提示界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_base.core.activity.RestTimesActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--WiFi切换移动流量界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_base.core.activity.NetWorkActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--休息service-->
+        <service android:name="com.colortu.colortu_module.colortu_base.core.service.RestTimesService"></service>
+
+        <!--************************************二维码模块**************************************-->
+        <!--登录界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_qrcode.activity.QrcodeLoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--支付界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_qrcode.activity.QrcodePayActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--广告界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_qrcode.activity.QrcodeADActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--文字提示界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_qrcode.activity.QrcodeTextTipActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--帮助界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_qrcode.activity.QrcodeHelpActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--小兔商城界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_qrcode.activity.QrcodeShopActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--***********************************作业记录模块**************************************-->
+        <!--作业记录界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--今日作业界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordSubjectActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--录音界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordInputActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--录入口令界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordInputCommandActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--选择科目界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordChooseSubjectActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--录入科目详情界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordSubjectDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--作业历史界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordHistoryActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
+        <!--选择日期界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordChooseDateActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
+        <!--历史科目界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordHistorySubjectActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--历史科目详情界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_record.activity.RecordHistorySubjectDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--*************************************教辅模块****************************************-->
+        <!--我的教辅界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_teach.activity.TeachMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--年级课目界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_teach.activity.TeachGradeClassActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--听力播放界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_teach.activity.TeachPlayActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--原题答案界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_teach.activity.TeachAnswerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--选择教辅系列界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_teach.activity.TeachBookActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--选择教辅系列下教辅界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_teach.activity.TeachBookListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--选择教辅年级界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_teach.activity.TeachChooseGradeClassActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--***************************************自习室模块***************************************-->
+        <!--自习室界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--自习广场列表界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyPlazaActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!--自习广场列表筛选界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyPlazaFiltrateActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!--自习列表详情界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!--自习室积分界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyIntegralActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!--个性签名界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudySignActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!--录入个性语音界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyInputActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!--我的自习室界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyMineActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--创建自习室界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyCreateActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--输入自习室口令界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyInputCommandActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+
+        <!--***************************************小兔听写模块**************************************-->
+        <!--听写课目界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_listen.activity.ListenSubjectActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--听写年级界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_listen.activity.ListenGradeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
+        <!--听写课本版本界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_listen.activity.ListenVersionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
+        <!--听写课界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_listen.activity.ListenClassActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
+        <!--听力播放界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_listen.activity.ListenPlayActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--听写答案界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_listen.activity.ListenAnswerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--************************************我的模块******************************************-->
+        <!--我的界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_mine.activity.MineMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--勋章界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_mine.activity.MineMedalActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--元气界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_mine.activity.MineVitalityActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--元气规则界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_mine.activity.MineVitalityRuleActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--元气活动界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_mine.activity.MineVitalityEventActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+    </application>
+
+</manifest>

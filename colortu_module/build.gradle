@@ -1,0 +1,158 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '29.0.2'
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName '1.0'
+
+        //MultiDex分包方法
+        multiDexEnabled true
+
+        //arouter配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+        //友盟appkey
+        manifestPlaceholders = [
+                UMENG_KEY: "60068053f1eb4f3f9b6569d4"
+        ]
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //多渠道种类
+    flavorDimensions "colortu"
+    productFlavors {
+        //小天才
+        xtc {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "xtc"]
+        }
+
+        //华为
+        huawei {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "huawei"]
+        }
+
+        //小米
+        xiaomi {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "xiaomi"]
+        }
+
+        //360
+        c360 {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "c360"]
+        }
+
+        //迪沃
+        dw {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "dw"]
+        }
+
+        //建友
+        jy {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "jy"]
+        }
+
+        //三基同创
+        sjtc {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "sjtc"]
+        }
+
+        //糖猫
+        teemo {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "teemo"]
+        }
+
+        //研强
+        yq {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "yq"]
+        }
+
+        //掌育
+        zy {
+            dimension "colortu"
+            manifestPlaceholders = [CHANNEL: "zy"]
+        }
+    }
+}
+
+dependencies {
+    api fileTree(dir: "libs", include: ["*.jar"])
+    api 'com.google.android.support:wearable:2.8.1'
+    api 'com.google.android.gms:play-services-wearable:17.0.0'
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    api 'androidx.appcompat:appcompat:1.2.0'
+
+    //OKhttp+Retrofit+rxjava
+    api 'com.squareup.retrofit2:converter-gson:2.5.0'
+    api 'com.squareup.retrofit2:retrofit:2.5.0'
+    api 'com.squareup.okhttp3:okhttp:3.12.1'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    api 'io.reactivex.rxjava2:rxjava:2.2.4'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    //抖音团队boostmultidex打包
+    api 'com.bytedance.boost_multidex:boost_multidex:1.0.1'
+    // ViewModel
+    api 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
+    // LiveData
+    api 'androidx.lifecycle:lifecycle-livedata:2.2.0'
+    // Lifecycles only (without ViewModel or LiveData)
+    api 'androidx.lifecycle:lifecycle-runtime:2.2.0'
+    //arouter
+    api 'com.alibaba:arouter-api:1.5.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.5.1'
+
+    //友盟
+    api 'com.umeng.umsdk:common:9.3.8'
+    api 'com.umeng.umsdk:asms:1.2.2'
+    api 'com.umeng.umsdk:apm:1.2.0'
+
+    //pinyin4j
+    api files('libs/pinyin4j-2.5.0.jar')
+    //toast
+    api 'com.hjq:toast:5.8'
+    //gson
+    api 'com.google.code.gson:gson:2.8.4'
+    //fastjson
+    api 'com.alibaba:fastjson:1.1.71.android'
+    //圆角图片
+    api 'de.hdodenhof:circleimageview:3.1.0'
+    //图片加载框架
+    api 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    //右滑退出
+    api 'me.imid.swipebacklayout.lib:library:1.1.0'
+}

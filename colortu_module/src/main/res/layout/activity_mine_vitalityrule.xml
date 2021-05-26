@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_mine.viewmodel.MineVitalityRuleViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/vitalityrule_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70"
+            android:gravity="center"
+            android:text="@string/vitality_rule"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"></TextView>
+
+        <TextView
+            android:id="@+id/vitalityrule_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dimen_10"
+            android:scrollbars="vertical"
+            android:text="@{viewmodel.vitalityrule}"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"></TextView>
+    </LinearLayout>
+</layout>

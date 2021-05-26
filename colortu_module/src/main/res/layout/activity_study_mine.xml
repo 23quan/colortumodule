@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_study.viewmodel.StudyMineViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/mine_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:id="@+id/mine_noneview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:gravity="center"
+                android:text="@string/none_studyroom"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_25"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/mine_create"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_15"
+                    android:background="@mipmap/icon_colortu_btnbg"
+                    android:gravity="center"
+                    android:onClick="@{()->viewmodel.onJumpMineCreate()}"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_20"
+                    android:text="@string/manually_create"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_30"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/mine_inputcommand"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:background="@mipmap/icon_colortu_btnbg"
+                    android:gravity="center"
+                    android:onClick="@{()->viewmodel.onJumpMineCommand()}"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_20"
+                    android:text="@string/command_invite"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_30"
+                    android:textStyle="bold"></TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mine_haveview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_70">
+
+                <TextView
+                    android:id="@+id/mine_create2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:gravity="center_vertical"
+                    android:onClick="@{()->viewmodel.onJumpMineCreate()}"
+                    android:text="@string/manually_create"
+                    android:textColor="@color/base_blue9"
+                    android:textSize="@dimen/size_30"></TextView>
+
+                <TextView
+                    android:id="@+id/mine_inputcommand2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:gravity="center_vertical"
+                    android:onClick="@{()->viewmodel.onJumpMineCommand()}"
+                    android:text="@string/command_join"
+                    android:textColor="@color/base_blue9"
+                    android:textSize="@dimen/size_30"></TextView>
+            </RelativeLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/mine_createtext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:text="@string/mine_create"
+                        android:textColor="@color/base_white1"
+                        android:textSize="@dimen/size_25"
+                        android:visibility="gone"></TextView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/mine_createlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_marginRight="@dimen/dimen_20"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"
+                        android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+
+                    <TextView
+                        android:id="@+id/mine_jointext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:text="@string/mine_join"
+                        android:textColor="@color/base_white1"
+                        android:textSize="@dimen/size_25"
+                        android:visibility="gone"></TextView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/mine_joinlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_marginRight="@dimen/dimen_20"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"
+                        android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+
+                    <TextView
+                        android:id="@+id/mine_pasttext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:text="@string/mine_past"
+                        android:textColor="@color/base_white1"
+                        android:textSize="@dimen/size_25"
+                        android:visibility="gone"></TextView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/mine_pastlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_marginRight="@dimen/dimen_20"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"
+                        android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

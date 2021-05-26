@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_study.viewmodel.StudyDetailViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/detail_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/detail_integral"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:onClick="@{()->viewmodel.onJumpStudyIntegral()}"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15"
+                android:text="@string/studyroom_integral"
+                android:textColor="@color/base_blue9"
+                android:textSize="@dimen/size_25"></TextView>
+
+            <TextView
+                android:id="@+id/detail_invite"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dimen_15"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15"
+                android:text="@string/invite_schoolmate"
+                android:textColor="@color/base_blue9"
+                android:textSize="@dimen/size_25"
+                android:visibility="gone"></TextView>
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/detail_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_marginRight="@dimen/dimen_30"
+                    android:gravity="center"
+                    android:text="@{viewmodel.studytitle}"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_30"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_70"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:background="@drawable/base_blue6_bg"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/detail_num"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:layout_marginRight="@dimen/dimen_10"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@{viewmodel.studynum}"
+                        android:textColor="@color/base_gray1"
+                        android:textSize="@dimen/size_25"></TextView>
+
+                    <LinearLayout
+                        android:id="@+id/detail_studyview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/base_blue7_bg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/detail_studytip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_30"
+                            android:layout_marginRight="@dimen/dimen_5"
+                            android:gravity="center"
+                            android:text="@{viewmodel.studytip}"
+                            android:textColor="@color/base_white1"
+                            android:textSize="@dimen/size_25"></TextView>
+
+                        <ImageView
+                            android:id="@+id/detail_studyicon"
+                            ressrc="@{viewmodel.studytipicon}"
+                            android:layout_width="@dimen/dimen_30"
+                            android:layout_height="@dimen/dimen_30"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_marginRight="@dimen/dimen_30"
+                            android:scaleType="fitXY"></ImageView>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/detail_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_70"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:background="@drawable/base_blue7_bg"
+                    android:gravity="center"
+                    android:onClick="@{()->viewmodel.onStudyRecommend()}"
+                    android:text="@string/colortu_recommend"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_25"
+                    android:visibility="gone"></TextView>
+
+                <LinearLayout
+                    android:id="@+id/detail_minesign"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_110"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:background="@drawable/base_blue7_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/detail_mineheadimg"
+                            android:layout_width="@dimen/dimen_40"
+                            android:layout_height="@dimen/dimen_40"
+                            android:layout_marginLeft="@dimen/dimen_10"></de.hdodenhof.circleimageview.CircleImageView>
+
+                        <TextView
+                            android:id="@+id/detail_minename"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:lines="1"
+                            android:textColor="@color/base_white1"
+                            android:textSize="@dimen/size_25"></TextView>
+
+                        <TextView
+                            android:id="@+id/detail_minetime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/base_white1"
+                            android:textSize="@dimen/size_20"></TextView>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_40"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentBottom="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/detail_minestateicon"
+                                android:layout_width="@dimen/dimen_25"
+                                android:layout_height="@dimen/dimen_25"
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:scaleType="fitXY"></ImageView>
+
+                            <TextView
+                                android:id="@+id/detail_minestatetip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_5"
+                                android:textColor="@color/base_black1"
+                                android:textSize="@dimen/size_20"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/detail_minelikeview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginRight="@dimen/dimen_30"
+                            android:layout_toLeftOf="@+id/detail_mineplay"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/detail_minelikeicon"
+                                android:layout_width="@dimen/dimen_28"
+                                android:layout_height="@dimen/dimen_28"
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/icon_study_unlike"></ImageView>
+
+                            <TextView
+                                android:id="@+id/detail_minelikenum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/base_black1"
+                                android:textSize="@dimen/size_22"></TextView>
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/detail_mineplay"
+                            android:layout_width="@dimen/dimen_40"
+                            android:layout_height="@dimen/dimen_40"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/icon_play_stop"></ImageView>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/detail_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>

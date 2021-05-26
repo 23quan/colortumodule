@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_base.core.viewmodel.AgreementViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/agreement_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_white1">
+
+        <TextView
+            android:id="@+id/agreement_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dimen_10"
+            android:text="@{viewmodel.content}"
+            android:textColor="@color/base_black1"
+            android:textSize="@dimen/size_35"
+            android:textStyle="bold"></TextView>
+
+    </LinearLayout>
+</layout>

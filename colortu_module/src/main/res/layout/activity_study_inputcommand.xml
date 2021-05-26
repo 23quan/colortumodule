@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_study.viewmodel.StudyInputCommandViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/inputcommand_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/inputcommand_command"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/input_command2"
+                android:maxLength="8"
+                android:text="@{viewmodel.command}"
+                android:textColor="@color/base_white1"
+                android:textColorHint="@color/base_white1"
+                android:textSize="@dimen/size_35"></TextView>
+
+            <ImageView
+                android:id="@+id/inputcommand_clear"
+                android:layout_width="@dimen/dimen_70"
+                android:layout_height="@dimen/dimen_50"
+                android:onClick="@{()->viewmodel.onClearCommand()}"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon_colortu_clear"></ImageView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/dimen_10"
+            android:background="@color/base_blue13"></View>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/inputcommand_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:overScrollMode="never"
+            android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+</layout>

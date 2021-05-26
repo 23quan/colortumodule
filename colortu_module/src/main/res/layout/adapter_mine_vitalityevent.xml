@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen_20"
+        android:paddingRight="@dimen/dimen_30"
+        android:paddingBottom="@dimen/dimen_20">
+
+        <TextView
+            android:id="@+id/vitalityevent_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"></TextView>
+
+        <TextView
+            android:id="@+id/vitalityevent_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"></TextView>
+    </LinearLayout>
+</layout>

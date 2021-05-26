@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_teach.viewmodel.TeachChooseGradeClassViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/choosegrade_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/choosegrdeclass_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_20"
+            android:gravity="center"
+            android:text="@{viewmodel.teachbookame}"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"></TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/choosegrdeclass_gradelist"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:id="@+id/choosegrdeclass_chooseview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/base_gray11"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/choosegrdeclass_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:onClick="@{()->viewmodel.onBack()}"
+                android:paddingLeft="@dimen/dimen_20"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_10"
+                android:text="@string/back"
+                android:textColor="@color/base_gray4"
+                android:textSize="@dimen/size_30"></TextView>
+
+            <TextView
+                android:id="@+id/choosegrdeclass_chosen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:onClick="@{()->viewmodel.onChosen()}"
+                android:paddingLeft="@dimen/dimen_20"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_10"
+                android:text="@string/chosen"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_30"></TextView>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

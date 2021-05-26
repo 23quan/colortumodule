@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="base_black1">#000000</color>
+    <color name="base_white1">#ffffff</color>
+    <color name="base_transparent">#00000000</color>
+
+    <color name="base_brown1">#975639</color>
+    <color name="base_green1">#34D941</color>
+    <color name="base_red1">#CC3333</color>
+
+    <color name="base_yellow1">#FFF7D5</color>
+    <color name="base_yellow2">#FFDF5E</color>
+
+    <color name="base_blue1">#A3C2E3</color>
+    <color name="base_blue2">#288BF0</color>
+    <color name="base_blue3">#8ad2ff</color>
+    <color name="base_blue4">#C5E8FA</color>
+    <color name="base_blue5">#85C6F3</color>
+    <color name="base_blue6">#169BD5</color>
+    <color name="base_blue7">#268CF0</color>
+    <color name="base_blue8">#A5C2E0</color>
+    <color name="base_blue9">#6DB9F6</color>
+    <color name="base_blue10">#1C5BA1</color>
+    <color name="base_blue11">#122143</color>
+    <color name="base_blue12">#0D49A1</color>
+    <color name="base_blue13">#2D3C55</color>
+    <color name="base_blue14">#2DA2EF</color>
+    <color name="base_blue15">#1D3154</color>
+    <color name="base_blue16">#2E4971</color>
+    <color name="base_blue17">#283A50</color>
+    <color name="base_blue18">#3c475b</color>
+    <color name="base_blue19">#3da5fc</color>
+
+    <color name="base_gray1">#e1e1e1</color>
+    <color name="base_gray2">#555657</color>
+    <color name="base_gray3">#cccccc</color>
+    <color name="base_gray4">#A1ABC0</color>
+    <color name="base_gray5">#5C5B5B</color>
+    <color name="base_gray6">#3E465C</color>
+    <color name="base_gray7">#D7D7D7</color>
+    <color name="base_gray8">#999999</color>
+    <color name="base_gray9">#5A6069</color>
+    <color name="base_gray10">#5B6579</color>
+    <color name="base_gray11">#3C475A</color>
+    <color name="base_gray12">#43464D</color>
+</resources>

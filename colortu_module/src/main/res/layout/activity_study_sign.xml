@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_study.viewmodel.StudySignViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/sign_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_80"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/sign_input"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/base_blue12"
+                android:gravity="center|center_vertical">
+
+                <ImageView
+                    android:id="@+id/sign_play"
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:onClick="@{()->viewmodel.onPlayAudio()}"
+                    android:scaleType="fitXY"
+                    android:visibility="gone"
+                    app:ressrc="@{viewmodel.inputplayimg}"></ImageView>
+
+                <ImageView
+                    android:id="@+id/sign_inputicon"
+                    android:layout_width="@dimen/dimen_40"
+                    android:layout_height="@dimen/dimen_50"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_play_audio"></ImageView>
+
+                <TextView
+                    android:id="@+id/sign_inputtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:text="@string/input_leaveword"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_25"></TextView>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/sign_sure"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen_3"
+                android:background="@color/base_gray8"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_20"
+                android:paddingRight="@dimen/dimen_20"
+                android:text="@string/affirm"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_25"></TextView>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sign_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:overScrollMode="never"
+            android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+</layout>

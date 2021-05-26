@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_record.viewmodel.RecordSubjectViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/recordsubject_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_80"
+            android:background="@color/base_gray6">
+
+            <TextView
+                android:id="@+id/recordsubject_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:gravity="center"
+                android:text="@{viewmodel.datetime}"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_28"></TextView>
+
+            <TextView
+                android:id="@+id/recordsubject_input"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_60"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:background="@mipmap/icon_colortu_btnbg"
+                android:gravity="center"
+                android:onClick="@{()->viewmodel.onJumpInput()}"
+                android:text="@string/input"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_30"
+                android:textStyle="bold"></TextView>
+
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/base_black1"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recordsubject_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginBottom="@dimen/dimen_15"
+                    android:gravity="center"
+                    android:text="@string/share_command"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_35"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/recordsubject_command"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:background="@color/base_gray7"
+                    android:gravity="center"
+                    android:hint="@string/none_command"
+                    android:paddingTop="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_15"
+                    android:text="@{viewmodel.command}"
+                    android:textColor="@color/base_black1"
+                    android:textSize="@dimen/size_30"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_15"
+                    android:text="@string/command_message"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_28"></TextView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_mine.viewmodel.MineMainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/minemain_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/minemain_headimg"
+                    android:layout_width="@dimen/dimen_40"
+                    android:layout_height="@dimen/dimen_40"
+                    android:layout_marginLeft="@dimen/dimen_10"></de.hdodenhof.circleimageview.CircleImageView>
+
+                <TextView
+                    android:id="@+id/minemain_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:layout_marginRight="@dimen/dimen_5"
+                    android:text="@{viewmodel.level}"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_20"></TextView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/mine"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_30"></TextView>
+
+            <TextView
+                android:id="@+id/minemain_login"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:paddingRight="@dimen/dimen_10"
+                android:text="@string/not_login"
+                android:textColor="@color/base_blue7"
+                android:textSize="@dimen/size_25"></TextView>
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/minemain_vitality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:onClick="@{()->viewmodel.onJumpVitality()}"
+                    android:text="@{viewmodel.vitality}"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_40"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/minemain_medalvalue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:onClick="@{()->viewmodel.onJumpMedal()}"
+                    android:text="@{viewmodel.medalvalue}"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_40"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/minemain_vitalityshop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:onClick="@{()->viewmodel.onJumpShop()}"
+                    android:text="@string/vitality_shop"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_40"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/minemain_useragreement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->viewmodel.onAgreement()}"
+                    android:text="@string/useragreement"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_40"
+                    android:textStyle="bold"
+                    android:visibility="gone"></TextView>
+
+                <TextView
+                    android:id="@+id/minemain_privacypolicy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:onClick="@{()->viewmodel.onPrivacy()}"
+                    android:text="@string/privacypolicy"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_40"
+                    android:textStyle="bold"
+                    android:visibility="gone"></TextView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>

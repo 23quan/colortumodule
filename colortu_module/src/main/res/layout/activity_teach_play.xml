@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_teach.viewmodel.TeachPlayViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/play_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/play_classname"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:paddingLeft="@dimen/dimen_20"
+            android:paddingRight="@dimen/dimen_20"
+            android:text="@{viewmodel.classname}"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"></TextView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/play_start"
+                android:layout_width="@dimen/dimen_90"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_centerInParent="true"
+                android:onClick="@{()->viewmodel.onPlay()}"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon_play_stop"></ImageView>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:background="@color/base_blue7"
+            android:gravity="center"
+            android:onClick="@{()->viewmodel.onJumpAnswer()}"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/check_answer"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_30"
+                android:textStyle="bold"></TextView>
+
+            <ImageView
+                android:layout_width="@dimen/dimen_10"
+                android:layout_height="@dimen/dimen_15"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon_teach_whiteright"></ImageView>
+
+            <ImageView
+                android:id="@+id/play_lock"
+                android:layout_width="@dimen/dimen_50"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon_colortu_lock"></ImageView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

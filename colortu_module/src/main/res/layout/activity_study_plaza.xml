@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_study.viewmodel.StudyPlazaViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/plaza_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <TextView
+            android:id="@+id/plaza_filtrate"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_70"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dimen_20"
+            android:paddingRight="@dimen/dimen_30"
+            android:text="@{viewmodel.filtratename}"
+            android:textColor="@color/base_blue9"
+            android:textSize="@dimen/size_25"
+            android:textStyle="bold"></TextView>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/plaza_recommend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_70"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginBottom="@dimen/dimen_15"
+                    android:background="@drawable/base_blue7_bg"
+                    android:gravity="center"
+                    android:onClick="@{()->viewmodel.onRecommend()}"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_20"
+                    android:text="@string/studyroom_group"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_25"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/plaza_official"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:text="@string/official"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_25"
+                    android:visibility="gone"></TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/plaza_officiallist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/plaza_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:text="@string/person"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_25"
+                    android:visibility="gone"></TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/plaza_personlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

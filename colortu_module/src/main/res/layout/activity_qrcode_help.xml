@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_qrcode.viewmodel.QrcodeHelpViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/teachhelp_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/teachhelp_codeimg"
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:scaleType="fitXY"></ImageView>
+
+            <TextView
+                android:id="@+id/teachhelp_tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:gravity="center"
+                android:scrollbars="vertical"
+                android:text="@string/feedback_teaching"
+                android:textColor="@color/base_blue4"
+                android:textSize="@dimen/size_30"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

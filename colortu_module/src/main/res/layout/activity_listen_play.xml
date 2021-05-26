@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_listen.viewmodel.ListenPlayViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/play_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/play_volumeview"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_80"
+                android:layout_weight="2"
+                android:gravity="left|center_vertical"
+                android:onClick="@{()->viewmodel.onAdjustVolume()}">
+
+                <ImageView
+                    android:id="@+id/play_volume"
+                    ressrc="@{viewmodel.volumeicon}"
+                    android:layout_width="@dimen/dimen_30"
+                    android:layout_height="@dimen/dimen_30"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:scaleType="fitXY"></ImageView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_80"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:layout_weight="3"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/play_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/base_gray2_bg"
+                    android:gravity="center"
+                    android:onClick="@{()->viewmodel.onAdjustSpeed()}"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:paddingTop="@dimen/dimen_8"
+                    android:paddingRight="@dimen/dimen_20"
+                    android:paddingBottom="@dimen/dimen_8"
+                    android:text="@{viewmodel.speedtext}"
+                    android:textColor="@color/base_gray3"
+                    android:textSize="@dimen/size_25" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/play_answer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="right|center_vertical"
+                android:onClick="@{()->viewmodel.onJumpAnswer()}"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:text="@string/answer"
+                    android:textColor="@color/base_blue3"
+                    android:textSize="@dimen/size_25" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/play_back"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->viewmodel.onLast()}"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_20"
+                android:text="〈"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_45"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/play_serialnumber"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@{viewmodel.curItemText}"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_35"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/play_next"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->viewmodel.onNext()}"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_20"
+                android:text="〉"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_45"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/play_menuview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_alignParentBottom="true">
+
+            <ProgressBar
+                android:id="@+id/play_progressbar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:max="@{viewmodel.progressmax}"
+                android:progress="@{viewmodel.progress}"
+                android:progressDrawable="@drawable/base_gray4_bg" />
+
+            <ImageView
+                android:id="@+id/play_play"
+                ressrc="@{viewmodel.playicon}"
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30"
+                android:layout_centerInParent="true"
+                android:onClick="@{()->viewmodel.onStartAudio()}"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/play_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dimen_15"
+                android:text="@{viewmodel.curtime}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_25"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/play_starting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/starting"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_25"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/choosegrade_item"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_110"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_15"
+            android:background="@mipmap/icon_colortu_btnbg"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/choosegrade_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:layout_marginRight="@dimen/dimen_15"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:lines="1"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_27"
+                android:textStyle="bold"></TextView>
+
+            <ImageView
+                android:id="@+id/choosegrade_choose"
+                android:layout_width="@dimen/dimen_50"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_marginRight="@dimen/dimen_15"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon_circle_nochoose"></ImageView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

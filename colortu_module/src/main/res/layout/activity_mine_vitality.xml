@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_mine.viewmodel.MineVitalityViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/vitality_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70"
+            android:gravity="center"
+            android:text="@string/vitality"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"></TextView>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vitality_value"
+                    android:textColor="@color/base_blue7"
+                    android:textSize="@dimen/size_23"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewmodel.vitality}"
+                    android:textColor="@color/base_blue6"
+                    android:textSize="@dimen/size_80"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/base_blue3_bg"
+                    android:onClick="@{()->viewmodel.onJumpVitalityRule()}"
+                    android:paddingLeft="@dimen/dimen_25"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_25"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/vitality_rule"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_30"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:background="@drawable/base_blue3_bg"
+                    android:onClick="@{()->viewmodel.onJumpVitalityEnvent()}"
+                    android:paddingLeft="@dimen/dimen_25"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_25"
+                    android:paddingBottom="@dimen/dimen_10"
+                    android:text="@string/vitality_event"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_30"></TextView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>
