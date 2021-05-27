@@ -1,4 +1,8 @@
 apply plugin: 'com.android.library'
+//启用Jitpack插件
+apply plugin: 'com.github.dcendents.android-maven'
+//设置Jitpack发布的Group,换成自己得github账号名
+group='com.github.23quan'
 
 android {
     compileSdkVersion 28
@@ -39,70 +43,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    //多渠道种类
-    flavorDimensions "colortu"
-    productFlavors {
-        //小天才
-        xtc {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "xtc"]
-        }
-
-        //华为
-        huawei {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "huawei"]
-        }
-
-        //小米
-        xiaomi {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "xiaomi"]
-        }
-
-        //360
-        c360 {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "c360"]
-        }
-
-        //迪沃
-        dw {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "dw"]
-        }
-
-        //建友
-        jy {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "jy"]
-        }
-
-        //三基同创
-        sjtc {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "sjtc"]
-        }
-
-        //糖猫
-        teemo {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "teemo"]
-        }
-
-        //研强
-        yq {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "yq"]
-        }
-
-        //掌育
-        zy {
-            dimension "colortu"
-            manifestPlaceholders = [CHANNEL: "zy"]
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.colortu.colortu_module.colortu_base.utils;
 
-import com.colortu.colortu_module.BuildConfig;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.umeng.analytics.AnalyticsConfig;
 
 /**
  * @author : Code23
@@ -11,47 +12,47 @@ import com.colortu.colortu_module.BuildConfig;
  */
 public class ChannelUtil {
     public static String Channel() {
-        String channel = BuildConfig.FLAVOR + "";
+        String channel = AnalyticsConfig.getChannel(BaseApplication.getContext());
         return channel;
     }
 
     public static boolean isXTC() {
-        return "xtc".equals(BuildConfig.FLAVOR);
+        return "xtc".equals(Channel());
     }
 
     public static boolean isHuaWei() {
-        return "huawei".equals(BuildConfig.FLAVOR);
+        return "huawei".equals(Channel());
     }
 
     public static boolean isXiaoMi() {
-        return "xiaomi".equals(BuildConfig.FLAVOR);
+        return "xiaomi".equals(Channel());
     }
 
     public static boolean isC360() {
-        return "c360".equals(BuildConfig.FLAVOR);
+        return "c360".equals(Channel());
     }
 
     public static boolean isDW() {
-        return "dw".equals(BuildConfig.FLAVOR);
+        return "dw".equals(Channel());
     }
 
     public static boolean isJY() {
-        return "jy".equals(BuildConfig.FLAVOR);
+        return "jy".equals(Channel());
     }
 
     public static boolean isSJTC() {
-        return "sjtc".equals(BuildConfig.FLAVOR);
+        return "sjtc".equals(Channel());
     }
 
     public static boolean isTeeMo() {
-        return "teemo".equals(BuildConfig.FLAVOR);
+        return "teemo".equals(Channel());
     }
 
     public static boolean isYQ() {
-        return "yq".equals(BuildConfig.FLAVOR);
+        return "yq".equals(Channel());
     }
 
     public static boolean isZY() {
-        return "zy".equals(BuildConfig.FLAVOR);
+        return "zy".equals(Channel());
     }
 }
