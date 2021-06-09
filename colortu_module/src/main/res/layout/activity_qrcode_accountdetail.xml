@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_qrcode.viewmodel.QrcodeAccountDetailViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/accountdetail_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70"
+            android:gravity="center"
+            android:text="@string/mine_message"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"></TextView>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/accountdetail_head"
+                        android:layout_width="@dimen/dimen_70"
+                        android:layout_height="@dimen/dimen_70"></de.hdodenhof.circleimageview.CircleImageView>
+
+                    <TextView
+                        android:id="@+id/accountdetail_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:layout_marginRight="@dimen/dimen_15"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:textColor="@color/base_blue2"
+                        android:textSize="@dimen/size_30"
+                        android:textStyle="bold"></TextView>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/accountdetail_uuid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_28"></TextView>
+
+                <TextView
+                    android:id="@+id/accountdetail_openid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_28"></TextView>
+
+                <TextView
+                    android:id="@+id/accountdetail_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_25"></TextView>
+
+                <TextView
+                    android:id="@+id/accountdetail_switch"
+                    android:layout_width="@dimen/dimen_160"
+                    android:layout_height="@dimen/dimen_60"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:background="@drawable/base_blue1_bg"
+                    android:gravity="center"
+                    android:onClick="@{()->viewmodel.onJumpAccount()}"
+                    android:text="@string/switch_account"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_25"></TextView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

@@ -72,6 +72,18 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
 
+        <!--账号切换界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_qrcode.activity.QrcodeAccountActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
+        <!--账号详情界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_qrcode.activity.QrcodeAccountDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
         <!--***********************************作业记录模块**************************************-->
         <!--作业记录界面-->
         <activity

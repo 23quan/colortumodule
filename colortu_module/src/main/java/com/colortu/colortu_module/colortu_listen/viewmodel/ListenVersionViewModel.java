@@ -48,9 +48,7 @@ public class ListenVersionViewModel extends BaseActivityViewModel<BaseRequest> {
             @Override
             public void onResponse(Call<ListenVersionBean> call, Response<ListenVersionBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getRecords())) {
-                        listenVersionBeanLiveData.setValue(response.body().getData().getRecords());
-                    }
+                    listenVersionBeanLiveData.setValue(response.body().getData().getRecords());
                 }
             }
 

@@ -14,6 +14,7 @@ import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_study.adapter.StudyPlazaOfficialAdapter;
 import com.colortu.colortu_module.colortu_study.adapter.StudyPlazaPersonAdapter;
 import com.colortu.colortu_module.colortu_base.bean.StudyPlazaBean;
@@ -52,22 +53,6 @@ public class StudyPlazaActivity extends BaseActivity<StudyPlazaViewModel, Activi
         binding.plazaOfficiallist.setAdapter(studyPlazaOfficialAdapter);
 
         /**
-         * 官方界面显示监听
-         */
-        viewModel.officialShow.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {//显示
-                    binding.plazaOfficial.setVisibility(View.VISIBLE);
-                    binding.plazaOfficiallist.setVisibility(View.VISIBLE);
-                } else {//隐藏
-                    binding.plazaOfficial.setVisibility(View.GONE);
-                    binding.plazaOfficiallist.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        /**
          * 官方自习列表数据监听
          */
         viewModel.officialLiveData.observe(this, new Observer<List<StudyPlazaBean.DataBean.OfficialBean>>() {
@@ -75,7 +60,14 @@ public class StudyPlazaActivity extends BaseActivity<StudyPlazaViewModel, Activi
             public void onChanged(List<StudyPlazaBean.DataBean.OfficialBean> officialBeans) {
                 //官方自习列表数据刷新
                 studyPlazaOfficialAdapter.clear();
-                studyPlazaOfficialAdapter.addAll(officialBeans);
+                if (EmptyUtils.listIsEmpty(officialBeans)) {
+                    binding.plazaOfficial.setVisibility(View.VISIBLE);
+                    binding.plazaOfficiallist.setVisibility(View.VISIBLE);
+                    studyPlazaOfficialAdapter.addAll(officialBeans);
+                } else {
+                    binding.plazaOfficial.setVisibility(View.GONE);
+                    binding.plazaOfficiallist.setVisibility(View.GONE);
+                }
                 studyPlazaOfficialAdapter.notifyDataSetChanged();
             }
         });
@@ -87,22 +79,6 @@ public class StudyPlazaActivity extends BaseActivity<StudyPlazaViewModel, Activi
         binding.plazaPersonlist.setAdapter(studyPlazaPersonAdapter);
 
         /**
-         * 个人界面显示监听
-         */
-        viewModel.personShow.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {//显示
-                    binding.plazaPerson.setVisibility(View.VISIBLE);
-                    binding.plazaPersonlist.setVisibility(View.VISIBLE);
-                } else {//隐藏
-                    binding.plazaPerson.setVisibility(View.GONE);
-                    binding.plazaPersonlist.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        /**
          * 个人自习列表数据监听
          */
         viewModel.personLiveData.observe(this, new Observer<List<StudyPlazaBean.DataBean.PersonalBean>>() {
@@ -110,7 +86,14 @@ public class StudyPlazaActivity extends BaseActivity<StudyPlazaViewModel, Activi
             public void onChanged(List<StudyPlazaBean.DataBean.PersonalBean> personalBeans) {
                 //个人自习列表数据刷新
                 studyPlazaPersonAdapter.clear();
-                studyPlazaPersonAdapter.addAll(personalBeans);
+                if (EmptyUtils.listIsEmpty(personalBeans)) {
+                    binding.plazaPerson.setVisibility(View.VISIBLE);
+                    binding.plazaPersonlist.setVisibility(View.VISIBLE);
+                    studyPlazaPersonAdapter.addAll(personalBeans);
+                } else {
+                    binding.plazaPerson.setVisibility(View.GONE);
+                    binding.plazaPersonlist.setVisibility(View.GONE);
+                }
                 studyPlazaPersonAdapter.notifyDataSetChanged();
             }
         });

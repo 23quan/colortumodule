@@ -38,6 +38,10 @@ public class UIKitName {
     public static final String QRCODE_HELP = "QrcodeHelpActivity";
     //小兔商城界面
     public static final String QRCODE_SHOP = "QrcodeShopActivity";
+    //账号切换界面
+    public static final String QRCODE_ACCOUNT = "QrcodeAccountActivity";
+    //账号详情界面
+    public static final String QRCODE_ACCOUNTDETAIL = "QrcodeAccountDetailActivity";
 
     /**
      * record(作业记录模块)

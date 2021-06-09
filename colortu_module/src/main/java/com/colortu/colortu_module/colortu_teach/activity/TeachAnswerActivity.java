@@ -66,6 +66,7 @@ public class TeachAnswerActivity extends BaseActivity<TeachAnswerViewModel, Acti
             @Override
             public void onChanged(List<TeachTopicAnswerBean.DataBean.QuestionBean> questionBeans) {
                 //原题答案列表数据刷新
+                teachAnswerAdapter.clear();
                 teachAnswerAdapter.addAll(questionBeans);
                 teachAnswerAdapter.notifyDataSetChanged();
             }

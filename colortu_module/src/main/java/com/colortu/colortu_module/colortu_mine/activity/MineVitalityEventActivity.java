@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_mine.adapter.MineVitalityEventAdapter;
 import com.colortu.colortu_module.colortu_base.bean.MineVitalityEventBean;
 import com.colortu.colortu_module.colortu_mine.viewmodel.MineVitalityEventViewModel;
@@ -50,7 +51,10 @@ public class MineVitalityEventActivity extends BaseActivity<MineVitalityEventVie
             @Override
             public void onChanged(List<MineVitalityEventBean.DataBeanX.DataBean> dataBeans) {
                 //元气活动列表数据刷新
-                mineVitalityEventAdapter.addAll(dataBeans);
+                mineVitalityEventAdapter.clear();
+                if (EmptyUtils.listIsEmpty(dataBeans)) {
+                    mineVitalityEventAdapter.addAll(dataBeans);
+                }
                 mineVitalityEventAdapter.notifyDataSetChanged();
             }
         });

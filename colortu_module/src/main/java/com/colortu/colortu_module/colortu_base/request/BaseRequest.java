@@ -92,7 +92,7 @@ public interface BaseRequest {
 
     //用户信息接口
     @Headers(BaseConstant.HomeWorkHeaders)
-    @GET("api/user/getInfo")
+    @GET("api/user/getInfo2")
     Call<QrcodeUserInfoBean> getuserinfo(@HeaderMap HashMap<String, String> hashMap, @Query("uuid") String uuid);
 
     //获取支付二维码

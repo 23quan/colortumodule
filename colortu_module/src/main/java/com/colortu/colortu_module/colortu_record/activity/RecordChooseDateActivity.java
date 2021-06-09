@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordChooseDateAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordChooseDateBean;
 import com.colortu.colortu_module.colortu_record.viewmodel.RecordChooseDateViewModel;
@@ -66,7 +67,10 @@ public class RecordChooseDateActivity extends BaseActivity<RecordChooseDateViewM
             @Override
             public void onChanged(List<RecordChooseDateBean> recordChooseDateBeans) {
                 //选择日期列表数据刷新
-                recordChooseDateAdapter.addAll(recordChooseDateBeans);
+                recordChooseDateAdapter.clear();
+                if (EmptyUtils.listIsEmpty(recordChooseDateBeans)) {
+                    recordChooseDateAdapter.addAll(recordChooseDateBeans);
+                }
                 recordChooseDateAdapter.notifyDataSetChanged();
             }
         });

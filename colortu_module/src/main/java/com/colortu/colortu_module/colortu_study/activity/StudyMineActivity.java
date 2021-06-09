@@ -80,18 +80,17 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
         viewModel.myCreateBeanLiveData.observe(this, new Observer<List<StudyMineBean.DataBean.MyCreateBean>>() {
             @Override
             public void onChanged(List<StudyMineBean.DataBean.MyCreateBean> myCreateBeans) {
+                //我创建的列表数据刷新
+                studyMineCreateAdapter.clear();
                 if (EmptyUtils.listIsEmpty(myCreateBeans)) {
-                    //我创建的列表数据刷新
                     binding.mineCreatetext.setVisibility(View.VISIBLE);
                     binding.mineCreatelist.setVisibility(View.VISIBLE);
-
-                    studyMineCreateAdapter.clear();
                     studyMineCreateAdapter.addAll(myCreateBeans);
-                    studyMineCreateAdapter.notifyDataSetChanged();
                 } else {
                     binding.mineCreatetext.setVisibility(View.GONE);
                     binding.mineCreatelist.setVisibility(View.GONE);
                 }
+                studyMineCreateAdapter.notifyDataSetChanged();
             }
         });
 
@@ -128,18 +127,17 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
         viewModel.myInJoinBeanLiveData.observe(this, new Observer<List<StudyMineBean.DataBean.MyInJoinBean>>() {
             @Override
             public void onChanged(List<StudyMineBean.DataBean.MyInJoinBean> myInJoinBeans) {
+                //我加入的列表数据刷新
+                studyMineJoinAdapter.clear();
                 if (EmptyUtils.listIsEmpty(myInJoinBeans)) {
-                    //我加入的列表数据刷新
                     binding.mineJointext.setVisibility(View.VISIBLE);
                     binding.mineJoinlist.setVisibility(View.VISIBLE);
-
-                    studyMineJoinAdapter.clear();
                     studyMineJoinAdapter.addAll(myInJoinBeans);
-                    studyMineJoinAdapter.notifyDataSetChanged();
                 } else {
                     binding.mineJointext.setVisibility(View.GONE);
                     binding.mineJoinlist.setVisibility(View.GONE);
                 }
+                studyMineJoinAdapter.notifyDataSetChanged();
             }
         });
 
@@ -155,18 +153,17 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
         viewModel.deprecatedBeaLiveData.observe(this, new Observer<List<StudyMineBean.DataBean.DeprecatedBean>>() {
             @Override
             public void onChanged(List<StudyMineBean.DataBean.DeprecatedBean> deprecatedBeans) {
+                //已过期的列表数据刷新
+                studyMinePastAdapter.clear();
                 if (EmptyUtils.listIsEmpty(deprecatedBeans)) {
-                    //已过期的列表数据刷新
                     binding.minePasttext.setVisibility(View.VISIBLE);
                     binding.minePastlist.setVisibility(View.VISIBLE);
-
-                    studyMinePastAdapter.clear();
                     studyMinePastAdapter.addAll(deprecatedBeans);
-                    studyMinePastAdapter.notifyDataSetChanged();
                 } else {
                     binding.minePasttext.setVisibility(View.GONE);
                     binding.minePastlist.setVisibility(View.GONE);
                 }
+                studyMinePastAdapter.notifyDataSetChanged();
             }
         });
     }

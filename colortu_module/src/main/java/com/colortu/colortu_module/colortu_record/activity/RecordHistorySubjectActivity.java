@@ -13,6 +13,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.dialog.DialogWhether;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordHistorySubjectAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordSubjectBean;
 import com.colortu.colortu_module.colortu_record.viewmodel.RecordHistorySubjectViewModel;
@@ -109,7 +110,9 @@ public class RecordHistorySubjectActivity extends BaseActivity<RecordHistorySubj
             public void onChanged(List<RecordSubjectBean.DataBean.RecordsBean> recordsBeans) {
                 //历史科目列表数据刷新
                 recordHistorySubjectAdapter.clear();
-                recordHistorySubjectAdapter.addAll(recordsBeans);
+                if (EmptyUtils.listIsEmpty(recordsBeans)) {
+                    recordHistorySubjectAdapter.addAll(recordsBeans);
+                }
                 recordHistorySubjectAdapter.notifyDataSetChanged();
             }
         });

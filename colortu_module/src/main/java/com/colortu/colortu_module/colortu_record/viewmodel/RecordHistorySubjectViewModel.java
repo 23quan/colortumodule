@@ -83,9 +83,7 @@ public class RecordHistorySubjectViewModel extends BaseActivityViewModel<BaseReq
             @Override
             public void onResponse(Call<RecordSubjectBean> call, Response<RecordSubjectBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getRecords())) {
-                        recordSubjectLiveData.setValue(response.body().getData().getRecords());
-                    }
+                    recordSubjectLiveData.setValue(response.body().getData().getRecords());
                 }
             }
 

@@ -23,6 +23,8 @@ import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioMngHelper;
 import com.colortu.colortu_module.colortu_base.utils.download.DownloadAudio;
+import com.colortu.colortu_module.colortu_base.utils.notification.NotificationClickReceiver;
+import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_base.utils.string.StringUtil;
 import com.colortu.colortu_module.colortu_base.bean.ListenClassBean;
 import com.colortu.colortu_module.colortu_base.bean.ListenFinishBean;
@@ -42,7 +44,8 @@ import retrofit2.Response;
  * @module : ListenPlayViewModel
  * @describe :听力播放界面ViewModel
  */
-public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> implements DownloadAudio.DownloadAudioListener {
+public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> implements DownloadAudio.DownloadAudioListener,
+        NotificationClickReceiver.OnNotificationListener {
     //听写完成接口
     private Call<ListenFinishBean> listenFinishBeanCall;
 
@@ -108,6 +111,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         //实例化
         handler = new Handler();
         audioMngHelper = new AudioMngHelper(BaseApplication.getContext());
+        NotificationClickReceiver.setOnNotificationListener(this);
 
         gradeid = GetBeanDate.getChooseGrade();
         //课目名字
@@ -281,6 +285,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
             if (playing) {
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
+                //发送通知栏消息
+                NotificationUtil.createNotification();
 
                 playicon.set(R.mipmap.icon_listen_stop);
                 playing = false;
@@ -413,11 +419,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     private void onStartDictationVoice(String url) {
         //取消息屏app销毁
         SuicideUtils.onCancelKill();
-
-        if (ChannelUtil.isHuaWei()) {
-            //发送通知栏消息
-            BaseApplication.onStartNotification();
-        }
+        //发送通知栏消息
+        NotificationUtil.createNotification();
 
         mediaPlayer2 = new MediaPlayer();
         try {
@@ -500,6 +503,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
 
                     //启动息屏app销毁
                     SuicideUtils.onStartKill();
+                    //发送通知栏消息
+                    NotificationUtil.createNotification();
                 } else {
                     curItem++;
                     curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
@@ -554,6 +559,21 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                 downloadAudio.isDownloadAudio(BaseConstant.ListenAudioUrl + listenClassBean.get().get(i).getWordAudioUrl(), i);
             }
         }
+    }
+
+    @Override
+    public void OnNotificationLast() {
+        onLast();
+    }
+
+    @Override
+    public void OnNotificationPlay() {
+        onStartAudio();
+    }
+
+    @Override
+    public void OnNotificationNext() {
+        onNext();
     }
 
     /**

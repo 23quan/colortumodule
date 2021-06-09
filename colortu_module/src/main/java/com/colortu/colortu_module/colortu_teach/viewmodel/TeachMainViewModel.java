@@ -112,10 +112,11 @@ public class TeachMainViewModel extends BaseActivityViewModel<BaseRequest> {
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
                     if (EmptyUtils.listIsEmpty(response.body().getData().getRecords())) {
                         GetBeanDate.putMineTeachBook(JSON.toJSONString(response.body().getData()));
-                        isEmpty.setValue(false);
                         teachMainBeanLiveData.setValue(response.body().getData().getRecords());
+                        isEmpty.setValue(false);
                     } else {
                         GetBeanDate.putMineTeachBook(null);
+                        teachMainBeanLiveData.setValue(null);
                         isEmpty.setValue(true);
                     }
                 } else {

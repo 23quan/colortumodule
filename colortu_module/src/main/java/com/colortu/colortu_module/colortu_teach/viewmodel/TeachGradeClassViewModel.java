@@ -60,9 +60,7 @@ public class TeachGradeClassViewModel extends BaseActivityViewModel<BaseRequest>
             @Override
             public void onResponse(Call<TeachGradeClassBean> call, Response<TeachGradeClassBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getList())) {
-                        teachGradeClassBeanLiveData.setValue(response.body().getData().getList());
-                    }
+                    teachGradeClassBeanLiveData.setValue(response.body().getData().getList());
                 }
             }
 

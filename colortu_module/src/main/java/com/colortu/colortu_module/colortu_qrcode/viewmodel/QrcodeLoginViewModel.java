@@ -43,6 +43,8 @@ public class QrcodeLoginViewModel extends BaseActivityViewModel<BaseRequest> {
     public ObservableField<String> codetip3 = new ObservableField<>();
     //跳过提示信息
     public ObservableField<String> skiptip = new ObservableField<>();
+    //是否登录成功
+    public MutableLiveData<Boolean> isLoginLiveData = new MutableLiveData<>();
 
     private Handler handler;
     public long requesttime = 2 * 1000;
@@ -125,15 +127,19 @@ public class QrcodeLoginViewModel extends BaseActivityViewModel<BaseRequest> {
             @Override
             public void onResponse(Call<QrcodeUserInfoBean> call, Response<QrcodeUserInfoBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.stringIsEmpty(response.body().getData().getOpenId())) {
+                    if (EmptyUtils.stringIsEmpty(response.body().getData().getUserInfo().getOpenId())) {
                         //存储用户信息
                         GetBeanDate.putUserInfo(JSONObject.toJSONString(response.body().getData()));
-                        GetBeanDate.putOpenid(response.body().getData().getOpenId());
-                        GetBeanDate.putUserHead(response.body().getData().getAvatar());
+                        GetBeanDate.putOpenid(response.body().getData().getUserInfo().getOpenId());
+                        GetBeanDate.putUserHead(response.body().getData().getUserInfo().getAvatar());
                         GetBeanDate.putIsLogin(true);
 
                         //跳转界面
-
+                        if (EmptyUtils.listIsEmpty(response.body().getData().getUserList())) {
+                            isLoginLiveData.setValue(true);
+                        } else {
+                            isLoginLiveData.setValue(false);
+                        }
                     } else {
                         handler.postDelayed(getUserInfoRunnable, requesttime);
                     }

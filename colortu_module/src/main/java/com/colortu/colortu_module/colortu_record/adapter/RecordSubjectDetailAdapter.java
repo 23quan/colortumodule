@@ -7,8 +7,10 @@ import androidx.databinding.ViewDataBinding;
 
 import com.bumptech.glide.Glide;
 import com.colortu.colortu_module.R;
+import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseRecyclerAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordSubjectDetailBean;
+import com.colortu.colortu_module.colortu_base.utils.Tools;
 import com.colortu.colortu_module.databinding.AdapterRecordSubjectdetailBinding;
 
 /**
@@ -77,7 +79,7 @@ public class RecordSubjectDetailAdapter extends BaseRecyclerAdapter<RecordSubjec
         adapterRecordSubjectdetailBinding.subjectdetailPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickSubjectDetailListener.OnClickPlay(position, item.isIsplay(), item.getAudioUrl());
+                onClickSubjectDetailListener.OnClickPlay(position, item.isIsplay(), Tools.stringIndexOf(item.getAudioUrl(), BaseConstant.HomeWorkAudioUrl));
             }
         });
 

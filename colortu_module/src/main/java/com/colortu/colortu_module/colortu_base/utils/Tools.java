@@ -256,4 +256,23 @@ public class Tools {
         long availableBlocks = statFs.getAvailableBlocksLong();
         return availableBlocks * blockSize;
     }
+
+    /**
+     * 判断是否字符串包涵某段字符
+     *
+     * @param s1 判断字符串
+     * @param s2 被判断字符串
+     * @return
+     */
+    public static String stringIndexOf(String s1, String s2) {
+        if (EmptyUtils.stringIsEmpty(s1)) {
+            if (s1.indexOf(s2) != -1) {
+                return s1;
+            } else {
+                return s2 + s1;
+            }
+        } else {
+            return "";
+        }
+    }
 }

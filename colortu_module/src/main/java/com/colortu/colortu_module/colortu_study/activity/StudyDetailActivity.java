@@ -242,7 +242,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                 if (EmptyUtils.listIsEmpty(viewModel.plazaDetailLiveData.getValue())) {
                     if (viewModel.plazaDetailLiveData.getValue().get(itemposition).isIsplay()) {
                         //刷新当前item的icon
-                        viewModel.onStopPlayer();
+                        viewModel.audioPlayer.onStop();
                         viewModel.plazaDetailLiveData.getValue().get(itemposition).setIsplay(false);
                         studyDetailAdapter.notifyItemChanged(itemposition);
                     }
@@ -253,12 +253,12 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                 //播放
                 if (mineplay) {
                     mineplay = false;
-                    viewModel.onStopPlayer();
+                    viewModel.audioPlayer.onStop();
                     Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_stop).into(binding.detailMineplay);
                 } else {
                     if (EmptyUtils.stringIsEmpty(viewModel.topUserBeanLiveData.getValue().getUserRecordURL())) {
                         mineplay = true;
-                        viewModel.onPlayPlayer(BaseConstant.HomeWorkAudioUrl + viewModel.topUserBeanLiveData.getValue().getUserRecordURL());
+                        viewModel.audioPlayer.onPlay(Tools.stringIndexOf(viewModel.topUserBeanLiveData.getValue().getUserRecordURL(), BaseConstant.HomeWorkAudioUrl));
                         Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_start).into(binding.detailMineplay);
                     }
                 }
@@ -303,7 +303,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                 //播放
                 if (mineplay) {
                     mineplay = false;
-                    viewModel.onStopPlayer();
+                    viewModel.audioPlayer.onStop();
                     Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_stop).into(binding.detailMineplay);
                 }
                 viewModel.typeplay.set(false);
@@ -315,11 +315,11 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                 //播放
                 if (isplay) {
                     viewModel.plazaDetailLiveData.getValue().get(position).setIsplay(false);
-                    viewModel.onStopPlayer();
+                    viewModel.audioPlayer.onStop();
                 } else {
                     if (EmptyUtils.stringIsEmpty(audiourl)) {
                         viewModel.plazaDetailLiveData.getValue().get(position).setIsplay(true);
-                        viewModel.onPlayPlayer(audiourl);
+                        viewModel.audioPlayer.onPlay(audiourl);
                     }
                 }
                 studyDetailAdapter.notifyItemChanged(position);
@@ -336,7 +336,9 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             public void onChanged(List<StudyDetailBean.DataBean.UserDetailsBean> userDetailsBeans) {
                 //自习广场列表详情列表数据刷新
                 studyDetailAdapter.clear();
-                studyDetailAdapter.addAll(userDetailsBeans);
+                if (EmptyUtils.listIsEmpty(userDetailsBeans)) {
+                    studyDetailAdapter.addAll(userDetailsBeans);
+                }
                 studyDetailAdapter.notifyDataSetChanged();
             }
         });
@@ -344,7 +346,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         /**
          * 监听是否播放完成
          */
-        viewModel.isPlay.observe(this, new Observer<Boolean>() {
+        viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {

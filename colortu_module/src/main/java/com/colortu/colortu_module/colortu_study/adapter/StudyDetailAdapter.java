@@ -87,7 +87,7 @@ public class StudyDetailAdapter extends BaseRecyclerAdapter<StudyDetailBean.Data
         adapterStudyDetailBinding.studydetailPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickPlayListener.OnClickPlay(position, item.isIsplay(), BaseConstant.HomeWorkAudioUrl + item.getUserRecordURL());
+                onClickPlayListener.OnClickPlay(position, item.isIsplay(),  Tools.stringIndexOf(item.getUserRecordURL(), BaseConstant.HomeWorkAudioUrl));
             }
         });
     }

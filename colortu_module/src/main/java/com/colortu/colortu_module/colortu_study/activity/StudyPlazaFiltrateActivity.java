@@ -11,6 +11,7 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_study.adapter.StudyPlazaFiltrateAreaAdapter;
 import com.colortu.colortu_module.colortu_study.adapter.StudyPlazaFiltrateGradeAdapter;
 import com.colortu.colortu_module.colortu_study.viewmodel.StudyPlazaFiltrateViewModel;
@@ -54,22 +55,6 @@ public class StudyPlazaFiltrateActivity extends BaseActivity<StudyPlazaFiltrateV
         binding.plazafiltrateAreaist.setAdapter(studyPlazaFiltrateAreaAdapter);
 
         /**
-         * 区域界面显示监听
-         */
-        viewModel.areaShow.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {//显示
-                    binding.plazafiltrateArea.setVisibility(View.VISIBLE);
-                    binding.plazafiltrateAreaist.setVisibility(View.VISIBLE);
-                } else {//隐藏
-                    binding.plazafiltrateArea.setVisibility(View.GONE);
-                    binding.plazafiltrateAreaist.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        /**
          * 区域item选择监听
          */
         studyPlazaFiltrateAreaAdapter.setOnClickFiltrateAreaListener(new StudyPlazaFiltrateAreaAdapter.OnClickFiltrateAreaListener() {
@@ -89,7 +74,14 @@ public class StudyPlazaFiltrateActivity extends BaseActivity<StudyPlazaFiltrateV
             public void onChanged(List<String> strings) {
                 //区域数据列表刷新
                 studyPlazaFiltrateAreaAdapter.clear();
-                studyPlazaFiltrateAreaAdapter.addAll(strings);
+                if (EmptyUtils.listIsEmpty(strings)) {
+                    binding.plazafiltrateArea.setVisibility(View.VISIBLE);
+                    binding.plazafiltrateAreaist.setVisibility(View.VISIBLE);
+                    studyPlazaFiltrateAreaAdapter.addAll(strings);
+                } else {
+                    binding.plazafiltrateArea.setVisibility(View.GONE);
+                    binding.plazafiltrateAreaist.setVisibility(View.GONE);
+                }
                 studyPlazaFiltrateAreaAdapter.notifyDataSetChanged();
             }
         });
@@ -100,22 +92,6 @@ public class StudyPlazaFiltrateActivity extends BaseActivity<StudyPlazaFiltrateV
         gridLayoutManager2.setOrientation(GridLayoutManager.VERTICAL);
         binding.plazafiltrateGradelist.setLayoutManager(gridLayoutManager2);
         binding.plazafiltrateGradelist.setAdapter(studyPlazaFiltrateGradeAdapter);
-
-        /**
-         * 年级界面显示监听
-         */
-        viewModel.gradeShow.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {//显示
-                    binding.plazafiltrateGrade.setVisibility(View.VISIBLE);
-                    binding.plazafiltrateGradelist.setVisibility(View.VISIBLE);
-                } else {//隐藏
-                    binding.plazafiltrateGrade.setVisibility(View.GONE);
-                    binding.plazafiltrateGradelist.setVisibility(View.GONE);
-                }
-            }
-        });
 
         /**
          * 年级item选择监听
@@ -137,7 +113,14 @@ public class StudyPlazaFiltrateActivity extends BaseActivity<StudyPlazaFiltrateV
             public void onChanged(List<String> strings) {
                 //年级数据列表刷新
                 studyPlazaFiltrateGradeAdapter.clear();
-                studyPlazaFiltrateGradeAdapter.addAll(strings);
+                if (EmptyUtils.listIsEmpty(strings)) {
+                    binding.plazafiltrateGrade.setVisibility(View.VISIBLE);
+                    binding.plazafiltrateGradelist.setVisibility(View.VISIBLE);
+                    studyPlazaFiltrateGradeAdapter.addAll(strings);
+                } else {
+                    binding.plazafiltrateGrade.setVisibility(View.GONE);
+                    binding.plazafiltrateGradelist.setVisibility(View.GONE);
+                }
                 studyPlazaFiltrateGradeAdapter.notifyDataSetChanged();
             }
         });
