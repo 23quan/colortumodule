@@ -86,7 +86,7 @@ public class MineMainViewModel extends BaseActivityViewModel<BaseRequest> {
     /**
      * 用户协议
      */
-    public void onAgreement() {
+    public void onUserAgreement() {
         Bundle bundle = new Bundle();
         bundle.putString("content", BaseApplication.getContext().getResources().getString(R.string.work_useragreement));
         BaseUIKit.startActivity(UIKitName.MINE_MAIN, UIKitName.BASE_AGREEMENT,
@@ -96,7 +96,7 @@ public class MineMainViewModel extends BaseActivityViewModel<BaseRequest> {
     /**
      * 隐私政策
      */
-    public void onPrivacy() {
+    public void onPrivacyPolicy() {
         Bundle bundle = new Bundle();
         bundle.putString("content", BaseApplication.getContext().getResources().getString(R.string.work_privacypolicy));
         BaseUIKit.startActivity(UIKitName.MINE_MAIN, UIKitName.BASE_AGREEMENT,

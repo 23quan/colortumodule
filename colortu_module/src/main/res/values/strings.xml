@@ -111,7 +111,8 @@
     <string name="subject_sport">体育</string>
     <string name="subject_other">其他</string>
 
-    <string name="study_room">自\n习\n室</string>
+    <string name="study_room">自习室</string>
+    <string name="study_room2">自\n习\n室</string>
     <string name="study_plaza">自习广场</string>
     <string name="studyroom_group">自习室拼桌</string>
     <string name="official">官方</string>
