@@ -11,6 +11,7 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
+import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_teach.viewmodel.TeachPlayViewModel;
 import com.colortu.colortu_module.databinding.ActivityTeachPlayBinding;
 
@@ -53,10 +54,10 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
         examid = bundle.getInt("examid");
         audiourl = bundle.getString("audiourl");
         position = bundle.getInt("position");
-
         viewModel.classname.set(classname);
         viewModel.examid.set(examid);
         viewModel.audiourl.set(BaseConstant.HomeWorkImgUrl + audiourl);
+        NotificationUtil.setContext(this);
 
         freecount = GetBeanDate.getFreeExamCount();
         isVip = GetBeanDate.getIsBookVIP();
