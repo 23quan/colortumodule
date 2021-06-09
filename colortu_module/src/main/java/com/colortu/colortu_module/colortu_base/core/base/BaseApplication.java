@@ -18,7 +18,6 @@ import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.UmengUtil;
-import com.colortu.colortu_module.colortu_base.utils.notification.NotificationService;
 import com.colortu.colortu_module.colortu_base.bean.QrcodeAddUserBean;
 
 import java.lang.ref.WeakReference;
@@ -181,30 +180,6 @@ public class BaseApplication extends Application {
     }
 
     /**
-     * ---------------------------------------播放消息通知栏--------------------------------------------
-     */
-
-    /**
-     * 发送通知栏消息
-     */
-    public static void onStartNotification() {
-        Intent serviceIntent = new Intent(getContext(), NotificationService.class);
-        if (Build.VERSION.SDK_INT >= 26) {
-            getContext().startForegroundService(serviceIntent);
-        } else {
-            getContext().startService(serviceIntent);
-        }
-    }
-
-    /**
-     * 销毁通知栏消息
-     */
-    public static void onStopNotification() {
-        Intent serviceIntent = new Intent(getContext(), NotificationService.class);
-        getContext().stopService(serviceIntent);
-    }
-
-    /**
      * ---------------------------------------activity管理--------------------------------------------
      */
 
@@ -328,10 +303,10 @@ public class BaseApplication extends Application {
     public void exitApp() {
         try {
             finishAllActivity();
-            // 退出JVM,释放所占内存资源,0表示正常退出
-            System.exit(0);
             // 从系统中kill掉应用程序
             android.os.Process.killProcess(android.os.Process.myPid());
+            // 退出JVM,释放所占内存资源,0表示正常退出
+            System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();
         }

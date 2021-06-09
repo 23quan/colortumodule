@@ -77,10 +77,7 @@ public class ListenClassViewModel extends BaseActivityViewModel<BaseRequest> {
             @Override
             public void onResponse(Call<ListenClassBean> call, Response<ListenClassBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getPoetryVOS())) {
-                        //获取数据
-                        listenClassBeanLiveData.setValue(response.body().getData().getPoetryVOS());
-                    }
+                    listenClassBeanLiveData.setValue(response.body().getData().getPoetryVOS());
                 }
             }
 

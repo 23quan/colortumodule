@@ -17,6 +17,7 @@ import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioPlayer;
+import com.colortu.colortu_module.colortu_base.utils.notification.NotificationClickReceiver;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 
 /**
@@ -25,7 +26,7 @@ import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUt
  * @module : TeachPlayViewModel
  * @describe :听力播放界面ViewModel
  */
-public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> {
+public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> implements NotificationClickReceiver.OnNotificationListener{
     //暂停播放监听
     public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
 
@@ -38,7 +39,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> {
     //课id
     public ObservableField<Integer> examid = new ObservableField<>();
     //语音播放工具类
-    private AudioPlayer audioPlayer;
+    public AudioPlayer audioPlayer;
 
     @Override
     protected void onCreate() {
@@ -49,34 +50,54 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> {
         isPlayLiveData.setValue(false);
 
         audioPlayer.setOnPlayerListener(new AudioPlayer.OnPlayerListener() {
+
             @Override
             public void playerstart() {//播放
-                isPlayLiveData.setValue(true);
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
+                //发送通知栏消息
+                NotificationUtil.createNotification();
 
-                if (ChannelUtil.isHuaWei()) {
-                    //发送通知栏消息
-                    BaseApplication.onStartNotification();
-                }
+                isPlayLiveData.setValue(true);
             }
 
             @Override
-            public void playerstop() {//暂停
-                isPlayLiveData.setValue(false);
+            public void playerpause() {//暂停
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                //发送通知栏消息
+                NotificationUtil.createNotification();
+
+                isPlayLiveData.setValue(false);
             }
 
             @Override
-            public void playerfinish() {//播放完成
-                isPlayLiveData.setValue(false);
+            public void playerstop() {//停止
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                //发送通知栏消息
+                NotificationUtil.createNotification();
+
+                isPlayLiveData.setValue(false);
             }
 
             @Override
-            public void playerfailure() {//播放失败
+            public void playerfinish() {//完成
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                //发送通知栏消息
+                NotificationUtil.createNotification();
+
+                isPlayLiveData.setValue(false);
+            }
+
+            @Override
+            public void playerfailure() {//失败
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                //发送通知栏消息
+                NotificationUtil.createNotification();
+
                 isPlayLiveData.setValue(false);
             }
         });
@@ -89,9 +110,9 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> {
         if (EmptyUtils.stringIsEmpty(audiourl.get())) {
             if (audioPlayer != null) {
                 if (isPlayLiveData.getValue()) {
-                    onStopPlayer();
+                    audioPlayer.onPause();
                 } else {
-                    onPlayPlayer(audiourl.get());
+                    audioPlayer.onPlay(audiourl.get());
                 }
             }
         } else {
@@ -105,7 +126,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> {
     public void onJumpAnswer() {
         if (isPlayLiveData.getValue()) {
             isPlayLiveData.setValue(false);
-            onStopPlayer();
+            audioPlayer.onStop();
         }
 
         if (isVip.get()) {
@@ -124,43 +145,33 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> {
         }
     }
 
-    /**
-     * 播放
-     */
-    public void onPlayPlayer(String audiourl) {
-        audioPlayer.play(audiourl);
+    @Override
+    public void OnNotificationLast() {
+
     }
 
-    /**
-     * 暂停
-     */
-    public void onStopPlayer() {
-        audioPlayer.stop();
+    @Override
+    public void OnNotificationPlay() {
+        onPlay();
     }
 
-    /**
-     * 释放
-     */
-    public void onReleasePlayer() {
-        audioPlayer.release();
+    @Override
+    public void OnNotificationNext() {
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ChannelUtil.isHuaWei()) {
-            //销毁通知栏消息
-            if (NotificationUtil.isExistNotification) {
-                BaseApplication.onStopNotification();
-            }
-        }
+        //销毁通知栏消息
+        NotificationUtil.cancelNotification();
 
-        //暂停播放
+        //暂停播放，释放资源
         if (audioPlayer != null) {
             if (audioPlayer.isPlay()) {
                 isPlayLiveData.setValue(false);
             }
-            onReleasePlayer();
+            audioPlayer.onRelease();
         }
     }
 }

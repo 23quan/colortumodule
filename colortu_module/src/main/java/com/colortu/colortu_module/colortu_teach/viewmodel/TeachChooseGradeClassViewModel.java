@@ -112,9 +112,7 @@ public class TeachChooseGradeClassViewModel extends BaseActivityViewModel<BaseRe
             @Override
             public void onResponse(Call<TeachChooseGradeBean> call, Response<TeachChooseGradeBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getList())) {
-                        teachChooseGradeBeanLiveData.setValue(response.body().getData().getList());
-                    }
+                    teachChooseGradeBeanLiveData.setValue(response.body().getData().getList());
                 }
             }
 

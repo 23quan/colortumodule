@@ -84,6 +84,10 @@ public class BaseConstant {
     public static final String QRCODE_HELP = "/qrcode/QrcodeHelpActivity";
     //小兔商城界面
     public static final String QRCODE_SHOP = "/qrcode/QrcodeShopActivity";
+    //账号切换界面
+    public static final String QRCODE_ACCOUNT = "/qrcode/QrcodeAccountActivity";
+    //账号详情界面
+    public static final String QRCODE_ACCOUNTDETAIL = "/qrcode/QrcodeAccountDetailActivity";
 
     /**
      * record(作业记录模块)

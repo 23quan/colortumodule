@@ -112,7 +112,10 @@ public class TeachChooseGradeClassActivity extends BaseActivity<TeachChooseGrade
             @Override
             public void onChanged(List<TeachChooseGradeBean.DataBean.ListBean> listBeans) {
                 //选择教辅年级数据刷新
-                teachChooseGradeClassAdapter.addAll(listBeans);
+                teachChooseGradeClassAdapter.clear();
+                if (EmptyUtils.listIsEmpty(listBeans)) {
+                    teachChooseGradeClassAdapter.addAll(listBeans);
+                }
                 teachChooseGradeClassAdapter.notifyDataSetChanged();
             }
         });

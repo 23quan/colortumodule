@@ -52,7 +52,10 @@ public abstract class BaseActivity<VM extends BaseActivityViewModel, VDB extends
         if (ChannelUtil.isTeeMo()) {
             this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         }
+
         setContentView(getLayoutId());
+        BaseApplication.getInstance().addActivity(this);
+
         //路由注册
         ARouter.getInstance().inject(this);
         viewModel = new ViewModelProvider(this).get(getTClass());
@@ -68,6 +71,7 @@ public abstract class BaseActivity<VM extends BaseActivityViewModel, VDB extends
         //立即更新UI
         binding.executePendingBindings();
         getLifecycle().addObserver(viewModel);
+
         initView(savedInstanceState);
 
         //控制二维码显示

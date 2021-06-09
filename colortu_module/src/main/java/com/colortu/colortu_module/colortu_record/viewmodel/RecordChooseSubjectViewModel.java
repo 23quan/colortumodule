@@ -91,9 +91,7 @@ public class RecordChooseSubjectViewModel extends BaseActivityViewModel<BaseRequ
             @Override
             public void onResponse(Call<RecordChooseSubjectBean> call, Response<RecordChooseSubjectBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getRecords())) {
-                        recordChooseSubjectLiveData.setValue(response.body().getData().getRecords());
-                    }
+                    recordChooseSubjectLiveData.setValue(response.body().getData().getRecords());
                 }
             }
 

@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordHistorySubjectDetailAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordSubjectDetailBean;
 import com.colortu.colortu_module.colortu_record.viewmodel.RecordHistorySubjectDetailViewModel;
@@ -77,10 +78,10 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
                 //播放
                 if (isplay) {
                     viewModel.recordSubjectDetailBeanLiveData.getValue().get(position).setIsplay(false);
-                    viewModel.onStopPlayer();
+                    viewModel.audioPlayer.onStop();
                 } else {
                     viewModel.recordSubjectDetailBeanLiveData.getValue().get(position).setIsplay(true);
-                    viewModel.onPlayPlayer(audiourl);
+                    viewModel.audioPlayer.onPlay(audiourl);
                 }
                 recordHistorySubjectDetailAdapter.notifyItemChanged(position);
 
@@ -96,7 +97,9 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
             public void onChanged(List<RecordSubjectDetailBean.DataBean.RecordsBean> recordsBeans) {
                 //历史科目详情列表数据刷新
                 recordHistorySubjectDetailAdapter.clear();
-                recordHistorySubjectDetailAdapter.addAll(recordsBeans);
+                if (EmptyUtils.listIsEmpty(recordsBeans)) {
+                    recordHistorySubjectDetailAdapter.addAll(recordsBeans);
+                }
                 recordHistorySubjectDetailAdapter.notifyDataSetChanged();
             }
         });
@@ -104,7 +107,7 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
         /**
          * 监听是否播放完成
          */
-        viewModel.isPlay.observe(this, new Observer<Boolean>() {
+        viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {

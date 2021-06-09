@@ -1,5 +1,7 @@
 package com.colortu.colortu_module.colortu_base.bean;
 
+import java.util.List;
+
 /**
  * @author : Code23
  * @time : 2020/12/14
@@ -45,68 +47,317 @@ public class QrcodeUserInfoBean {
     }
 
     public static class DataBean {
-        private int id;
-        private String uuid;
-        private String channel;
-        private String openId;
-        private String nickName;
-        private String avatar;
-        private String phone;
+        private UserInfoBean userInfo;
+        private List<UserListBean> userList;
 
-        public int getId() {
-            return id;
+        public UserInfoBean getUserInfo() {
+            return userInfo;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setUserInfo(UserInfoBean userInfo) {
+            this.userInfo = userInfo;
         }
 
-        public String getUuid() {
-            return uuid;
+        public List<UserListBean> getUserList() {
+            return userList;
         }
 
-        public void setUuid(String uuid) {
-            this.uuid = uuid;
+        public void setUserList(List<UserListBean> userList) {
+            this.userList = userList;
         }
 
-        public String getChannel() {
-            return channel;
+        public static class UserInfoBean {
+            private int id;
+            private String uuid;
+            private String channel;
+            private int type;
+            private double price;
+            private String createDate;
+            private String updateDate;
+            private String openId;
+            private String nickName;
+            private String avatar;
+            private String phone;
+            private String valueOfYaunQi;
+            private String level;
+            private int isVIP;
+            private String vipTypes;
+            private String expireTime;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getUuid() {
+                return uuid;
+            }
+
+            public void setUuid(String uuid) {
+                this.uuid = uuid;
+            }
+
+            public String getChannel() {
+                return channel;
+            }
+
+            public void setChannel(String channel) {
+                this.channel = channel;
+            }
+
+            public int getType() {
+                return type;
+            }
+
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            public double getPrice() {
+                return price;
+            }
+
+            public void setPrice(double price) {
+                this.price = price;
+            }
+
+            public String getCreateDate() {
+                return createDate;
+            }
+
+            public void setCreateDate(String createDate) {
+                this.createDate = createDate;
+            }
+
+            public String getUpdateDate() {
+                return updateDate;
+            }
+
+            public void setUpdateDate(String updateDate) {
+                this.updateDate = updateDate;
+            }
+
+            public String getOpenId() {
+                return openId;
+            }
+
+            public void setOpenId(String openId) {
+                this.openId = openId;
+            }
+
+            public String getNickName() {
+                return nickName;
+            }
+
+            public void setNickName(String nickName) {
+                this.nickName = nickName;
+            }
+
+            public String getAvatar() {
+                return avatar;
+            }
+
+            public void setAvatar(String avatar) {
+                this.avatar = avatar;
+            }
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+
+            public String getValueOfYaunQi() {
+                return valueOfYaunQi;
+            }
+
+            public void setValueOfYaunQi(String valueOfYaunQi) {
+                this.valueOfYaunQi = valueOfYaunQi;
+            }
+
+            public String getLevel() {
+                return level;
+            }
+
+            public void setLevel(String level) {
+                this.level = level;
+            }
+
+            public int getIsVIP() {
+                return isVIP;
+            }
+
+            public void setIsVIP(int isVIP) {
+                this.isVIP = isVIP;
+            }
+
+            public String getVipTypes() {
+                return vipTypes;
+            }
+
+            public void setVipTypes(String vipTypes) {
+                this.vipTypes = vipTypes;
+            }
+
+            public String getExpireTime() {
+                return expireTime;
+            }
+
+            public void setExpireTime(String expireTime) {
+                this.expireTime = expireTime;
+            }
         }
 
-        public void setChannel(String channel) {
-            this.channel = channel;
-        }
+        public static class UserListBean {
+            private int id;
+            private String uuid;
+            private String channel;
+            private int type;
+            private double price;
+            private String createDate;
+            private String updateDate;
+            private String openId;
+            private String nickName;
+            private String avatar;
+            private String phone;
+            private String valueOfYaunQi;
+            private String level;
+            private int isVIP;
+            private String vipTypes;
+            private String expireTime;
 
-        public String getOpenId() {
-            return openId;
-        }
+            public int getId() {
+                return id;
+            }
 
-        public void setOpenId(String openId) {
-            this.openId = openId;
-        }
+            public void setId(int id) {
+                this.id = id;
+            }
 
-        public String getNickName() {
-            return nickName;
-        }
+            public String getUuid() {
+                return uuid;
+            }
 
-        public void setNickName(String nickName) {
-            this.nickName = nickName;
-        }
+            public void setUuid(String uuid) {
+                this.uuid = uuid;
+            }
 
-        public String getAvatar() {
-            return avatar;
-        }
+            public String getChannel() {
+                return channel;
+            }
 
-        public void setAvatar(String avatar) {
-            this.avatar = avatar;
-        }
+            public void setChannel(String channel) {
+                this.channel = channel;
+            }
 
-        public String getPhone() {
-            return phone;
-        }
+            public int getType() {
+                return type;
+            }
 
-        public void setPhone(String phone) {
-            this.phone = phone;
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            public double getPrice() {
+                return price;
+            }
+
+            public void setPrice(double price) {
+                this.price = price;
+            }
+
+            public String getCreateDate() {
+                return createDate;
+            }
+
+            public void setCreateDate(String createDate) {
+                this.createDate = createDate;
+            }
+
+            public String getUpdateDate() {
+                return updateDate;
+            }
+
+            public void setUpdateDate(String updateDate) {
+                this.updateDate = updateDate;
+            }
+
+            public String getOpenId() {
+                return openId;
+            }
+
+            public void setOpenId(String openId) {
+                this.openId = openId;
+            }
+
+            public String getNickName() {
+                return nickName;
+            }
+
+            public void setNickName(String nickName) {
+                this.nickName = nickName;
+            }
+
+            public String getAvatar() {
+                return avatar;
+            }
+
+            public void setAvatar(String avatar) {
+                this.avatar = avatar;
+            }
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+
+            public String getValueOfYaunQi() {
+                return valueOfYaunQi;
+            }
+
+            public void setValueOfYaunQi(String valueOfYaunQi) {
+                this.valueOfYaunQi = valueOfYaunQi;
+            }
+
+            public String getLevel() {
+                return level;
+            }
+
+            public void setLevel(String level) {
+                this.level = level;
+            }
+
+            public int getIsVIP() {
+                return isVIP;
+            }
+
+            public void setIsVIP(int isVIP) {
+                this.isVIP = isVIP;
+            }
+
+            public String getVipTypes() {
+                return vipTypes;
+            }
+
+            public void setVipTypes(String vipTypes) {
+                this.vipTypes = vipTypes;
+            }
+
+            public String getExpireTime() {
+                return expireTime;
+            }
+
+            public void setExpireTime(String expireTime) {
+                this.expireTime = expireTime;
+            }
         }
     }
 }

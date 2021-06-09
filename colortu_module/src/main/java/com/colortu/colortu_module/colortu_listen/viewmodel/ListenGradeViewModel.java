@@ -52,10 +52,7 @@ public class ListenGradeViewModel extends BaseActivityViewModel<BaseRequest> {
             @Override
             public void onResponse(Call<ListenGradeBean> call, Response<ListenGradeBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getList())) {
-                        //获取数据
-                        listenGradeBeanLiveData.setValue(response.body().getData().getList());
-                    }
+                    listenGradeBeanLiveData.setValue(response.body().getData().getList());
                 }
             }
 

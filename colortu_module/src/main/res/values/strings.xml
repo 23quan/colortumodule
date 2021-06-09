@@ -1,4 +1,7 @@
 <resources>
+    <string name="colortu_homework">小兔作业</string>
+    <string name="colortu_listen">小兔听写</string>
+
     <string name="lowmemory">系统内存不足,请清理缓存</string>
     <string name="refused_permission">拒绝授权导致功能无法使用</string>
     <string name="networt_wifi">当前网络为wifi</string>
@@ -32,6 +35,16 @@
     <string name="answer">答案</string>
     <string name="not_login">未登录</string>
     <string name="not_login2">未登录~</string>
+    <string name="translate">翻译</string>
+    <string name="vip">VIP</string>
+    <string name="no_vip">非VIP</string>
+    <string name="create">创建</string>
+
+    <string name="account">账号</string>
+    <string name="choose_account">选择登录账号</string>
+    <string name="no_account">没有更多账号</string>
+    <string name="switch_account">切换账号</string>
+    <string name="mine_message">我的信息</string>
 
     <string name="login_scancode">微信扫码获取元气</string>
     <string name="pay_scancode">请家长用微信扫码解锁</string>

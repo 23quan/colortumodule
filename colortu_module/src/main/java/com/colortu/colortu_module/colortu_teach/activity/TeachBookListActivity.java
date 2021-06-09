@@ -13,6 +13,7 @@ import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.sidebarutils.ListUtil;
 import com.colortu.colortu_module.colortu_base.utils.sidebarutils.SideBar;
 import com.colortu.colortu_module.colortu_base.utils.sidebarutils.TeachBookSortBean;
@@ -78,16 +79,17 @@ public class TeachBookListActivity extends BaseActivity<TeachBookListViewModel, 
         viewModel.teachBookBeanLiveData.observe(this, new Observer<List<TeachBookBean.DataBean.ListBeanX>>() {
             @Override
             public void onChanged(List<TeachBookBean.DataBean.ListBeanX> listBeanXES) {
-                teachBookSortBeanList.clear();
-                for (int i = 0; i < listBeanXES.size(); i++) {
-                    TeachBookSortBean teachBookSortBean = new TeachBookSortBean(listBeanXES.get(i).getTitle()
-                            , listBeanXES.get(i).getId(), TeachBookSortBean.TYPE_DATA);
-                    teachBookSortBeanList.add(teachBookSortBean);
-                }
-                ListUtil.sortList(teachBookSortBeanList);
-
                 //教辅系列下教辅列表数据刷新
-                teachBookAdapter.setTeachBookSortBeanList(teachBookSortBeanList);
+                teachBookSortBeanList.clear();
+                if (EmptyUtils.listIsEmpty(listBeanXES)) {
+                    for (int i = 0; i < listBeanXES.size(); i++) {
+                        TeachBookSortBean teachBookSortBean = new TeachBookSortBean(listBeanXES.get(i).getTitle()
+                                , listBeanXES.get(i).getId(), TeachBookSortBean.TYPE_DATA);
+                        teachBookSortBeanList.add(teachBookSortBean);
+                    }
+                    ListUtil.sortList(teachBookSortBeanList);
+                    teachBookAdapter.setTeachBookSortBeanList(teachBookSortBeanList);
+                }
                 teachBookAdapter.notifyDataSetChanged();
             }
         });

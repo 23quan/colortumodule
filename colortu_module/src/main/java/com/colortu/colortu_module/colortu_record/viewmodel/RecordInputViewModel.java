@@ -264,7 +264,7 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
                         //录音翻译文本
                         bundle.putString("content", translate2);
                         //录音url
-                        bundle.putString("audioUrl", BaseConstant.HomeWorkAudioUrl + audiourl.get());
+                        bundle.putString("audioUrl", audiourl.get());
                         //录音时长
                         bundle.putString("audioTime", duration.get());
                         BaseUIKit.startActivity(UIKitName.RECORD_INPUT, UIKitName.RECORD_CHOOSESUBJECT,
@@ -274,7 +274,7 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
                     }
                 } else {
                     if (EmptyUtils.stringIsEmpty(audiourl.get())) {
-                        addHomeWork(GetBeanDate.getUserUuid(), subjectId.get(), translate2, BaseConstant.HomeWorkAudioUrl + audiourl.get(), duration.get());
+                        addHomeWork(GetBeanDate.getUserUuid(), subjectId.get(), translate2, audiourl.get(), duration.get());
                     } else {
                         TipToast.tipToastShort(BaseApplication.getContext().getResources().getString(R.string.record_uploadfailure));
                     }

@@ -1,14 +1,9 @@
 package com.colortu.colortu_module.colortu_base.utils;
 
-import android.annotation.SuppressLint;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.os.CountDownTimer;
 
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
-
-import java.util.List;
 
 /**
  * @author : Code23
@@ -83,25 +78,8 @@ public class SuicideUtils {
 
             @Override
             public void onFinish() {
-                exitApp();
+                BaseApplication.getInstance().exitApp();
             }
         }.start();
-    }
-
-    /**
-     * 结束app进程
-     */
-    @SuppressLint("NewApi")
-    public static void exitApp() {
-        // 1. 通过Context获取ActivityManager
-        ActivityManager activityManager = (ActivityManager) BaseApplication.getInstance().getSystemService(Context.ACTIVITY_SERVICE);
-        // 2. 通过ActivityManager获取任务栈
-        List<ActivityManager.AppTask> appTaskList = activityManager.getAppTasks();
-        // 3. 逐个关闭Activity
-        for (ActivityManager.AppTask appTask : appTaskList) {
-            appTask.finishAndRemoveTask();
-        }
-        // 4. 结束进程
-        System.exit(0);
     }
 }

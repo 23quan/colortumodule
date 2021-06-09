@@ -13,6 +13,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_listen.adapter.ListenGradeAdapter;
 import com.colortu.colortu_module.colortu_listen.viewmodel.ListenGradeViewModel;
 import com.colortu.colortu_module.databinding.ActivityListenGradeBinding;
@@ -72,7 +73,9 @@ public class ListenGradeActivity extends BaseActivity<ListenGradeViewModel, Acti
             public void onChanged(List<Integer> integers) {
                 //年级列表数据刷新
                 listenGradeAdapter.clear();
-                listenGradeAdapter.addAll(integers);
+                if (EmptyUtils.listIsEmpty(integers)) {
+                    listenGradeAdapter.addAll(integers);
+                }
                 listenGradeAdapter.notifyDataSetChanged();
             }
         });

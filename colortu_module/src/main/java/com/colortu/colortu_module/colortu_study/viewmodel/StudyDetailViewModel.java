@@ -91,9 +91,9 @@ public class StudyDetailViewModel extends BaseActivityViewModel<BaseRequest> {
     //true自己签名播放,false他人签名播放
     public ObservableField<Boolean> typeplay = new ObservableField<>();
     //判断是否播放完成
-    public MutableLiveData<Boolean> isPlay = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
     //播放器工具类
-    private AudioPlayer audioPlayer;
+    public AudioPlayer audioPlayer;
 
     public void initStudyDetail() {
         //实例化
@@ -122,53 +122,36 @@ public class StudyDetailViewModel extends BaseActivityViewModel<BaseRequest> {
             public void playerstart() {//播放
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
-
-                if (ChannelUtil.isHuaWei()) {
-                    //发送通知栏消息
-                    BaseApplication.onStartNotification();
-                }
             }
 
             @Override
-            public void playerstop() {//暂停
-                isPlay.setValue(true);
+            public void playerpause() {//暂停
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
 
             @Override
-            public void playerfinish() {//播放完成
-                isPlay.setValue(true);
+            public void playerstop() {//停止
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
 
             @Override
-            public void playerfailure() {//播放失败
-                isPlay.setValue(true);
+            public void playerfinish() {//完成
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
+            }
+
+            @Override
+            public void playerfailure() {//失败
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
         });
-    }
-
-    /**
-     * 播放
-     */
-    public void onPlayPlayer(String audiourl) {
-        audioPlayer.play(audiourl);
-    }
-
-    /**
-     * 暂停
-     */
-    public void onStopPlayer() {
-        audioPlayer.stop();
-    }
-
-    /**
-     * 释放
-     */
-    public void onReleasePlayer() {
-        audioPlayer.release();
     }
 
     /**
@@ -246,9 +229,7 @@ public class StudyDetailViewModel extends BaseActivityViewModel<BaseRequest> {
                     }
 
                     //自习广场列表详情列表数据
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getUserDetails())) {
-                        plazaDetailLiveData.setValue(response.body().getData().getUserDetails());
-                    }
+                    plazaDetailLiveData.setValue(response.body().getData().getUserDetails());
                 }
             }
 
@@ -435,18 +416,13 @@ public class StudyDetailViewModel extends BaseActivityViewModel<BaseRequest> {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ChannelUtil.isHuaWei()) {
-            //销毁通知栏消息
-            if (NotificationUtil.isExistNotification) {
-                BaseApplication.onStopNotification();
-            }
-        }
-
         if (handler != null) {
             handler.removeCallbacks(getStudyDetailRunnable);
         }
 
         //暂停播放，释放资源
-        onReleasePlayer();
+        if (audioPlayer != null) {
+            audioPlayer.onRelease();
+        }
     }
 }

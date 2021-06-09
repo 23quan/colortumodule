@@ -46,9 +46,7 @@ public class MineVitalityEventViewModel extends BaseActivityViewModel<BaseReques
             @Override
             public void onResponse(Call<MineVitalityEventBean> call, Response<MineVitalityEventBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getData())) {
-                        vitalityEventLiveData.setValue(response.body().getData().getData());
-                    }
+                    vitalityEventLiveData.setValue(response.body().getData().getData());
                 }
             }
 

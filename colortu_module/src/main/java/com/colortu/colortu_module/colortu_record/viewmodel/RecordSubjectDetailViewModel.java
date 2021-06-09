@@ -54,7 +54,7 @@ public class RecordSubjectDetailViewModel extends BaseActivityViewModel<BaseRequ
     //控制编辑和完成转换
     public MutableLiveData<Boolean> switchLiveData = new MutableLiveData<>();
     //判断是否播放完成
-    public MutableLiveData<Boolean> isPlay = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
 
     private Handler handler;
     //查询时间
@@ -64,7 +64,7 @@ public class RecordSubjectDetailViewModel extends BaseActivityViewModel<BaseRequ
     //课id
     public ObservableField<Integer> classId = new ObservableField<>();
     //语音播放工具类
-    private AudioPlayer audioPlayer;
+    public AudioPlayer audioPlayer;
 
     @Override
     protected void onCreate() {
@@ -82,30 +82,34 @@ public class RecordSubjectDetailViewModel extends BaseActivityViewModel<BaseRequ
             public void playerstart() {//播放
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
-
-                if (ChannelUtil.isHuaWei()) {
-                    //发送通知栏消息
-                    BaseApplication.onStartNotification();
-                }
             }
 
             @Override
-            public void playerstop() {//暂停
-                isPlay.setValue(true);
+            public void playerpause() {//暂停
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
 
             @Override
-            public void playerfinish() {//播放完成
-                isPlay.setValue(true);
+            public void playerstop() {//停止
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
 
             @Override
-            public void playerfailure() {//播放失败
-                isPlay.setValue(true);
+            public void playerfinish() {//完成
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
+            }
+
+            @Override
+            public void playerfailure() {//失败
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
         });
     }
@@ -141,27 +145,6 @@ public class RecordSubjectDetailViewModel extends BaseActivityViewModel<BaseRequ
     }
 
     /**
-     * 播放
-     */
-    public void onPlayPlayer(String audiourl) {
-        audioPlayer.play(audiourl);
-    }
-
-    /**
-     * 暂停
-     */
-    public void onStopPlayer() {
-        audioPlayer.stop();
-    }
-
-    /**
-     * 释放
-     */
-    public void onReleasePlayer() {
-        audioPlayer.release();
-    }
-
-    /**
      * 作业列表详情Runnable
      */
     public void getSubjectDetailRunnable() {
@@ -186,11 +169,7 @@ public class RecordSubjectDetailViewModel extends BaseActivityViewModel<BaseRequ
             @Override
             public void onResponse(Call<RecordSubjectDetailBean> call, Response<RecordSubjectDetailBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getRecords())) {
-                        recordSubjectDetailBeanLiveData.setValue(response.body().getData().getRecords());
-                    } else {
-                        recordSubjectDetailBeanLiveData.setValue(null);
-                    }
+                    recordSubjectDetailBeanLiveData.setValue(response.body().getData().getRecords());
                 }
             }
 
@@ -239,14 +218,9 @@ public class RecordSubjectDetailViewModel extends BaseActivityViewModel<BaseRequ
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ChannelUtil.isHuaWei()) {
-            //销毁通知栏消息
-            if (NotificationUtil.isExistNotification) {
-                BaseApplication.onStopNotification();
-            }
-        }
-
         //暂停播放，释放资源
-        onReleasePlayer();
+        if (audioPlayer != null) {
+            audioPlayer.onRelease();
+        }
     }
 }

@@ -82,9 +82,7 @@ public class TeachBookListViewModel extends BaseActivityViewModel<BaseRequest> {
             @Override
             public void onResponse(Call<TeachBookBean> call, Response<TeachBookBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getList())) {
-                        teachBookBeanLiveData.setValue(response.body().getData().getList());
-                    }
+                    teachBookBeanLiveData.setValue(response.body().getData().getList());
                 }
             }
 

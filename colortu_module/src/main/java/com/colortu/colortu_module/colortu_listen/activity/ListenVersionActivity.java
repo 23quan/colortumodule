@@ -16,6 +16,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_listen.adapter.ListenVersionAdapter;
 import com.colortu.colortu_module.colortu_base.bean.ListenVersionBean;
 import com.colortu.colortu_module.colortu_listen.viewmodel.ListenVersionViewModel;
@@ -118,9 +119,9 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
      * 版本数据列表刷新
      */
     public void onRefreshVersion() {
-        if (viewModel.listenVersionBeanLiveData.getValue() != null) {
-            recordsBeanList.clear();
-            listenVersionAdapter.clear();
+        recordsBeanList.clear();
+        listenVersionAdapter.clear();
+        if (EmptyUtils.listIsEmpty(viewModel.listenVersionBeanLiveData.getValue())) {
             int grade = GetBeanDate.getChooseGrade() + 1;
             for (int i = 1; i < viewModel.listenVersionBeanLiveData.getValue().size(); i++) {
                 if (grade >= Integer.parseInt(viewModel.listenVersionBeanLiveData.getValue().get(i).getMinGrade())) {
@@ -129,7 +130,7 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
                 }
             }
             listenVersionAdapter.addAll(recordsBeanList);
-            listenVersionAdapter.notifyDataSetChanged();
         }
+        listenVersionAdapter.notifyDataSetChanged();
     }
 }

@@ -34,7 +34,7 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
     public MutableLiveData<List<RecordSubjectDetailBean.DataBean.RecordsBean>> recordSubjectDetailBeanLiveData = new MutableLiveData<>();
 
     //判断是否播放完成
-    public MutableLiveData<Boolean> isPlay = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
     //科目名
     public ObservableField<String> subjectname = new ObservableField<>();
     //科目id
@@ -42,7 +42,7 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
     //日期
     public ObservableField<String> date = new ObservableField<>();
     //播放器工具类
-    private AudioPlayer audioPlayer;
+    public AudioPlayer audioPlayer;
 
     @Override
     protected void onCreate() {
@@ -63,53 +63,36 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
             public void playerstart() {//播放
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
-
-                if (ChannelUtil.isHuaWei()) {
-                    //发送通知栏消息
-                    BaseApplication.onStartNotification();
-                }
             }
 
             @Override
-            public void playerstop() {//暂停
-                isPlay.setValue(true);
+            public void playerpause() {//暂停
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
 
             @Override
-            public void playerfinish() {//播放完成
-                isPlay.setValue(true);
+            public void playerstop() {//停止
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
 
             @Override
-            public void playerfailure() {//播放失败
-                isPlay.setValue(true);
+            public void playerfinish() {//完成
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
+            }
+
+            @Override
+            public void playerfailure() {//失败
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
         });
-    }
-
-    /**
-     * 播放
-     */
-    public void onPlayPlayer(String audiourl) {
-        audioPlayer.play(audiourl);
-    }
-
-    /**
-     * 暂停
-     */
-    public void onStopPlayer() {
-        audioPlayer.stop();
-    }
-
-    /**
-     * 释放
-     */
-    public void onReleasePlayer() {
-        audioPlayer.release();
     }
 
     /**
@@ -125,9 +108,7 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
             @Override
             public void onResponse(Call<RecordSubjectDetailBean> call, Response<RecordSubjectDetailBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getRecords())) {
-                        recordSubjectDetailBeanLiveData.setValue(response.body().getData().getRecords());
-                    }
+                    recordSubjectDetailBeanLiveData.setValue(response.body().getData().getRecords());
                 }
             }
 
@@ -140,14 +121,9 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ChannelUtil.isHuaWei()) {
-            //销毁通知栏消息
-            if (NotificationUtil.isExistNotification) {
-                BaseApplication.onStopNotification();
-            }
-        }
-
         //暂停播放，释放资源
-        onReleasePlayer();
+        if (audioPlayer != null) {
+            audioPlayer.onRelease();
+        }
     }
 }

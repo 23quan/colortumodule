@@ -47,10 +47,6 @@ public class StudyPlazaViewModel extends BaseActivityViewModel<BaseRequest> {
 
     //筛选tip
     public ObservableField<String> filtratename = new ObservableField<>();
-    //官方界面显示
-    public MutableLiveData<Boolean> officialShow = new MutableLiveData<>();
-    //个人界面显示
-    public MutableLiveData<Boolean> personShow = new MutableLiveData<>();
 
     /**
      * 初始化数据
@@ -86,20 +82,10 @@ public class StudyPlazaViewModel extends BaseActivityViewModel<BaseRequest> {
             public void onResponse(Call<StudyPlazaBean> call, Response<StudyPlazaBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
                     //官方自习
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getOfficial())) {
-                        officialShow.setValue(true);
-                        officialLiveData.setValue(response.body().getData().getOfficial());
-                    } else {
-                        officialShow.setValue(false);
-                    }
+                    officialLiveData.setValue(response.body().getData().getOfficial());
 
                     //个人自习
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getPersonal())) {
-                        personShow.setValue(true);
-                        personLiveData.setValue(response.body().getData().getPersonal());
-                    } else {
-                        personShow.setValue(false);
-                    }
+                    personLiveData.setValue(response.body().getData().getPersonal());
                 }
             }
 
@@ -120,20 +106,10 @@ public class StudyPlazaViewModel extends BaseActivityViewModel<BaseRequest> {
             public void onResponse(Call<StudyPlazaBean> call, Response<StudyPlazaBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
                     //官方自习
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getOfficial())) {
-                        officialShow.setValue(true);
-                        officialLiveData.setValue(response.body().getData().getOfficial());
-                    } else {
-                        officialShow.setValue(false);
-                    }
+                    officialLiveData.setValue(response.body().getData().getOfficial());
 
                     //个人自习
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getPersonal())) {
-                        personShow.setValue(true);
-                        personLiveData.setValue(response.body().getData().getPersonal());
-                    } else {
-                        personShow.setValue(false);
-                    }
+                    personLiveData.setValue(response.body().getData().getPersonal());
                 }
             }
 

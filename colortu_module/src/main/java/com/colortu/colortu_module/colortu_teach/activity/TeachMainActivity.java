@@ -14,6 +14,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.dialog.DialogWhether;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_teach.adapter.TeachMainAdapter;
 import com.colortu.colortu_module.colortu_base.bean.TeachMainBean;
 import com.colortu.colortu_module.colortu_teach.viewmodel.TeachMainViewModel;
@@ -102,7 +103,9 @@ public class TeachMainActivity extends BaseActivity<TeachMainViewModel, Activity
             public void onChanged(List<TeachMainBean.DataBean.RecordsBean> recordsBeans) {
                 //我的教辅列表数据刷新
                 teachMainAdapter.clear();
-                teachMainAdapter.addAll(recordsBeans);
+                if (EmptyUtils.listIsEmpty(recordsBeans)) {
+                    teachMainAdapter.addAll(recordsBeans);
+                }
                 teachMainAdapter.notifyDataSetChanged();
             }
         });

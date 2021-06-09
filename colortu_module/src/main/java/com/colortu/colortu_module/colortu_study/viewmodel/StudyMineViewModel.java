@@ -86,25 +86,13 @@ public class StudyMineViewModel extends BaseActivityViewModel<BaseRequest> {
             public void onResponse(Call<StudyMineBean> call, Response<StudyMineBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
                     //我创建的列表
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getMyCreate())) {
-                        myCreateBeanLiveData.setValue(response.body().getData().getMyCreate());
-                    } else {
-                        myCreateBeanLiveData.setValue(null);
-                    }
+                    myCreateBeanLiveData.setValue(response.body().getData().getMyCreate());
 
                     //我加入的列表
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getMyInJoin())) {
-                        myInJoinBeanLiveData.setValue(response.body().getData().getMyInJoin());
-                    } else {
-                        myInJoinBeanLiveData.setValue(null);
-                    }
+                    myInJoinBeanLiveData.setValue(response.body().getData().getMyInJoin());
 
                     //已过期的列表
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getDeprecated())) {
-                        deprecatedBeaLiveData.setValue(response.body().getData().getDeprecated());
-                    } else {
-                        deprecatedBeaLiveData.setValue(null);
-                    }
+                    deprecatedBeaLiveData.setValue(response.body().getData().getDeprecated());
 
                     //false无数据,true有数据
                     if (EmptyUtils.listIsEmpty(response.body().getData().getMyCreate()) ||

@@ -138,7 +138,9 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
             public void onChanged(List<StudySignBean.DataBean.RecordsBean> recordsBeans) {
                 //个性签名列表数据刷新
                 studySignAdapter.clear();
-                studySignAdapter.addAll(recordsBeans);
+                if (EmptyUtils.listIsEmpty(recordsBeans)) {
+                    studySignAdapter.addAll(recordsBeans);
+                }
                 studySignAdapter.notifyDataSetChanged();
             }
         });

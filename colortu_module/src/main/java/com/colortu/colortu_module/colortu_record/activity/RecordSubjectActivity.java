@@ -10,6 +10,7 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.dialog.DialogWhether;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordSubjectAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordSubjectBean;
 import com.colortu.colortu_module.colortu_record.viewmodel.RecordSubjectViewModel;
@@ -77,7 +78,7 @@ public class RecordSubjectActivity extends BaseActivity<RecordSubjectViewModel, 
             public void onChanged(List<RecordSubjectBean.DataBean.RecordsBean> recordsBeans) {
                 //今日作业列表数据刷新
                 recordSubjectAdapter.clear();
-                if (recordsBeans != null) {
+                if (EmptyUtils.listIsEmpty(recordsBeans)) {
                     recordSubjectAdapter.addAll(recordsBeans);
                 }
                 recordSubjectAdapter.notifyDataSetChanged();

@@ -14,6 +14,7 @@ import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.QuantizeUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordHistoryAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordHistoryBean;
@@ -75,7 +76,9 @@ public class RecordHistoryActivity extends BaseActivity<RecordHistoryViewModel, 
             public void onChanged(List<RecordHistoryBean.DataBean.RecordsBean> recordsBeans) {
                 //作业历史列表数据刷新
                 recordHistoryAdapter.clear();
-                recordHistoryAdapter.addAll(recordsBeans);
+                if (EmptyUtils.listIsEmpty(recordsBeans)) {
+                    recordHistoryAdapter.addAll(recordsBeans);
+                }
                 recordHistoryAdapter.notifyDataSetChanged();
             }
         });

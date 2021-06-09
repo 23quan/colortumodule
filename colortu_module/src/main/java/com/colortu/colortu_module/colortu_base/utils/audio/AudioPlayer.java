@@ -16,6 +16,8 @@ import java.io.IOException;
  */
 public class AudioPlayer {
     private MediaPlayer mediaPlayer;
+    //是否暂停
+    private boolean isPause;
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
@@ -39,16 +41,13 @@ public class AudioPlayer {
         @Override
         public void onAudioFocusChange(int focusChange) {
             switch (focusChange) {
-                //失去焦点
                 case AudioManager.AUDIOFOCUS_LOSS:
-                    if (isPlay()) {
-                        stop();
-                        onPlayerListener.playerstop();
-                    }
-                    break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    if (isPlay()) {
+                        onPause();
+                        onPlayerListener.playerpause();
+                    }
                     break;
                 case AudioManager.AUDIOFOCUS_GAIN:
                     break;
@@ -57,12 +56,12 @@ public class AudioPlayer {
     };
 
     /**
-     * 播放
+     * 初始化播放
      */
-    public void play(String audiourl) {
+    private void onInitPlay(String audiourl) {
         if (mediaPlayer != null) {
             if (isPlay()) {
-                stop();
+                onStop();
             }
             mediaPlayer.reset();
             try {
@@ -103,26 +102,55 @@ public class AudioPlayer {
     }
 
     /**
-     * 暂停
+     * 播放
      */
-    public void stop() {
+    public void onPlay(String audiourl) {
         if (mediaPlayer != null) {
-            onPlayerListener.playerstop();
-            mediaPlayer.stop();
-            mediaPlayer.reset();
+            if (isPause) {
+                isPause = false;
+                mediaPlayer.start();
+            } else {
+                isPause = false;
+                onInitPlay(audiourl);
+            }
+            onPlayerListener.playerstart();
         }
     }
 
     /**
-     * 释放资源
+     * 暂停播放
      */
-    public void release() {
+    public void onPause() {
         if (mediaPlayer != null) {
-            onPlayerListener.playerfinish();
+            isPause = true;
+            mediaPlayer.pause();
+            onPlayerListener.playerpause();
+        }
+    }
+
+    /**
+     * 停止播放
+     */
+    public void onStop() {
+        if (mediaPlayer != null) {
+            isPause = false;
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+            onPlayerListener.playerstop();
+        }
+    }
+
+    /**
+     * 释放播放资源
+     */
+    public void onRelease() {
+        if (mediaPlayer != null) {
+            isPause = false;
             mediaPlayer.stop();
             mediaPlayer.reset();
             mediaPlayer.release();
             mediaPlayer = null;
+            onPlayerListener.playerfinish();
         }
     }
 
@@ -146,16 +174,14 @@ public class AudioPlayer {
     private OnPlayerListener onPlayerListener;
 
     public interface OnPlayerListener {
-        //播放
-        void playerstart();
+        void playerstart();//播放
 
-        //暂停
-        void playerstop();
+        void playerpause();//暂停
 
-        //结束
-        void playerfinish();
+        void playerstop();//停止
 
-        //失败
-        void playerfailure();
+        void playerfinish();//结束
+
+        void playerfailure();//失败
     }
 }

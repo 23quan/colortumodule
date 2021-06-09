@@ -116,12 +116,9 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ChannelUtil.isHuaWei()) {
-            //销毁通知栏消息
-            if (NotificationUtil.isExistNotification) {
-                BaseApplication.onStopNotification();
-            }
-        }
+        //销毁通知栏消息
+        NotificationUtil.cancelNotification();
+
         viewModel.onDispose();
         audioManager.abandonAudioFocus(onAudioFocusChangeListener);
     }

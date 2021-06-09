@@ -16,6 +16,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_listen.adapter.ListenClassAdapter;
 import com.colortu.colortu_module.colortu_base.bean.ListenClassBean;
 import com.colortu.colortu_module.colortu_listen.viewmodel.ListenClassViewModel;
@@ -88,7 +89,9 @@ public class ListenClassActivity extends BaseActivity<ListenClassViewModel, Acti
             public void onChanged(List<ListenClassBean.DataBean.PoetryVOSBean> poetryVOSBeans) {
                 //课列表数据刷新
                 listenClassAdapter.clear();
-                listenClassAdapter.addAll(poetryVOSBeans);
+                if (EmptyUtils.listIsEmpty(poetryVOSBeans)) {
+                    listenClassAdapter.addAll(poetryVOSBeans);
+                }
                 listenClassAdapter.notifyDataSetChanged();
             }
         });

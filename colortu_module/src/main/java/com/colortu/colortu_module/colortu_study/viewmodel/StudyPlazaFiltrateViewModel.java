@@ -24,10 +24,6 @@ public class StudyPlazaFiltrateViewModel extends BaseActivityViewModel<BaseReque
     //自习广场列表筛选接口
     private Call<StudyPlazaFiltrateBean> studyPlazaFiltrateBeanCall;
 
-    //区域界面显示
-    public MutableLiveData<Boolean> areaShow = new MutableLiveData<>();
-    //年级界面显示
-    public MutableLiveData<Boolean> gradeShow = new MutableLiveData<>();
     //区域数据列表
     public MutableLiveData<List<String>> areaLiveData = new MutableLiveData<>();
     //年级数据列表
@@ -50,20 +46,10 @@ public class StudyPlazaFiltrateViewModel extends BaseActivityViewModel<BaseReque
             public void onResponse(Call<StudyPlazaFiltrateBean> call, Response<StudyPlazaFiltrateBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
                     //区域数据列表
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getRegion())) {
-                        areaShow.setValue(true);
-                        areaLiveData.setValue(response.body().getData().getRegion());
-                    } else {
-                        areaShow.setValue(false);
-                    }
+                    areaLiveData.setValue(response.body().getData().getRegion());
 
                     //年级数据列表
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getGrade())) {
-                        gradeShow.setValue(true);
-                        gradeLiveData.setValue(response.body().getData().getGrade());
-                    } else {
-                        gradeShow.setValue(false);
-                    }
+                    gradeLiveData.setValue(response.body().getData().getGrade());
                 }
             }
 

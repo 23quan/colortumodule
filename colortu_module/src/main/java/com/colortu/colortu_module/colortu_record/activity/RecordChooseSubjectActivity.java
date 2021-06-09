@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordChooseSubjectAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordChooseSubjectBean;
 import com.colortu.colortu_module.colortu_record.viewmodel.RecordChooseSubjectViewModel;
@@ -80,7 +81,11 @@ public class RecordChooseSubjectActivity extends BaseActivity<RecordChooseSubjec
         viewModel.recordChooseSubjectLiveData.observe(this, new Observer<List<RecordChooseSubjectBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<RecordChooseSubjectBean.DataBean.RecordsBean> recordsBeans) {
-                recordChooseSubjectAdapter.addAll(recordsBeans);
+                //选择科目列表数据监听刷新
+                recordChooseSubjectAdapter.clear();
+                if (EmptyUtils.listIsEmpty(recordsBeans)) {
+                    recordChooseSubjectAdapter.addAll(recordsBeans);
+                }
                 recordChooseSubjectAdapter.notifyDataSetChanged();
             }
         });

@@ -11,6 +11,7 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_teach.adapter.TeachGradeClassAdapter;
 import com.colortu.colortu_module.colortu_base.bean.TeachGradeClassBean;
 import com.colortu.colortu_module.colortu_teach.viewmodel.TeachGradeClassViewModel;
@@ -70,7 +71,9 @@ public class TeachGradeClassActivity extends BaseActivity<TeachGradeClassViewMod
             public void onChanged(List<TeachGradeClassBean.DataBean.ListBeanX> listBeanXES) {
                 //年级课目列表数据刷新
                 teachGradeClassAdapter.clear();
-                teachGradeClassAdapter.addAll(listBeanXES);
+                if (EmptyUtils.listIsEmpty(listBeanXES)) {
+                    teachGradeClassAdapter.addAll(listBeanXES);
+                }
                 teachGradeClassAdapter.notifyDataSetChanged();
             }
         });
