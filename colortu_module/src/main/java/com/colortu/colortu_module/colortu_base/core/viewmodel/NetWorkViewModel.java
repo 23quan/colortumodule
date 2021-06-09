@@ -1,5 +1,6 @@
 package com.colortu.colortu_module.colortu_base.core.viewmodel;
 
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
@@ -19,7 +20,7 @@ public class NetWorkViewModel extends BaseActivityViewModel<BaseRequest> {
     public void onDisagree() {
         status = 1;
         GetBeanDate.putAgreeNetWork(false);
-        SuicideUtils.exitApp();
+        BaseApplication.getInstance().exitApp();
     }
 
     /**
@@ -36,7 +37,7 @@ public class NetWorkViewModel extends BaseActivityViewModel<BaseRequest> {
         super.onDestroy();
         if (status == 0) {
             GetBeanDate.putAgreeNetWork(false);
-            SuicideUtils.exitApp();
+            BaseApplication.getInstance().exitApp();
         }
     }
 }

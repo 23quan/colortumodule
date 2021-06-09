@@ -11,7 +11,6 @@ import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioPlayer;
-import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_base.bean.RecordSubjectDetailBean;
 
 import java.util.List;
@@ -49,9 +48,9 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
         super.onCreate();
         //实例化
         audioPlayer = new AudioPlayer();
+        initPlay();
 
         getSubjectDetail(GetBeanDate.getUserUuid(), date.get(), subjectId.get());
-        initPlay();
     }
 
     /**

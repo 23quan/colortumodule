@@ -67,6 +67,8 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
     @Override
     protected void onCreate() {
         super.onCreate();
+        //实例化
+        audioRecord = new AudioRecord();
         postParams = new PostParams();
 
         isvisibleLiveData.setValue(true);
@@ -74,15 +76,13 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
         inputtip.set(BaseApplication.getContext().getResources().getString(R.string.input_message));
         inputplayimg.set(R.mipmap.icon_play_stop);
 
-        initData();
+        initPlay();
     }
 
     /**
-     * 录音和播放监听
+     * 初始化播放
      */
-    private void initData() {
-        //实例化
-        audioRecord = new AudioRecord();
+    public void initPlay() {
         audioRecord.setOnRecorderListener(new AudioRecord.OnRecorderListener() {
             @Override
             public void onStartPlayer() {//播放开始监听

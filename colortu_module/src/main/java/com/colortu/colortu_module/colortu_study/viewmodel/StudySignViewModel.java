@@ -8,11 +8,9 @@ import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
-import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioPlayer;
-import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_base.bean.StudySignBean;
 
 import java.util.List;
@@ -37,7 +35,7 @@ public class StudySignViewModel extends BaseActivityViewModel<BaseRequest> {
     //暂停播放icon
     public ObservableField<Integer> inputplayimg = new ObservableField<>();
     //判断是否播放完成
-    public MutableLiveData<Boolean> isPlay = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
     //录入语音url
     public ObservableField<String> audiourl = new ObservableField<>();
     //确定按钮背景颜色
@@ -52,38 +50,48 @@ public class StudySignViewModel extends BaseActivityViewModel<BaseRequest> {
         //实例化
         audioPlayer = new AudioPlayer();
 
-        isPlay.setValue(true);
+        isPlayLiveData.setValue(true);
+        initPlay();
         getStudySign();
+    }
 
+    /**
+     * 初始化播放
+     */
+    public void initPlay() {
         audioPlayer.setOnPlayerListener(new AudioPlayer.OnPlayerListener() {
             @Override
             public void playerstart() {//播放
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
-
-                if (ChannelUtil.isHuaWei()) {
-                    //发送通知栏消息
-                    BaseApplication.onStartNotification();
-                }
             }
 
             @Override
-            public void playerstop() {//暂停
-                isPlay.setValue(true);
+            public void playerpause() {//暂停
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
 
             @Override
-            public void playerfinish() {//播放完成
-                isPlay.setValue(true);
+            public void playerstop() {//停止
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
 
             @Override
-            public void playerfailure() {//播放失败
-                isPlay.setValue(true);
+            public void playerfinish() {//完成
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
+            }
+
+            @Override
+            public void playerfailure() {//失败
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
+                isPlayLiveData.setValue(true);
             }
         });
     }
@@ -92,34 +100,13 @@ public class StudySignViewModel extends BaseActivityViewModel<BaseRequest> {
      * 控制播放与暂停
      */
     public void onPlayAudio() {
-        if (isPlay.getValue()) {
+        if (isPlayLiveData.getValue()) {
             inputplayimg.set(R.mipmap.icon_play_start);
-            onPlayPlayer(BaseConstant.HomeWorkAudioUrl + audiourl.get());
+            audioPlayer.onPlay(BaseConstant.HomeWorkAudioUrl + audiourl.get());
         } else {
             inputplayimg.set(R.mipmap.icon_play_stop);
-            onStopPlayer();
+            audioPlayer.onStop();
         }
-    }
-
-    /**
-     * 播放
-     */
-    public void onPlayPlayer(String audiourl) {
-        audioPlayer.play(audiourl);
-    }
-
-    /**
-     * 暂停
-     */
-    public void onStopPlayer() {
-        audioPlayer.stop();
-    }
-
-    /**
-     * 释放
-     */
-    public void onReleasePlayer() {
-        audioPlayer.release();
     }
 
     /**
@@ -145,14 +132,9 @@ public class StudySignViewModel extends BaseActivityViewModel<BaseRequest> {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ChannelUtil.isHuaWei()) {
-            //销毁通知栏消息
-            if (NotificationUtil.isExistNotification) {
-                BaseApplication.onStopNotification();
-            }
-        }
-
         //暂停播放，释放资源
-        onReleasePlayer();
+        if (audioPlayer != null) {
+            audioPlayer.onRelease();
+        }
     }
 }
