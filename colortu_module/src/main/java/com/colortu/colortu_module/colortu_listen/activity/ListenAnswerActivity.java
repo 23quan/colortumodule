@@ -83,11 +83,6 @@ public class ListenAnswerActivity extends BaseActivity<ListenAnswerViewModel, Ac
                         //取消息屏app销毁
                         SuicideUtils.onCancelKill();
 
-                        if (ChannelUtil.isHuaWei()) {
-                            //发送通知栏消息
-                            BaseApplication.onStartNotification();
-                        }
-
                         onStartDictationVoice(wordsBean, position);
                     }
                 }).start();
@@ -156,13 +151,6 @@ public class ListenAnswerActivity extends BaseActivity<ListenAnswerViewModel, Ac
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ChannelUtil.isHuaWei()) {
-            //销毁通知栏消息
-            if (NotificationUtil.isExistNotification) {
-                BaseApplication.onStopNotification();
-            }
-        }
-
         onReleaseDictationVoice();
     }
 }

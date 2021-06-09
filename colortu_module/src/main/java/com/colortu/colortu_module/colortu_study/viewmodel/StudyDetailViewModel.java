@@ -19,7 +19,6 @@ import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioPlayer;
-import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_base.bean.StudyCloseBean;
 import com.colortu.colortu_module.colortu_base.bean.StudyDetailBean;
 import com.colortu.colortu_module.colortu_base.bean.StudyFirstBean;

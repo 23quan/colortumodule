@@ -20,7 +20,6 @@ import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioPlayer;
-import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_base.bean.RecordDeleteWorkBean;
 import com.colortu.colortu_module.colortu_base.bean.RecordSubjectDetailBean;
 
@@ -76,7 +75,19 @@ public class RecordSubjectDetailViewModel extends BaseActivityViewModel<BaseRequ
         edit.set(BaseApplication.getInstance().getString(R.string.edit));
         switchLiveData.setValue(false);
         checktime = String.valueOf(DateFormat.format("yyyy-MM-dd", Calendar.getInstance(Locale.CHINA)));
+        initPlay();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSubjectDetailRunnable();
+    }
+
+    /**
+     * 初始化播放
+     */
+    public void initPlay() {
         audioPlayer.setOnPlayerListener(new AudioPlayer.OnPlayerListener() {
             @Override
             public void playerstart() {//播放
@@ -112,12 +123,6 @@ public class RecordSubjectDetailViewModel extends BaseActivityViewModel<BaseRequ
                 isPlayLiveData.setValue(true);
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getSubjectDetailRunnable();
     }
 
     /**

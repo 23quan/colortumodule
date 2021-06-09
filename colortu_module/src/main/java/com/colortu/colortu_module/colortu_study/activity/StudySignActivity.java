@@ -104,7 +104,7 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
         /**
          * 播放暂停监听
          */
-        viewModel.isPlay.observe(this, new Observer<Boolean>() {
+        viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {

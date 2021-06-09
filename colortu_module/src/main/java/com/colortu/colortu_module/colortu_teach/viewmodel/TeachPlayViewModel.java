@@ -26,7 +26,7 @@ import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUt
  * @module : TeachPlayViewModel
  * @describe :听力播放界面ViewModel
  */
-public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> implements NotificationClickReceiver.OnNotificationListener{
+public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> implements NotificationClickReceiver.OnNotificationListener {
     //暂停播放监听
     public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
 
@@ -48,7 +48,13 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         audioPlayer = new AudioPlayer();
 
         isPlayLiveData.setValue(false);
+        initPlay();
+    }
 
+    /**
+     * 初始化播放
+     */
+    public void initPlay() {
         audioPlayer.setOnPlayerListener(new AudioPlayer.OnPlayerListener() {
 
             @Override
