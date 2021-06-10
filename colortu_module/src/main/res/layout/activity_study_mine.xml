@@ -52,7 +52,7 @@
                     android:onClick="@{()->viewmodel.onJumpMineCreate()}"
                     android:paddingLeft="@dimen/dimen_20"
                     android:paddingRight="@dimen/dimen_20"
-                    android:text="@string/manually_create"
+                    android:text="@string/create_studyroom"
                     android:textColor="@color/base_white1"
                     android:textSize="@dimen/size_30"
                     android:textStyle="bold"></TextView>
@@ -95,7 +95,7 @@
                     android:layout_marginLeft="@dimen/dimen_20"
                     android:gravity="center_vertical"
                     android:onClick="@{()->viewmodel.onJumpMineCreate()}"
-                    android:text="@string/manually_create"
+                    android:text="@string/create_studyroom"
                     android:textColor="@color/base_blue9"
                     android:textSize="@dimen/size_30"></TextView>
 

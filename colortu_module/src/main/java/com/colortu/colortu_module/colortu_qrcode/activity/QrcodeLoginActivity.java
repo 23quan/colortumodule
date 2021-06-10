@@ -142,7 +142,7 @@ public class QrcodeLoginActivity extends BaseActivity<QrcodeLoginViewModel, Acti
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
                     ARouter.getInstance()
-                            .build(UIKitName.QRCODE_ACCOUNT)
+                            .build(BaseConstant.QRCODE_ACCOUNT)
                             .withString("toPage", toPage)
                             .withString("toPageRoute", toPageRoute)
                             .withString("afterPageRoute", afterPageRoute)

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_study.viewmodel.StudyAudioCreateViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/audiocreate_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1"
+        android:orientation="vertical"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:id="@+id/audiocreate_startview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/audiocreate_tipview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/audiocreate_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{viewmodel.inputtip}"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_35"
+                    android:textStyle="bold"></TextView>
+
+                <ImageView
+                    android:id="@+id/audiocreate_gif"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    app:resgifsrc="@{viewmodel.inputgif}"></ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/audiocreate_inputview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
+                android:background="@color/base_blue7"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="@dimen/dimen_70"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_play_audio"></ImageView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/audiocreate_endview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/audiocreate_translate"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:layout_marginBottom="@dimen/dimen_15"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_30"
+                android:paddingRight="@dimen/dimen_30"
+                android:scrollbars="vertical"
+                android:text="@{viewmodel.translate}"
+                android:textColor="@color/base_blue9"
+                android:textSize="@dimen/size_30"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_110"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="@dimen/dimen_120"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_blue8"
+                    android:gravity="center"
+                    android:onClick="@{()->viewmodel.onAgainAudio()}">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_50"
+                        android:layout_height="@dimen/dimen_70"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/icon_play_audio"></ImageView>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/audiocreate_create"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/base_blue7"
+                    android:gravity="center"
+                    android:onClick="@{()->viewmodel.onAudioCreate()}"
+                    android:text="@string/create"
+                    android:textColor="@color/base_white1"
+                    android:textSize="@dimen/size_35"
+                    android:textStyle="bold"></TextView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

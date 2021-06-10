@@ -130,10 +130,10 @@ public class NotificationUtil {
         remoteViews.setOnClickPendingIntent(R.id.smallplayer_next, getPendingIntent(context, CLICK_NEXT));
 
         if (BaseApplication.appType == 1) {
-            remoteViews.setImageViewResource(R.id.notification_icon, R.mipmap.icon_work_huaweilogo);
+            remoteViews.setImageViewResource(R.id.smallplayer_icon, R.mipmap.icon_work_huaweilogo);
             remoteViews.setTextViewText(R.id.smallplayer_title, context.getResources().getString(R.string.colortu_homework));
         } else {
-            remoteViews.setImageViewResource(R.id.notification_icon, R.mipmap.icon_listen_logo);
+            remoteViews.setImageViewResource(R.id.smallplayer_icon, R.mipmap.icon_listen_logo);
             remoteViews.setTextViewText(R.id.smallplayer_title, context.getResources().getString(R.string.colortu_listen));
         }
 
@@ -162,10 +162,10 @@ public class NotificationUtil {
         remoteViews.setOnClickPendingIntent(R.id.bigplayer_next, getPendingIntent(context, CLICK_NEXT));
 
         if (BaseApplication.appType == 1) {
-            remoteViews.setImageViewResource(R.id.notification_icon, R.mipmap.icon_work_huaweilogo);
+            remoteViews.setImageViewResource(R.id.bigplayer_icon, R.mipmap.icon_work_huaweilogo);
             remoteViews.setTextViewText(R.id.bigplayer_title, context.getResources().getString(R.string.colortu_homework));
         } else {
-            remoteViews.setImageViewResource(R.id.notification_icon, R.mipmap.icon_listen_logo);
+            remoteViews.setImageViewResource(R.id.bigplayer_icon, R.mipmap.icon_listen_logo);
             remoteViews.setTextViewText(R.id.bigplayer_title, context.getResources().getString(R.string.colortu_listen));
         }
 

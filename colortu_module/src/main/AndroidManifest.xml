@@ -243,6 +243,18 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <!--手动创建自习室界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyManualCreateActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--语音创建自习室界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_study.activity.StudyAudioCreateActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <!--输入自习室口令界面-->
         <activity
             android:name="com.colortu.colortu_module.colortu_study.activity.StudyInputCommandActivity"
