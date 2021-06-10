@@ -68,6 +68,7 @@ public class StudyAudioCreateViewModel extends BaseActivityViewModel<BaseRequest
         super.onCreate();
         //实例化
         postParams = new PostParams();
+        audioRecord = new AudioRecord();
 
         initPlay();
     }
