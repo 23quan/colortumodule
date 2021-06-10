@@ -46,6 +46,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         super.onCreate();
         //实例化
         audioPlayer = new AudioPlayer();
+        NotificationClickReceiver.setOnNotificationListener(this);
 
         isPlayLiveData.setValue(false);
         initPlay();

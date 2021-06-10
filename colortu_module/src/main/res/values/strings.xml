@@ -147,6 +147,7 @@
     <string name="studyroom_openmessage">确定开启当前自习室?开启后好友可以通过你分享的自习室口令进入你的自习室</string>
 
     <string name="manually_create">手动创建</string>
+    <string name="audio_create">语音创建</string>
     <string name="input_studyroomname">输入自习室名称</string>
     <string name="create_studyroom">创建自习室</string>
     <string name="studyroom_namenone">自习室名称不能为空</string>

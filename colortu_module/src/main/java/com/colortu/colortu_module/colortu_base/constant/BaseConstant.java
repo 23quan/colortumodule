@@ -152,6 +152,10 @@ public class BaseConstant {
     public static final String STUDY_MINE = "/study/StudyMineActivity";
     //创建自习室界面
     public static final String STUDY_CREATE = "/study/StudyCreateActivity";
+    //手动创建自习室界面
+    public static final String STUDY_MANUALCREATE = "/study/StudyManualCreateActivity";
+    //语音创建自习室界面
+    public static final String STUDY_AUDIOCREATE = "/study/StudyAudioCreateActivity";
     //输入自习室口令界面
     public static final String STUDY_INPUTCOMMAND = "/study/StudyInputCommandActivity";
 
