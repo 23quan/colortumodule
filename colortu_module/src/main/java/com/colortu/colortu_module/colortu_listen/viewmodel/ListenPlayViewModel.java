@@ -283,8 +283,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         if (isClick) {
             onStopDictationVoice();
             if (playing) {
-                //取消息屏app销毁
-                SuicideUtils.onCancelKill();
+                //启动息屏app销毁
+                SuicideUtils.onStartKill();
                 //发送通知栏消息
                 NotificationUtil.createNotification();
 
