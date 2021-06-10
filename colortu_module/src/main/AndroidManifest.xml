@@ -35,6 +35,9 @@
         <!--休息service-->
         <service android:name="com.colortu.colortu_module.colortu_base.core.service.RestTimesService"></service>
 
+        <!--通知栏跳转广播监听-->
+        <receiver android:name="com.colortu.colortu_module.colortu_base.utils.notification.NotificationClickReceiver"></receiver>
+
         <!--************************************二维码模块**************************************-->
         <!--登录界面-->
         <activity
