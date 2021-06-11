@@ -70,6 +70,10 @@ public class StudyAudioCreateViewModel extends BaseActivityViewModel<BaseRequest
         postParams = new PostParams();
         audioRecord = new AudioRecord();
 
+        isvisibleLiveData.setValue(true);
+        isstop.set(false);
+        inputtip.set(BaseApplication.getContext().getResources().getString(R.string.input_message));
+
         initPlay();
     }
 
