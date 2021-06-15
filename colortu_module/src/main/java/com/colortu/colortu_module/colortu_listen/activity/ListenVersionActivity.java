@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
@@ -55,6 +56,8 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
         viewModel.setAdapteScreen(binding.versionParentview);
 
         type = bundle.getInt("type");
+        //播放提示音
+        BaseApplication.onStartTipVoice(R.raw.music_choose_version);
 
         //版本列表数据适配器实例化
         listenVersionAdapter = new ListenVersionAdapter();
@@ -132,5 +135,12 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
             listenVersionAdapter.addAll(recordsBeanList);
         }
         listenVersionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //停止播放，释放资源
+        BaseApplication.onStopTipVoice();
     }
 }

@@ -49,13 +49,13 @@ public class NotificationUtil {
     /**
      * 创建通知栏
      */
-    public static void createNotification() {
+    public static void createNotification(boolean isShow) {
         if (ChannelUtil.isHuaWei()) {
-            create();
+            create(isShow);
         }
     }
 
-    private static void create() {
+    private static void create(boolean isShow) {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//适配一下高版本
@@ -85,9 +85,9 @@ public class NotificationUtil {
         //设置只提醒一次
         builder.setOnlyAlertOnce(true);
         //把自定义小的view放上
-        builder.setContent(getSmallRemoteViews(context));
+        builder.setContent(getSmallRemoteViews(context, isShow));
         //把自定义大的view放上
-        builder.setCustomBigContentView(getBigRemoteViews(context));
+        builder.setCustomBigContentView(getBigRemoteViews(context, isShow));
         //整个点击跳转activity
         builder.setContentIntent(getPendingIntent(context, CLICK_APP));
 
@@ -117,17 +117,22 @@ public class NotificationUtil {
     /**
      * 自定义小的界面
      */
-    private static RemoteViews getSmallRemoteViews(Context context) {
+    private static RemoteViews getSmallRemoteViews(Context context, boolean isShow) {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_smallplayer);
         //点击取消通知栏
         remoteViews.setOnClickPendingIntent(R.id.smallplayer_cancel, getPendingIntent(context, CLICK_CANCEL));
-        //点击上一首
-        remoteViews.setOnClickPendingIntent(R.id.smallplayer_last, getPendingIntent(context, CLICK_LAST));
         //点击播放暂停
         remoteViews.setOnClickPendingIntent(R.id.smallplayer_play, getPendingIntent(context, CLICK_PLAY));
-        //点击下一首
-        remoteViews.setOnClickPendingIntent(R.id.smallplayer_next, getPendingIntent(context, CLICK_NEXT));
+
+        if (isShow) {
+            //点击上一首
+            remoteViews.setImageViewResource(R.id.smallplayer_last, R.mipmap.icon_base_left);
+            remoteViews.setOnClickPendingIntent(R.id.smallplayer_last, getPendingIntent(context, CLICK_LAST));
+            //点击下一首
+            remoteViews.setImageViewResource(R.id.smallplayer_next, R.mipmap.icon_base_right);
+            remoteViews.setOnClickPendingIntent(R.id.smallplayer_next, getPendingIntent(context, CLICK_NEXT));
+        }
 
         if (BaseApplication.appType == 1) {
             remoteViews.setImageViewResource(R.id.smallplayer_icon, R.mipmap.icon_work_huaweilogo);
@@ -149,17 +154,22 @@ public class NotificationUtil {
     /**
      * 自定义大的界面
      */
-    private static RemoteViews getBigRemoteViews(Context context) {
+    private static RemoteViews getBigRemoteViews(Context context, boolean isShow) {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_bigplayer);
         //点击取消通知栏
         remoteViews.setOnClickPendingIntent(R.id.bigplayer_cancel, getPendingIntent(context, CLICK_CANCEL));
-        //点击上一首
-        remoteViews.setOnClickPendingIntent(R.id.bigplayer_last, getPendingIntent(context, CLICK_LAST));
         //点击播放暂停
         remoteViews.setOnClickPendingIntent(R.id.bigplayer_play, getPendingIntent(context, CLICK_PLAY));
-        //点击下一首
-        remoteViews.setOnClickPendingIntent(R.id.bigplayer_next, getPendingIntent(context, CLICK_NEXT));
+
+        if (isShow) {
+            //点击上一首
+            remoteViews.setImageViewResource(R.id.bigplayer_last, R.mipmap.icon_base_left);
+            remoteViews.setOnClickPendingIntent(R.id.bigplayer_last, getPendingIntent(context, CLICK_LAST));
+            //点击下一首
+            remoteViews.setImageViewResource(R.id.bigplayer_next, R.mipmap.icon_base_right);
+            remoteViews.setOnClickPendingIntent(R.id.bigplayer_next, getPendingIntent(context, CLICK_NEXT));
+        }
 
         if (BaseApplication.appType == 1) {
             remoteViews.setImageViewResource(R.id.bigplayer_icon, R.mipmap.icon_work_huaweilogo);
