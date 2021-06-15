@@ -6,7 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -19,6 +19,7 @@ import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.UmengUtil;
 import com.colortu.colortu_module.colortu_base.bean.QrcodeAddUserBean;
+import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -180,6 +181,40 @@ public class BaseApplication extends Application {
     }
 
     /**
+     * ---------------------------------------mediaPlayer播放提示音--------------------------------------------
+     */
+    //媒体播放器
+    private static MediaPlayer mediaPlayer;
+
+    /**
+     * 开始(结束)提示语音
+     */
+    public static void onStartTipVoice(int audio) {
+        onStopTipVoice();
+        mediaPlayer = new MediaPlayer().create(BaseApplication.getContext(), audio);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                onStopTipVoice();
+            }
+        });
+        mediaPlayer.setLooping(false);
+        mediaPlayer.start();
+    }
+
+    /**
+     * 暂停/释放开始(结束)提示语音
+     */
+    public static void onStopTipVoice() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    /**
      * ---------------------------------------activity管理--------------------------------------------
      */
 
@@ -302,10 +337,13 @@ public class BaseApplication extends Application {
      */
     public void exitApp() {
         try {
+            //关闭通知栏
+            NotificationUtil.cancelNotification();
+            //结束所有activity
             finishAllActivity();
-            // 从系统中kill掉应用程序
+            //从系统中kill掉应用程序
             android.os.Process.killProcess(android.os.Process.myPid());
-            // 退出JVM,释放所占内存资源,0表示正常退出
+            //退出JVM,释放所占内存资源,0表示正常退出
             System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();

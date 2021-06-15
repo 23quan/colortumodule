@@ -18,7 +18,6 @@ import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
-import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioMngHelper;
@@ -286,7 +285,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
                 //发送通知栏消息
-                NotificationUtil.createNotification();
+                NotificationUtil.createNotification(true);
 
                 playicon.set(R.mipmap.icon_listen_stop);
                 playing = false;
@@ -420,7 +419,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         //取消息屏app销毁
         SuicideUtils.onCancelKill();
         //发送通知栏消息
-        NotificationUtil.createNotification();
+        NotificationUtil.createNotification(true);
 
         mediaPlayer2 = new MediaPlayer();
         try {
@@ -504,7 +503,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                     //启动息屏app销毁
                     SuicideUtils.onStartKill();
                     //发送通知栏消息
-                    NotificationUtil.createNotification();
+                    NotificationUtil.createNotification(true);
                 } else {
                     curItem++;
                     curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());

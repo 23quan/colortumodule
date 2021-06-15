@@ -12,7 +12,6 @@ import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
-import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
@@ -63,7 +62,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
                 //发送通知栏消息
-                NotificationUtil.createNotification();
+                NotificationUtil.createNotification(false);
 
                 isPlayLiveData.setValue(true);
             }
@@ -73,7 +72,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
                 //发送通知栏消息
-                NotificationUtil.createNotification();
+                NotificationUtil.createNotification(false);
 
                 isPlayLiveData.setValue(false);
             }
@@ -83,7 +82,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
                 //发送通知栏消息
-                NotificationUtil.createNotification();
+                NotificationUtil.createNotification(false);
 
                 isPlayLiveData.setValue(false);
             }
@@ -93,7 +92,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
                 //发送通知栏消息
-                NotificationUtil.createNotification();
+                NotificationUtil.createNotification(false);
 
                 isPlayLiveData.setValue(false);
             }
@@ -103,7 +102,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
                 //发送通知栏消息
-                NotificationUtil.createNotification();
+                NotificationUtil.createNotification(false);
 
                 isPlayLiveData.setValue(false);
             }

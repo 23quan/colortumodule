@@ -60,8 +60,7 @@
                 android:id="@+id/bigplayer_last"
                 android:layout_width="@dimen/dimen_50"
                 android:layout_height="@dimen/dimen_50"
-                android:scaleType="fitXY"
-                android:src="@mipmap/icon_base_left"></ImageView>
+                android:scaleType="fitXY"></ImageView>
 
             <ImageView
                 android:id="@+id/bigplayer_play"
@@ -76,8 +75,7 @@
                 android:id="@+id/bigplayer_next"
                 android:layout_width="@dimen/dimen_50"
                 android:layout_height="@dimen/dimen_50"
-                android:scaleType="fitXY"
-                android:src="@mipmap/icon_base_right"></ImageView>
+                android:scaleType="fitXY"></ImageView>
         </LinearLayout>
     </RelativeLayout>
 </layout>

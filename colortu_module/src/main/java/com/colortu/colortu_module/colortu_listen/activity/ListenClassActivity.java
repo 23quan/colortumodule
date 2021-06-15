@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
@@ -55,10 +56,11 @@ public class ListenClassActivity extends BaseActivity<ListenClassViewModel, Acti
 
         type = bundle.getInt("type");
         publisherid = bundle.getInt("publisherid");
-
         viewModel.subjectid.set(type);
         viewModel.gid.set(GetBeanDate.getChooseGrade());
         viewModel.publisherid.set(publisherid);
+        //播放提示音
+        BaseApplication.onStartTipVoice(R.raw.music_choose_class);
 
         if (type == 1) {
             //语文、选择年级
@@ -224,5 +226,12 @@ public class ListenClassActivity extends BaseActivity<ListenClassViewModel, Acti
             }
         }
         viewModel.nametip.set(grade + version);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //停止播放，释放资源
+        BaseApplication.onStopTipVoice();
     }
 }
