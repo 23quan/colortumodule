@@ -27,7 +27,7 @@ public class NotificationClickReceiver extends BroadcastReceiver {
                 }
                 break;
             case NotificationUtil.CLICK_CANCEL://通知栏取消
-                NotificationUtil.cancelNotification();
+                BaseApplication.getInstance().exitApp();
                 break;
             case NotificationUtil.CLICK_LAST://通知栏上一首
                 onNotificationListener.OnNotificationLast();
