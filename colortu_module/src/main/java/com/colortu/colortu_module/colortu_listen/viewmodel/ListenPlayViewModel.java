@@ -1,7 +1,7 @@
 package com.colortu.colortu_module.colortu_listen.viewmodel;
 
-import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothReceiver;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
@@ -44,7 +45,7 @@ import retrofit2.Response;
  * @describe :听力播放界面ViewModel
  */
 public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> implements DownloadAudio.DownloadAudioListener,
-        NotificationClickReceiver.OnNotificationListener {
+        NotificationClickReceiver.OnNotificationListener, BaseApplication.OnFinishTipVoiceListener, BlueToothReceiver.OnBluetoothListener {
     //听写完成接口
     private Call<ListenFinishBean> listenFinishBeanCall;
 
@@ -79,8 +80,10 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     private boolean isClick = false;
     //控制初始播放
     public boolean isStart = false;
+    //监听提示音是否结束
+    private boolean isFinishTipVoice;
     //是否播放
-    private boolean playing = false;
+    public boolean playing = false;
     //调节音量
     private int volumeLevel;
     //播放下标
@@ -98,7 +101,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     //是否显示答案
     public MutableLiveData<Boolean> isShowAnswer = new MutableLiveData<>();
     //媒体播放器
-    private MediaPlayer mediaPlayer1, mediaPlayer2;
+    private MediaPlayer mediaPlayer;
     //倒计时工具
     private CountDownTimer countDownTimer;
     //媒体音量管理
@@ -158,7 +161,10 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         speedtime = BaseConstant.LISTEN_SPEED_NORMAL;
         speedtext.set(BaseApplication.getContext().getResources().getString(R.string.normal));
 
-        onStartTipVoice(true, R.raw.music_play_start);
+        BlueToothReceiver.setOnBluetoothListener(this);
+        isFinishTipVoice = true;
+        BaseApplication.setOnFinishTipVoiceListener(this);
+        BaseApplication.onStartTipVoice(R.raw.music_play_start);
         handler.postDelayed(initPlay, 8500);
     }
 
@@ -223,7 +229,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      */
     public void onJumpAnswer() {
         if (isClick) {
-            if (mediaPlayer1 != null) {
+            if (mediaPlayer != null) {
                 onReleaseDictationVoice();
             }
             if (countDownTimer != null) {
@@ -307,38 +313,6 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     }
 
     /**
-     * 开始(结束)提示语音
-     */
-    public void onStartTipVoice(final boolean show, int audio) {
-        mediaPlayer1 = new MediaPlayer().create(BaseApplication.getContext(), audio);
-        mediaPlayer1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                onStopTipVoice();
-
-                if (show) {
-                    isStart = true;
-                    isPlay.setValue(true);
-                }
-            }
-        });
-        mediaPlayer1.setLooping(false);
-        mediaPlayer1.start();
-    }
-
-    /**
-     * 暂停/释放开始(结束)提示语音
-     */
-    public void onStopTipVoice() {
-        if (mediaPlayer1 != null) {
-            mediaPlayer1.stop();
-            mediaPlayer1.reset();
-            mediaPlayer1.release();
-            mediaPlayer1 = null;
-        }
-    }
-
-    /**
      * 初始播放数据
      */
     Runnable initPlay = new Runnable() {
@@ -372,9 +346,9 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      * 暂停播放
      */
     public void onStopWords() {
-        if (mediaPlayer2 != null) {
-            mediaPlayer2.stop();
-            mediaPlayer2.reset();
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
         }
         playicon.set(R.mipmap.icon_listen_stop);
         playing = false;
@@ -394,72 +368,68 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     private Runnable dictationVoiceRunnable = new Runnable() {
         @Override
         public void run() {
+            String path = "";
             if (audiourllist != null) {
                 if (audiourllist[curItem] != null) {
                     if (!audiourllist[curItem].equals("failure") && !audiourllist[curItem].equals("")) {
-                        onStartDictationVoice(audiourllist[curItem]);
+                        path = audiourllist[curItem];
                     } else {
-                        onStartDictationVoice(BaseConstant.ListenAudioUrl + listenClassBean.get().get(curItem).getWordAudioUrl());
+                        path = BaseConstant.ListenAudioUrl + listenClassBean.get().get(curItem).getWordAudioUrl();
                     }
                 } else {
-                    onStartDictationVoice(BaseConstant.ListenAudioUrl + listenClassBean.get().get(curItem).getWordAudioUrl());
+                    path = BaseConstant.ListenAudioUrl + listenClassBean.get().get(curItem).getWordAudioUrl();
                 }
             } else {
-                onStartDictationVoice(BaseConstant.ListenAudioUrl + listenClassBean.get().get(curItem).getWordAudioUrl());
+                path = BaseConstant.ListenAudioUrl + listenClassBean.get().get(curItem).getWordAudioUrl();
             }
+            Uri uri = Uri.parse(path);
+            onStartDictationVoice(uri);
         }
     };
 
     /**
      * 播放听写语音
      *
-     * @param url
+     * @param uri
      */
-    private void onStartDictationVoice(String url) {
+    private void onStartDictationVoice(Uri uri) {
         //取消息屏app销毁
         SuicideUtils.onCancelKill();
         //发送通知栏消息
         NotificationUtil.createNotification(true);
 
-        mediaPlayer2 = new MediaPlayer();
         try {
-            mediaPlayer2.setDataSource(url);
-            mediaPlayer2.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setDataSource(BaseApplication.getContext(), uri);
+            mediaPlayer.setLooping(false);
+            mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (mediaPlayer2 == null) {
-            return;
-        }
-        mediaPlayer2.setLooping(false);
-
-        mediaPlayer2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                mediaPlayer2.stop();
-                mediaPlayer2.reset();
+                mediaPlayer.stop();
+                mediaPlayer.reset();
             }
         });
 
-        mediaPlayer2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
-                if (mediaPlayer2 == mediaPlayer) {
-                    mediaPlayer2.start();
-                }
+                mediaPlayer.start();
             }
         });
-        mediaPlayer2.prepareAsync();
     }
 
     /**
      * 暂停开始听写语音
      */
     private void onStopDictationVoice() {
-        if (mediaPlayer2 != null) {
-            mediaPlayer2.stop();
-            mediaPlayer2.reset();
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
         }
     }
 
@@ -467,11 +437,11 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      * 释放开始听写语音
      */
     private void onReleaseDictationVoice() {
-        if (mediaPlayer2 != null) {
-            mediaPlayer2.stop();
-            mediaPlayer2.reset();
-            mediaPlayer2.release();
-            mediaPlayer2 = null;
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 
@@ -491,7 +461,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                     progress.set(0);
                     curtime.set(String.valueOf((speedtime / 1000) - 1));
                     playicon.set(R.mipmap.icon_listen_stop);
-                    onStartTipVoice(false, R.raw.music_play_end);
+                    isFinishTipVoice = false;
+                    BaseApplication.onStartTipVoice(R.raw.music_play_end);
 
                     handler.postDelayed(showAnswerRunnable, 5000);
 
@@ -561,18 +532,52 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     }
 
     @Override
-    public void OnNotificationLast() {
+    public void onNotificationLast() {
         onLast();
     }
 
     @Override
-    public void OnNotificationPlay() {
+    public void onNotificationPlay() {
         onStartAudio();
     }
 
     @Override
-    public void OnNotificationNext() {
+    public void onNotificationNext() {
         onNext();
+    }
+
+    /**
+     * 蓝牙监听
+     */
+    @Override
+    public void onBluetoothDisConnected() {
+        if (playing) {
+            onStopWords();
+        }
+    }
+
+    /**
+     * 提示音播放结束监听
+     */
+    @Override
+    public void onFinishTipVoice() {
+        if (isFinishTipVoice) {
+            isStart = true;
+            isPlay.setValue(true);
+        }
+    }
+
+    /**
+     * 销毁资源
+     */
+    public void onDispose() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        BaseApplication.onStopTipVoice();
+        onReleaseDictationVoice();
+        handler.removeCallbacks(showAnswerRunnable);
+        handler.removeCallbacks(dictationVoiceRunnable);
     }
 
     /**
@@ -594,18 +599,5 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
 
             }
         });
-    }
-
-    /**
-     * 销毁资源
-     */
-    public void onDispose() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
-        onStopTipVoice();
-        onReleaseDictationVoice();
-        handler.removeCallbacks(showAnswerRunnable);
-        handler.removeCallbacks(dictationVoiceRunnable);
     }
 }

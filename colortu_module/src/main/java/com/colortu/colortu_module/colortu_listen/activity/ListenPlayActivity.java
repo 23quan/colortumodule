@@ -13,6 +13,7 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothUtils;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
@@ -36,6 +37,8 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
 
     //音频焦点管理
     private AudioManager audioManager;
+    //是否音频焦点失去暂停播放
+    private boolean isLoseFocus;
 
     @Override
     public int getLayoutId() {
@@ -46,6 +49,8 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.playParentview);
+        //注册蓝牙广播
+        BlueToothUtils.onRegisterBlueTooth(this);
 
         viewModel.subjectid.set(bundle.getInt("subjectid"));
         viewModel.versionid.set(bundle.getInt("versionid"));
@@ -104,11 +109,18 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                     if (!viewModel.isStart) {
-                        viewModel.onStopTipVoice();
+                        BaseApplication.onStopTipVoice();
                     }
-                    viewModel.onStopWords();
+                    if (viewModel.playing) {
+                        isLoseFocus = true;
+                        viewModel.onStopWords();
+                    }
                     break;
                 case AudioManager.AUDIOFOCUS_GAIN:
+                    if (isLoseFocus) {
+                        isLoseFocus = false;
+                        viewModel.onStartAudio();
+                    }
                     break;
             }
         }
@@ -119,6 +131,8 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
         super.onDestroy();
         //销毁通知栏消息
         NotificationUtil.cancelNotification();
+        //注销蓝牙广播
+        BlueToothUtils.onUnRegisterBlueTooth(this);
 
         viewModel.onDispose();
         audioManager.abandonAudioFocus(onAudioFocusChangeListener);

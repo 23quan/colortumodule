@@ -30,13 +30,13 @@ public class NotificationClickReceiver extends BroadcastReceiver {
                 BaseApplication.getInstance().exitApp();
                 break;
             case NotificationUtil.CLICK_LAST://通知栏上一首
-                onNotificationListener.OnNotificationLast();
+                onNotificationListener.onNotificationLast();
                 break;
             case NotificationUtil.CLICK_PLAY://通知栏播放和暂停
-                onNotificationListener.OnNotificationPlay();
+                onNotificationListener.onNotificationPlay();
                 break;
             case NotificationUtil.CLICK_NEXT://通知栏下一首
-                onNotificationListener.OnNotificationNext();
+                onNotificationListener.onNotificationNext();
                 break;
         }
     }
@@ -49,12 +49,12 @@ public class NotificationClickReceiver extends BroadcastReceiver {
 
     public interface OnNotificationListener {
         //上一首
-        void OnNotificationLast();
+        void onNotificationLast();
 
         //播放暂停
-        void OnNotificationPlay();
+        void onNotificationPlay();
 
         //下一首
-        void OnNotificationNext();
+        void onNotificationNext();
     }
 }
