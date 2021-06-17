@@ -58,10 +58,8 @@ public class SuicideUtils {
      */
     public static void cancelKillApp() {
         if (ChannelUtil.isXTC() || ChannelUtil.isHuaWei()) {
-            if (!BaseApplication.isListen) {
-                if (countDownTimer != null) {
-                    countDownTimer.cancel();
-                }
+            if (countDownTimer != null) {
+                countDownTimer.cancel();
             }
         }
     }
