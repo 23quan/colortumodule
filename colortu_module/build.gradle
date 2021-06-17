@@ -69,11 +69,11 @@ dependencies {
 
     //抖音团队boostmultidex打包
     api 'com.bytedance.boost_multidex:boost_multidex:1.0.1'
-    // ViewModel
+    //ViewModel
     api 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
-    // LiveData
+    //LiveData
     api 'androidx.lifecycle:lifecycle-livedata:2.2.0'
-    // Lifecycles only (without ViewModel or LiveData)
+    //Lifecycles only (without ViewModel or LiveData)
     api 'androidx.lifecycle:lifecycle-runtime:2.2.0'
     //arouter
     api 'com.alibaba:arouter-api:1.5.1'

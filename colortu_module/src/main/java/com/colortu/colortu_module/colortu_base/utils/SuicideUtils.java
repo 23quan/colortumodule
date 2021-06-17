@@ -36,6 +36,7 @@ public class SuicideUtils {
     public static void onCancelKill() {
         if (ChannelUtil.isXTC() || ChannelUtil.isHuaWei()) {
             BaseApplication.setIsListen(true);
+            cancelKillApp();
         }
     }
 

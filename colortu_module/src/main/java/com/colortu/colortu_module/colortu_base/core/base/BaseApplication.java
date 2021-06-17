@@ -187,7 +187,7 @@ public class BaseApplication extends Application {
     private static MediaPlayer mediaPlayer;
 
     /**
-     * 开始(结束)提示语音
+     * 开始播放提示语音
      */
     public static void onStartTipVoice(int audio) {
         onStopTipVoice();
@@ -196,6 +196,9 @@ public class BaseApplication extends Application {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 onStopTipVoice();
+                if (onFinishTipVoiceListener != null) {
+                    onFinishTipVoiceListener.onFinishTipVoice();
+                }
             }
         });
         mediaPlayer.setLooping(false);
@@ -203,7 +206,7 @@ public class BaseApplication extends Application {
     }
 
     /**
-     * 暂停/释放开始(结束)提示语音
+     * 停止播放提示语音
      */
     public static void onStopTipVoice() {
         if (mediaPlayer != null) {
@@ -212,6 +215,16 @@ public class BaseApplication extends Application {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+
+    private static OnFinishTipVoiceListener onFinishTipVoiceListener;
+
+    public static void setOnFinishTipVoiceListener(OnFinishTipVoiceListener onFinishTipVoiceListener) {
+        BaseApplication.onFinishTipVoiceListener = onFinishTipVoiceListener;
+    }
+
+    public interface OnFinishTipVoiceListener {
+        void onFinishTipVoice();
     }
 
     /**

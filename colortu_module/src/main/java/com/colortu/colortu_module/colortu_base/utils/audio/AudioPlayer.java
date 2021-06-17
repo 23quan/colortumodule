@@ -18,6 +18,8 @@ public class AudioPlayer {
     private MediaPlayer mediaPlayer;
     //是否暂停
     private boolean isPause;
+    //是否音频焦点失去暂停播放
+    private boolean isLoseFocus;
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
@@ -45,11 +47,16 @@ public class AudioPlayer {
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                     if (isPlay()) {
+                        isLoseFocus = true;
                         onPause();
                         onPlayerListener.playerpause();
                     }
                     break;
                 case AudioManager.AUDIOFOCUS_GAIN:
+                    if (isLoseFocus) {
+                        isLoseFocus = false;
+                        onPlayerListener.recoverplayerstart();
+                    }
                     break;
             }
         }
@@ -175,6 +182,8 @@ public class AudioPlayer {
 
     public interface OnPlayerListener {
         void playerstart();//播放
+
+        void recoverplayerstart();//恢复播放
 
         void playerpause();//暂停
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothReceiver;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
@@ -25,7 +26,8 @@ import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUt
  * @module : TeachPlayViewModel
  * @describe :听力播放界面ViewModel
  */
-public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> implements NotificationClickReceiver.OnNotificationListener {
+public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> implements NotificationClickReceiver.OnNotificationListener ,
+        BlueToothReceiver.OnBluetoothListener{
     //暂停播放监听
     public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
 
@@ -47,6 +49,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         audioPlayer = new AudioPlayer();
         NotificationClickReceiver.setOnNotificationListener(this);
 
+        BlueToothReceiver.setOnBluetoothListener(this);
         isPlayLiveData.setValue(false);
         initPlay();
     }
@@ -64,6 +67,17 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 //发送通知栏消息
                 NotificationUtil.createNotification(false);
 
+                isPlayLiveData.setValue(true);
+            }
+
+            @Override
+            public void recoverplayerstart() {//恢复播放
+                //取消息屏app销毁
+                SuicideUtils.onCancelKill();
+                //发送通知栏消息
+                NotificationUtil.createNotification(false);
+
+                onPlay();
                 isPlayLiveData.setValue(true);
             }
 
@@ -152,18 +166,26 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
     }
 
     @Override
-    public void OnNotificationLast() {
+    public void onNotificationLast() {
 
     }
 
     @Override
-    public void OnNotificationPlay() {
+    public void onNotificationPlay() {
         onPlay();
     }
 
     @Override
-    public void OnNotificationNext() {
+    public void onNotificationNext() {
 
+    }
+
+    /**
+     * 蓝牙监听
+     */
+    @Override
+    public void onBluetoothDisConnected() {
+        onPlay();
     }
 
     @Override

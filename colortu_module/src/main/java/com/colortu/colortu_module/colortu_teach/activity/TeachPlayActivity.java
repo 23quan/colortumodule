@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothUtils;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_teach.viewmodel.TeachPlayViewModel;
@@ -49,6 +50,8 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.playParentview);
+        //注册蓝牙广播
+        BlueToothUtils.onRegisterBlueTooth(this);
 
         classname = bundle.getString("classname");
         examid = bundle.getInt("examid");
@@ -91,5 +94,12 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //注销蓝牙广播
+        BlueToothUtils.onUnRegisterBlueTooth(this);
     }
 }
