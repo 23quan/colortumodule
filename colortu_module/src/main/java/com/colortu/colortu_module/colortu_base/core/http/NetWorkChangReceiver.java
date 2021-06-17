@@ -8,7 +8,9 @@ import android.net.ConnectivityManager;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
+import com.colortu.colortu_module.colortu_base.core.activity.NetWorkActivity;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
+import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 
 /**
@@ -21,16 +23,20 @@ public class NetWorkChangReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
-            onNetWorkTip(context);
+            if (ChannelUtil.isHuaWei()) {
+                onHuaWeiNetWorkTip(context);
+            } else {
+                onOtherNetWorkTip(context);
+            }
         }
     }
 
     /**
-     * 显示网络提示
+     * 华为显示网络提示
      *
      * @param context
      */
-    public void onNetWorkTip(Context context) {
+    public void onHuaWeiNetWorkTip(Context context) {
         if (GetBeanDate.getAgreeNetWork()) {
             if (NetWorkUtils.isMobile(context)) {
                 TipToast.tipToastLong(context.getResources().getString(R.string.networt_mobile));
@@ -39,6 +45,21 @@ public class NetWorkChangReceiver extends BroadcastReceiver {
             if (NetWorkUtils.isMobile(context)) {
                 ARouter.getInstance().build(BaseConstant.BASE_NETWORK).navigation();
             }
+        }
+    }
+
+    /**
+     * 其他显示网络提示
+     */
+    public void onOtherNetWorkTip(Context context) {
+        if (NetWorkUtils.isConnected(context)) {
+            if (NetWorkUtils.isMobile(context)) {
+                TipToast.tipToastLong(context.getResources().getString(R.string.networt_mobile));
+            } else {
+                TipToast.tipToastLong(context.getResources().getString(R.string.networt_wifi));
+            }
+        } else {
+            TipToast.tipToastLong(context.getResources().getString(R.string.no_networt));
         }
     }
 }
