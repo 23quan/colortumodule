@@ -48,8 +48,12 @@ public class NetWorkChangReceiver extends BroadcastReceiver {
                 TipToast.tipToastLong(context.getResources().getString(R.string.no_networt));
             }
         } else {
-            if (NetWorkUtils.isMobile(context)) {
-                ARouter.getInstance().build(BaseConstant.BASE_NETWORK).navigation();
+            if (NetWorkUtils.isConnected(context)) {
+                if (NetWorkUtils.isMobile(context)) {
+                    ARouter.getInstance().build(BaseConstant.BASE_NETWORK).navigation();
+                }
+            } else {
+                TipToast.tipToastLong(context.getResources().getString(R.string.no_networt));
             }
         }
     }
