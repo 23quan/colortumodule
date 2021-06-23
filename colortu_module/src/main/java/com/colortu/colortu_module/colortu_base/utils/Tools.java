@@ -238,23 +238,22 @@ public class Tools {
      *
      * @return
      */
-    public static boolean checkFreeSpace() {
-        //要求sd卡最少可用空间已M为单位
-        long minimum = 50;
-        long size = minimum * 1024 * 1024;
-
-        if (getSDFreeSpace() > size) {
-            return true;
+    public static int checkFreeSpace() {
+        //预警值
+        long warning = 100 * 1024 * 1024;
+        //低于退出app值
+        long minimum = 50 * 1024 * 1024;
+        //内存剩余空间值
+        long freespace = Environment.getExternalStorageDirectory().getFreeSpace();
+        if (freespace > warning) {
+            return 0;
         } else {
-            return false;
+            if (freespace < warning && freespace > minimum) {
+                return 1;
+            } else {
+                return 2;
+            }
         }
-    }
-
-    public static long getSDFreeSpace() {
-        StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getAbsolutePath());
-        long blockSize = statFs.getBlockSizeLong();
-        long availableBlocks = statFs.getAvailableBlocksLong();
-        return availableBlocks * blockSize;
     }
 
     /**
