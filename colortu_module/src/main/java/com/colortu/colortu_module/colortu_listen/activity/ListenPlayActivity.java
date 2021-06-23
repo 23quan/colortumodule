@@ -1,7 +1,10 @@
 package com.colortu.colortu_module.colortu_listen.activity;
 
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -64,8 +67,29 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
             }
         }
 
+        //音频焦点
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //AudioAttributes 配置(多媒体场景，申请的是音乐流)
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
+            // 初始化AudioFocusRequest
+            AudioFocusRequest audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                    .setAudioAttributes(audioAttributes)
+                    //设置是否允许延迟获取焦点
+                    .setAcceptsDelayedFocusGain(true)
+                    //设置AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK会暂停，系统不会压低声音
+                    .setWillPauseWhenDucked(true)
+                    //设置焦点监听回调
+                    .setOnAudioFocusChangeListener(onAudioFocusChangeListener)
+                    .build();
+            //申请焦点
+            audioManager.requestAudioFocus(audioFocusRequest);
+        } else {
+            audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        }
 
         /**
          * 开始播放监听
