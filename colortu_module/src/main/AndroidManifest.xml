@@ -35,6 +35,9 @@
         <!--休息service-->
         <service android:name="com.colortu.colortu_module.colortu_base.core.service.RestTimesService"></service>
 
+        <!--网络广播通知-->
+        <receiver android:name="com.colortu.colortu_module.colortu_base.core.http.NetWorkChangReceiver"></receiver>
+
         <!--通知栏跳转广播监听-->
         <receiver android:name="com.colortu.colortu_module.colortu_base.utils.notification.NotificationClickReceiver"></receiver>
 
