@@ -2,7 +2,8 @@
     <string name="colortu_homework">小兔作业</string>
     <string name="colortu_listen">小兔听写</string>
 
-    <string name="lowmemory">系统内存不足,请清理缓存</string>
+    <string name="warning_memory">系统空间不足100m,请清理缓存</string>
+    <string name="minimum_memory">系统空间不足50m,App停止运行,请清理缓存</string>
     <string name="refused_permission">拒绝授权导致功能无法使用</string>
     <string name="no_networt">当前网络不可用</string>
     <string name="networt_wifi">当前网络为wifi</string>
