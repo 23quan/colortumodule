@@ -1,8 +1,11 @@
 package com.colortu.colortu_module.colortu_base.utils.audio;
 
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 
@@ -20,6 +23,8 @@ public class AudioPlayer {
     private boolean isPause;
     //是否音频焦点失去暂停播放
     private boolean isLoseFocus;
+    //音频焦点管理
+    private AudioManager audioManager;
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
@@ -30,8 +35,29 @@ public class AudioPlayer {
     }
 
     public AudioPlayer() {
-        AudioManager audioManager = (AudioManager) BaseApplication.getContext().getSystemService(Context.AUDIO_SERVICE);
-        audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        //音频焦点
+        audioManager = (AudioManager) BaseApplication.getContext().getSystemService(Context.AUDIO_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //AudioAttributes 配置(多媒体场景，申请的是音乐流)
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
+            // 初始化AudioFocusRequest
+            AudioFocusRequest audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                    .setAudioAttributes(audioAttributes)
+                    //设置是否允许延迟获取焦点
+                    .setAcceptsDelayedFocusGain(true)
+                    //设置AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK会暂停，系统不会压低声音
+                    .setWillPauseWhenDucked(true)
+                    //设置焦点监听回调
+                    .setOnAudioFocusChangeListener(onAudioFocusChangeListener)
+                    .build();
+            //申请焦点
+            audioManager.requestAudioFocus(audioFocusRequest);
+        } else {
+            audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        }
 
         mediaPlayer = new MediaPlayer();
     }
