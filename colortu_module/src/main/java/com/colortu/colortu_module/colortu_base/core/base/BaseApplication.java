@@ -192,9 +192,9 @@ public class BaseApplication extends Application {
      * ---------------------------------------mediaPlayer播放提示音--------------------------------------------
      */
     //音频焦点管理
-    private AudioManager audioManager;
+    public static AudioManager audioManager;
     //媒体播放器
-    private static MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
 
     /**
      * 开始播放提示语音
@@ -256,10 +256,17 @@ public class BaseApplication extends Application {
     /**
      * 音频焦点监听
      */
-    private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
-
+            switch (focusChange) {
+                case AudioManager.AUDIOFOCUS_LOSS:
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    break;
+                case AudioManager.AUDIOFOCUS_GAIN:
+                    break;
+            }
         }
     };
 
