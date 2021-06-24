@@ -41,8 +41,6 @@ public class NetWorkChangReceiver extends BroadcastReceiver {
             if (NetWorkUtils.isConnected(context)) {
                 if (NetWorkUtils.isMobile(context)) {
                     TipToast.tipToastLong(context.getResources().getString(R.string.networt_mobile));
-                } else {
-                    TipToast.tipToastLong(context.getResources().getString(R.string.networt_wifi));
                 }
             } else {
                 TipToast.tipToastLong(context.getResources().getString(R.string.no_networt));
