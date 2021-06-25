@@ -15,11 +15,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.colortu.colortu_module.BR;
+import com.colortu.colortu_module.R;
+import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.api.PermissionListener;
+import com.colortu.colortu_module.colortu_base.core.http.NetWorkUtils;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
+import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.OSUtil;
+import com.colortu.colortu_module.colortu_base.utils.TipToast;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -52,10 +57,8 @@ public abstract class BaseActivity<VM extends BaseActivityViewModel, VDB extends
         if (ChannelUtil.isTeeMo()) {
             this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         }
-
         setContentView(getLayoutId());
         BaseApplication.getInstance().addActivity(this);
-
         //路由注册
         ARouter.getInstance().inject(this);
         viewModel = new ViewModelProvider(this).get(getTClass());
@@ -71,9 +74,12 @@ public abstract class BaseActivity<VM extends BaseActivityViewModel, VDB extends
         //立即更新UI
         binding.executePendingBindings();
         getLifecycle().addObserver(viewModel);
-
+        //初始化view
         initView(savedInstanceState);
-
+        //判断网络是否可用
+        if (!NetWorkUtils.isConnected(this)) {
+            TipToast.tipToastLong(getResources().getString(R.string.no_networt));
+        }
         //控制二维码显示
         BaseApplication.getInstance().startAfterActivity(BaseUIKit.AfterEnter);
     }
