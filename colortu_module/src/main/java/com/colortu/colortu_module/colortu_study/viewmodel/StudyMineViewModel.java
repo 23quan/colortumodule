@@ -10,6 +10,7 @@ import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
+import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.bean.StudyCloseBean;
 import com.colortu.colortu_module.colortu_base.bean.StudyMineBean;
@@ -62,8 +63,13 @@ public class StudyMineViewModel extends BaseActivityViewModel<BaseRequest> {
      * 跳转创建自习室界面
      */
     public void onJumpMineCreate() {
-        BaseUIKit.startActivity(UIKitName.STUDY_MINE, UIKitName.STUDY_CREATE,
-                BaseConstant.STUDY_CREATE, BaseUIKit.OTHER, null);
+        if (ChannelUtil.isXiaoMi()) {
+            BaseUIKit.startActivity(UIKitName.STUDY_MINE, UIKitName.STUDY_AUDIOCREATE,
+                    BaseConstant.STUDY_AUDIOCREATE, BaseUIKit.OTHER, null);
+        } else {
+            BaseUIKit.startActivity(UIKitName.STUDY_MINE, UIKitName.STUDY_CREATE,
+                    BaseConstant.STUDY_CREATE, BaseUIKit.OTHER, null);
+        }
     }
 
     /**
