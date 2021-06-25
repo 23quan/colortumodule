@@ -48,15 +48,13 @@ public class AudioRecord {
             switch (focusChange) {
                 //失去焦点
                 case AudioManager.AUDIOFOCUS_LOSS:
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                     if (mediaPlayer != null) {
                         if (mediaPlayer.isPlaying()) {
                             onRecorderListener.onStopPlayer();
                         }
                     }
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                     break;
                 case AudioManager.AUDIOFOCUS_GAIN:
                     break;
@@ -188,7 +186,6 @@ public class AudioRecord {
         filename = String.valueOf(DateFormat.format("yyyyMMddHHmm", Calendar.getInstance(Locale.CHINA))) + randomnum() + ".m4a";
         filepath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Homework/InputAudio/";
         File file = new File(filepath);
-        deleteLocal(file);
         if (!file.exists()) { //文件夹不存在
             // 创建文件夹
             file.mkdirs();
@@ -198,7 +195,7 @@ public class AudioRecord {
     /**
      * 删除本地文件
      */
-    public void deleteLocal(File file) {
+    public static void deleteLocal(File file) {
         if (file.exists()) {
             if (file.isFile()) {
                 //如果为文件，直接删除
