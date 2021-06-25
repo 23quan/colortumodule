@@ -6,11 +6,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
-import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_study.viewmodel.StudyCreateViewModel;
-import com.colortu.colortu_module.colortu_teach.viewmodel.TeachBookViewModel;
 import com.colortu.colortu_module.databinding.ActivityStudyCreateBinding;
-import com.colortu.colortu_module.databinding.ActivityTeachBookBinding;
 
 /**
  * @author : Code23
