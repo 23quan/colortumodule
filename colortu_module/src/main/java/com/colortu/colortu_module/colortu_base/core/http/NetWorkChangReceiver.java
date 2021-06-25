@@ -37,21 +37,15 @@ public class NetWorkChangReceiver extends BroadcastReceiver {
      * @param context
      */
     public void onHuaWeiNetWorkTip(Context context) {
-        if (GetBeanDate.getAgreeNetWork()) {
-            if (NetWorkUtils.isConnected(context)) {
+        if (NetWorkUtils.isConnected(context)) {
+            if (GetBeanDate.getAgreeNetWork()) {
                 if (NetWorkUtils.isMobile(context)) {
                     TipToast.tipToastLong(context.getResources().getString(R.string.networt_mobile));
                 }
             } else {
-                TipToast.tipToastLong(context.getResources().getString(R.string.no_networt));
-            }
-        } else {
-            if (NetWorkUtils.isConnected(context)) {
                 if (NetWorkUtils.isMobile(context)) {
                     ARouter.getInstance().build(BaseConstant.BASE_NETWORK).navigation();
                 }
-            } else {
-                TipToast.tipToastLong(context.getResources().getString(R.string.no_networt));
             }
         }
     }
@@ -66,8 +60,6 @@ public class NetWorkChangReceiver extends BroadcastReceiver {
             } else {
                 TipToast.tipToastLong(context.getResources().getString(R.string.networt_wifi));
             }
-        } else {
-            TipToast.tipToastLong(context.getResources().getString(R.string.no_networt));
         }
     }
 }
