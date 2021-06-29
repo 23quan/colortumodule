@@ -74,13 +74,13 @@ public class AudioRecord {
     }
 
     /**
-     * @param isrecorder true 录音 ；false 结束
+     * 是否正在播放
      */
-    public void OnRecorder(boolean isrecorder) {
-        if (isrecorder) {
-            onStartRecorder();
+    public boolean isPlayer() {
+        if (mediaPlayer != null) {
+            return mediaPlayer.isPlaying();
         } else {
-            onStopRecorder();
+            return false;
         }
     }
 
@@ -118,6 +118,17 @@ public class AudioRecord {
             mediaPlayer.reset();
             mediaPlayer.release();
             mediaPlayer = null;
+        }
+    }
+
+    /**
+     * @param isrecorder true 录音 ；false 结束
+     */
+    public void OnRecorder(boolean isrecorder) {
+        if (isrecorder) {
+            onStartRecorder();
+        } else {
+            onStopRecorder();
         }
     }
 
