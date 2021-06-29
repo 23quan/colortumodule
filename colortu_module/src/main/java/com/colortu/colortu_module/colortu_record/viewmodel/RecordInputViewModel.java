@@ -237,6 +237,9 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
      * 重新录音
      */
     public void onAgainAudio() {
+        if (audioRecord.isPlayer()) {
+            audioRecord.OnPlayer(false);
+        }
         if (audioRecord != null) {
             audioRecord.onCancelRecorder();
         }

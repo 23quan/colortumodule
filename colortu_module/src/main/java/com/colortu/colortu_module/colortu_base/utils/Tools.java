@@ -223,8 +223,8 @@ public class Tools {
             if (minutes != 0) {
                 time = time + minutes + "分钟";
             }
-            if (seconds != 0) {
-                time = time + seconds + "秒";
+            if (seconds != 0 && seconds != -1) {
+                time = time + Math.abs(seconds) + "秒";
             }
             return time;
         } catch (ParseException e) {

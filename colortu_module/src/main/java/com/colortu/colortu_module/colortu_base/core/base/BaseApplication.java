@@ -102,13 +102,18 @@ public class BaseApplication extends Application {
         //阿里路由销毁
         ARouter.getInstance().destroy();
         //解绑音频焦点
-        audioManager.abandonAudioFocus(onAudioFocusChangeListener);
-
+        if (onAudioFocusChangeListener != null) {
+            audioManager.abandonAudioFocus(onAudioFocusChangeListener);
+        }
         //亮屏息屏广播监听注销
         if (ChannelUtil.isXTC() || ChannelUtil.isHuaWei()) {
             if (screenStatusReceiver != null) {
-                unregisterReceiver(screenStatusReceiver);
-                screenStatusReceiver = null;
+                try {
+                    unregisterReceiver(screenStatusReceiver);
+                    screenStatusReceiver = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

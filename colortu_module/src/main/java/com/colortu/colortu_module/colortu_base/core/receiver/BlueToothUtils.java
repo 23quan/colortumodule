@@ -28,7 +28,12 @@ public class BlueToothUtils {
      */
     public static void onUnRegisterBlueTooth(Context context) {
         if (blueToothReceiver != null) {
-            context.unregisterReceiver(blueToothReceiver);
+            try {
+                context.unregisterReceiver(blueToothReceiver);
+                blueToothReceiver = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
