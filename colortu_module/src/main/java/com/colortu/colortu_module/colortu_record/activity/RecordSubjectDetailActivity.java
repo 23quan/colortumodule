@@ -27,7 +27,8 @@ import java.util.List;
  * @describe :录入科目详情界面
  */
 @Route(path = BaseConstant.RECORD_SUBJECTDETAIL)
-public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetailViewModel, ActivityRecordSubjectdetailBinding> implements DialogWhether.OnWhetherListener {
+public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetailViewModel, ActivityRecordSubjectdetailBinding>
+        implements DialogWhether.OnWhetherListener, BaseActivity.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -52,6 +53,7 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.subjectdetailParentview);
+        setOnAudioFocusListener(this);
 
         subjectname = bundle.getString("subjectname");
         subjectId = bundle.getInt("subjectId");
@@ -163,5 +165,24 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
         //删除
         viewModel.deleteHomeWorkRunnable();
         dialogWhether.cancel();
+    }
+
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (viewModel.audioPlayer.isPlay()) {
+            //暂停当前播放
+            viewModel.audioPlayer.onStop();
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+
     }
 }

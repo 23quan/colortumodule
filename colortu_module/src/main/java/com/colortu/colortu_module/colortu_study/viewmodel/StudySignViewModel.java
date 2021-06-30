@@ -42,7 +42,7 @@ public class StudySignViewModel extends BaseActivityViewModel<BaseRequest> {
     public MutableLiveData<Boolean> sureBgColor = new MutableLiveData<>();
 
     //语音播放工具类
-    private AudioPlayer audioPlayer;
+    public AudioPlayer audioPlayer;
 
     @Override
     protected void onCreate() {
@@ -64,11 +64,6 @@ public class StudySignViewModel extends BaseActivityViewModel<BaseRequest> {
             public void playerstart() {//播放
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
-            }
-
-            @Override
-            public void recoverplayerstart() {//恢复播放
-
             }
 
             @Override

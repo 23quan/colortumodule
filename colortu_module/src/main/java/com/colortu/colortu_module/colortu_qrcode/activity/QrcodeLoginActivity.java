@@ -24,7 +24,6 @@ import com.colortu.colortu_module.colortu_qrcode.viewmodel.QrcodeLoginViewModel;
 import com.colortu.colortu_module.databinding.ActivityQrcodeLoginBinding;
 
 import java.io.File;
-import java.security.PublicKey;
 
 /**
  * @author : Code23

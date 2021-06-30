@@ -34,34 +34,6 @@ public class AudioRecord {
         return mediaPlayer;
     }
 
-    public AudioRecord() {
-        AudioManager audioManager = (AudioManager) BaseApplication.getContext().getSystemService(Context.AUDIO_SERVICE);
-        audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-    }
-
-    /**
-     * 音频焦点监听
-     */
-    private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
-        @Override
-        public void onAudioFocusChange(int focusChange) {
-            switch (focusChange) {
-                //失去焦点
-                case AudioManager.AUDIOFOCUS_LOSS:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    if (mediaPlayer != null) {
-                        if (mediaPlayer.isPlaying()) {
-                            onRecorderListener.onStopPlayer();
-                        }
-                    }
-                    break;
-                case AudioManager.AUDIOFOCUS_GAIN:
-                    break;
-            }
-        }
-    };
-
     /**
      * @param isplayer true 播放；false 暂停
      */

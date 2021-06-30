@@ -84,12 +84,8 @@ public class BaseApplication extends Application {
             ARouter.openDebug();
         }
         ARouter.init(this);
-
         //网络变化广播监听
         netWorkChangReceiver = new NetWorkChangReceiver();
-        //音频焦点
-        initAudioFocus();
-
         //亮屏息屏广播监听
         if (ChannelUtil.isXTC() || ChannelUtil.isHuaWei()) {
             registSreenStatusReceiver();
@@ -101,10 +97,6 @@ public class BaseApplication extends Application {
         super.onTerminate();
         //阿里路由销毁
         ARouter.getInstance().destroy();
-        //解绑音频焦点
-        if (onAudioFocusChangeListener != null) {
-            audioManager.abandonAudioFocus(onAudioFocusChangeListener);
-        }
         //亮屏息屏广播监听注销
         if (ChannelUtil.isXTC() || ChannelUtil.isHuaWei()) {
             if (screenStatusReceiver != null) {
@@ -196,8 +188,6 @@ public class BaseApplication extends Application {
     /**
      * ---------------------------------------mediaPlayer播放提示音--------------------------------------------
      */
-    //音频焦点管理
-    public static AudioManager audioManager;
     //媒体播放器
     public static MediaPlayer mediaPlayer;
 
@@ -231,49 +221,6 @@ public class BaseApplication extends Application {
             mediaPlayer = null;
         }
     }
-
-    private void initAudioFocus() {
-        //音频焦点
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //AudioAttributes 配置(多媒体场景，申请的是音乐流)
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build();
-            // 初始化AudioFocusRequest
-            AudioFocusRequest audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
-                    .setAudioAttributes(audioAttributes)
-                    //设置是否允许延迟获取焦点
-                    .setAcceptsDelayedFocusGain(true)
-                    //设置AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK会暂停，系统不会压低声音
-                    .setWillPauseWhenDucked(true)
-                    //设置焦点监听回调
-                    .setOnAudioFocusChangeListener(onAudioFocusChangeListener)
-                    .build();
-            //申请焦点
-            audioManager.requestAudioFocus(audioFocusRequest);
-        } else {
-            audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-        }
-    }
-
-    /**
-     * 音频焦点监听
-     */
-    public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
-        @Override
-        public void onAudioFocusChange(int focusChange) {
-            switch (focusChange) {
-                case AudioManager.AUDIOFOCUS_LOSS:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    break;
-                case AudioManager.AUDIOFOCUS_GAIN:
-                    break;
-            }
-        }
-    };
 
     private static OnFinishTipVoiceListener onFinishTipVoiceListener;
 

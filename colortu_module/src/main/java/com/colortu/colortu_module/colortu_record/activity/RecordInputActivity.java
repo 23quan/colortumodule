@@ -27,7 +27,7 @@ import com.colortu.colortu_module.databinding.ActivityRecordInputBinding;
  * @describe :录音界面
  */
 @Route(path = BaseConstant.RECORD_INPUT)
-public class RecordInputActivity extends BaseActivity<RecordInputViewModel, ActivityRecordInputBinding> {
+public class RecordInputActivity extends BaseActivity<RecordInputViewModel, ActivityRecordInputBinding> implements BaseActivity.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -52,6 +52,7 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.inputParentview);
         BaseApplication.getInstance().addActivity(this);
+        setOnAudioFocusListener(this);
 
         /**
          * 检查是否有相应的权限
@@ -152,6 +153,26 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
         binding.inputInputbtn.setBackgroundColor(getResources().getColor(R.color.base_blue7));
         viewModel.isstop.set(false);
         viewModel.audioRecord.OnRecorder(false);
+    }
+
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (viewModel.audioRecord != null) {
+            if (viewModel.audioRecord.isPlayer()) {
+                viewModel.audioRecord.OnPlayer(false);
+            }
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+
     }
 
     @Override

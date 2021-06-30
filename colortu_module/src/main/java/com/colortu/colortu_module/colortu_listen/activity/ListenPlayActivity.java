@@ -1,10 +1,5 @@
 package com.colortu.colortu_module.colortu_listen.activity;
 
-import android.content.Context;
-import android.media.AudioAttributes;
-import android.media.AudioFocusRequest;
-import android.media.AudioManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -17,7 +12,6 @@ import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothUtils;
-import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_base.bean.ListenClassBean;
@@ -33,13 +27,11 @@ import java.util.List;
  * @describe :听力播放界面
  */
 @Route(path = BaseConstant.LISTEN_PLAY)
-public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, ActivityListenPlayBinding> {
+public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, ActivityListenPlayBinding> implements BaseActivity.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
 
-    //音频焦点管理
-    private AudioManager audioManager;
     //是否音频焦点失去暂停播放
     private boolean isLoseFocus;
 
@@ -54,6 +46,7 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
         viewModel.setAdapteScreen(binding.playParentview);
         //注册蓝牙广播
         BlueToothUtils.onRegisterBlueTooth(this);
+        setOnAudioFocusListener(this);
 
         viewModel.subjectid.set(bundle.getInt("subjectid"));
         viewModel.versionid.set(bundle.getInt("versionid"));
@@ -65,30 +58,6 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
                 TipToast.tipToastShort(getResources().getString(R.string.none_dictation));
                 finish();
             }
-        }
-
-        //音频焦点
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //AudioAttributes 配置(多媒体场景，申请的是音乐流)
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build();
-            // 初始化AudioFocusRequest
-            AudioFocusRequest audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
-                    .setAudioAttributes(audioAttributes)
-                    //设置是否允许延迟获取焦点
-                    .setAcceptsDelayedFocusGain(true)
-                    //设置AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK会暂停，系统不会压低声音
-                    .setWillPauseWhenDucked(true)
-                    //设置焦点监听回调
-                    .setOnAudioFocusChangeListener(onAudioFocusChangeListener)
-                    .build();
-            //申请焦点
-            audioManager.requestAudioFocus(audioFocusRequest);
-        } else {
-            audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         }
 
         /**
@@ -123,32 +92,29 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
     }
 
     /**
-     * 音频焦点监听
+     * 失去焦点
      */
-    private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
-        @Override
-        public void onAudioFocusChange(int focusChange) {
-            switch (focusChange) {
-                case AudioManager.AUDIOFOCUS_LOSS:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    if (!viewModel.isStart) {
-                        BaseApplication.onStopTipVoice();
-                    }
-                    if (viewModel.playing) {
-                        isLoseFocus = true;
-                        viewModel.onStopWords();
-                    }
-                    break;
-                case AudioManager.AUDIOFOCUS_GAIN:
-                    if (isLoseFocus) {
-                        isLoseFocus = false;
-                        viewModel.onStartAudio();
-                    }
-                    break;
-            }
+    @Override
+    public void onLossAudioFocus() {
+        if (!viewModel.isStart) {
+            BaseApplication.onStopTipVoice();
         }
-    };
+        if (viewModel.playing) {
+            isLoseFocus = true;
+            viewModel.onStopWords();
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+        if (isLoseFocus) {
+            isLoseFocus = false;
+            viewModel.onStartAudio();
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -157,8 +123,7 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
         NotificationUtil.cancelNotification();
         //注销蓝牙广播
         BlueToothUtils.onUnRegisterBlueTooth(this);
-
+        //销毁资源
         viewModel.onDispose();
-        audioManager.abandonAudioFocus(onAudioFocusChangeListener);
     }
 }

@@ -43,7 +43,7 @@ import java.util.List;
  */
 @Route(path = BaseConstant.STUDY_DETAIL)
 public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, ActivityStudyDetailBinding>
-        implements DialogWhether.OnWhetherListener, DialogAffirm.OnAffirmListener {
+        implements DialogWhether.OnWhetherListener, DialogAffirm.OnAffirmListener, BaseActivity.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -80,6 +80,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.detailParentview);
+        setOnAudioFocusListener(this);
 
         viewModel.roomid.set(bundle.getInt("id"));
         viewModel.channel.set(bundle.getString("channel"));
@@ -491,6 +492,26 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
     @Override
     public void onAffirm() {
         dialogAffirm.cancel();
+    }
+
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (viewModel.audioPlayer != null) {
+            if (viewModel.audioPlayer.isPlay()) {
+                viewModel.audioPlayer.onStop();
+            }
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+
     }
 
     /**

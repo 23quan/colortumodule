@@ -124,11 +124,6 @@ public class StudyDetailViewModel extends BaseActivityViewModel<BaseRequest> {
             }
 
             @Override
-            public void recoverplayerstart() {//恢复播放
-
-            }
-
-            @Override
             public void playerpause() {//暂停
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
