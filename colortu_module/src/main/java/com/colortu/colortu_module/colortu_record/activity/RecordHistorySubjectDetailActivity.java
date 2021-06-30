@@ -25,7 +25,8 @@ import java.util.List;
  * @describe :历史科目详情界面
  */
 @Route(path = BaseConstant.RECORD_HISTORYSUBJECTDETAIL)
-public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHistorySubjectDetailViewModel, ActivityRecordHistorysubjectdetailBinding> {
+public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHistorySubjectDetailViewModel, ActivityRecordHistorysubjectdetailBinding>
+        implements BaseActivity.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -50,11 +51,11 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.historysubjectdetailParentview);
+        setOnAudioFocusListener(this);
 
         subjectname = bundle.getString("subjectname");
         subjectId = bundle.getInt("subjectId");
         date = bundle.getString("date");
-
         viewModel.subjectname.set(subjectname);
         viewModel.subjectId.set(subjectId);
         viewModel.date.set(date);
@@ -117,5 +118,24 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
                 }
             }
         });
+    }
+
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (viewModel.audioPlayer.isPlay()) {
+            //暂停当前播放
+            viewModel.audioPlayer.onStop();
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+
     }
 }

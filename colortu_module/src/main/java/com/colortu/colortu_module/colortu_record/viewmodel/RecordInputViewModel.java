@@ -76,7 +76,7 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
     //录音时长
     private int count = 0;
     //判断是否播放
-    private boolean isplay = false;
+    public boolean isplay = false;
     //上传语音翻译参数
     private String translate2;
     //0 不是会员 1是会员

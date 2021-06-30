@@ -71,17 +71,6 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
             }
 
             @Override
-            public void recoverplayerstart() {//恢复播放
-                //取消息屏app销毁
-                SuicideUtils.onCancelKill();
-                //发送通知栏消息
-                NotificationUtil.createNotification(false);
-
-                onPlay();
-                isPlayLiveData.setValue(true);
-            }
-
-            @Override
             public void playerpause() {//暂停
                 //启动息屏app销毁
                 SuicideUtils.onStartKill();
