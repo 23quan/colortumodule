@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordHistorySubjectDetailAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordSubjectDetailBean;
@@ -26,7 +27,7 @@ import java.util.List;
  */
 @Route(path = BaseConstant.RECORD_HISTORYSUBJECTDETAIL)
 public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHistorySubjectDetailViewModel, ActivityRecordHistorysubjectdetailBinding>
-        implements BaseActivity.OnAudioFocusListener {
+        implements AudioFocusService.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -51,7 +52,7 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.historysubjectdetailParentview);
-        setOnAudioFocusListener(this);
+        AudioFocusService.setOnAudioFocusListener(this);
 
         subjectname = bundle.getString("subjectname");
         subjectId = bundle.getInt("subjectId");

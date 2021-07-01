@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
@@ -31,7 +32,7 @@ import java.util.List;
  * @describe :个性签名界面
  */
 @Route(path = BaseConstant.STUDY_SIGN)
-public class StudySignActivity extends BaseActivity<StudySignViewModel, ActivityStudySignBinding> implements BaseActivity.OnAudioFocusListener {
+public class StudySignActivity extends BaseActivity<StudySignViewModel, ActivityStudySignBinding> implements AudioFocusService.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -56,7 +57,7 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.signParentview);
-        setOnAudioFocusListener(this);
+        AudioFocusService.setOnAudioFocusListener(this);
 
         isfirst = bundle.getInt("isfirst");
 

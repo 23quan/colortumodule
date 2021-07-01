@@ -12,6 +12,7 @@ import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothUtils;
+import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_base.bean.ListenClassBean;
@@ -27,7 +28,7 @@ import java.util.List;
  * @describe :听力播放界面
  */
 @Route(path = BaseConstant.LISTEN_PLAY)
-public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, ActivityListenPlayBinding> implements BaseActivity.OnAudioFocusListener {
+public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, ActivityListenPlayBinding> implements AudioFocusService.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -46,7 +47,7 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
         viewModel.setAdapteScreen(binding.playParentview);
         //注册蓝牙广播
         BlueToothUtils.onRegisterBlueTooth(this);
-        setOnAudioFocusListener(this);
+        AudioFocusService.setOnAudioFocusListener(this);
 
         viewModel.subjectid.set(bundle.getInt("subjectid"));
         viewModel.versionid.set(bundle.getInt("versionid"));

@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.dialog.DialogWhether;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordSubjectDetailAdapter;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 @Route(path = BaseConstant.RECORD_SUBJECTDETAIL)
 public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetailViewModel, ActivityRecordSubjectdetailBinding>
-        implements DialogWhether.OnWhetherListener, BaseActivity.OnAudioFocusListener {
+        implements DialogWhether.OnWhetherListener, AudioFocusService.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -53,7 +54,7 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.subjectdetailParentview);
-        setOnAudioFocusListener(this);
+        AudioFocusService.setOnAudioFocusListener(this);
 
         subjectname = bundle.getString("subjectname");
         subjectId = bundle.getInt("subjectId");
