@@ -15,6 +15,7 @@ import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.api.PermissionListener;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_record.viewmodel.RecordInputViewModel;
@@ -27,7 +28,7 @@ import com.colortu.colortu_module.databinding.ActivityRecordInputBinding;
  * @describe :录音界面
  */
 @Route(path = BaseConstant.RECORD_INPUT)
-public class RecordInputActivity extends BaseActivity<RecordInputViewModel, ActivityRecordInputBinding> implements BaseActivity.OnAudioFocusListener {
+public class RecordInputActivity extends BaseActivity<RecordInputViewModel, ActivityRecordInputBinding> implements AudioFocusService.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -52,7 +53,7 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.inputParentview);
         BaseApplication.getInstance().addActivity(this);
-        setOnAudioFocusListener(this);
+        AudioFocusService.setOnAudioFocusListener(this);
 
         /**
          * 检查是否有相应的权限

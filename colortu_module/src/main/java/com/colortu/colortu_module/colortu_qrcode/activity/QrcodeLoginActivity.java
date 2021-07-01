@@ -15,6 +15,7 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
@@ -50,6 +51,8 @@ public class QrcodeLoginActivity extends BaseActivity<QrcodeLoginViewModel, Acti
     @Autowired
     public Bundle bundle;
 
+    //是否解绑音频焦点
+    private boolean abandonFocus;
     //控制二维码数据
     private QrcodeAddUserBean.DataBean.ChannelConfigBean.PageInsertConfigBean pageInsertConfigBean;
 
@@ -148,6 +151,7 @@ public class QrcodeLoginActivity extends BaseActivity<QrcodeLoginViewModel, Acti
                             .withInt("type", type)
                             .withBundle("bundle", bundle)
                             .navigation();
+                    abandonFocus = true;
                     finish();
                 } else {
                     onJumpOther();
@@ -168,6 +172,16 @@ public class QrcodeLoginActivity extends BaseActivity<QrcodeLoginViewModel, Acti
                 BaseUIKit.startActivity(UIKitName.QRCODE_LOGIN, toPage, toPageRoute, BaseUIKit.OTHER, bundle);
                 break;
         }
+        abandonFocus = true;
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //解绑音频焦点
+        if (!abandonFocus) {
+            AudioFocusService.stopAudioFocus(this);
+        }
     }
 }

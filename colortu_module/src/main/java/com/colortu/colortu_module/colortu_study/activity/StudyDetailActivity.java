@@ -19,6 +19,7 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
@@ -43,7 +44,7 @@ import java.util.List;
  */
 @Route(path = BaseConstant.STUDY_DETAIL)
 public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, ActivityStudyDetailBinding>
-        implements DialogWhether.OnWhetherListener, DialogAffirm.OnAffirmListener, BaseActivity.OnAudioFocusListener {
+        implements DialogWhether.OnWhetherListener, DialogAffirm.OnAffirmListener, AudioFocusService.OnAudioFocusListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -80,7 +81,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.detailParentview);
-        setOnAudioFocusListener(this);
+        AudioFocusService.setOnAudioFocusListener(this);
 
         viewModel.roomid.set(bundle.getInt("id"));
         viewModel.channel.set(bundle.getString("channel"));

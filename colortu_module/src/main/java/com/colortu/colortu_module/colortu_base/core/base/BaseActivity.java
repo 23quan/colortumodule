@@ -1,13 +1,8 @@
 package com.colortu.colortu_module.colortu_base.core.base;
 
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.AudioAttributes;
-import android.media.AudioFocusRequest;
-import android.media.AudioManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -21,12 +16,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.colortu.colortu_module.BR;
 import com.colortu.colortu_module.R;
-import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.api.PermissionListener;
 import com.colortu.colortu_module.colortu_base.core.http.NetWorkUtils;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
-import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.OSUtil;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
@@ -85,8 +78,6 @@ public abstract class BaseActivity<VM extends BaseActivityViewModel, VDB extends
         if (!NetWorkUtils.isConnected(this)) {
             TipToast.tipToastLong(getResources().getString(R.string.no_networt));
         }
-        //初始化音频焦点
-        initAudioFocus();
         //控制二维码显示
         BaseApplication.getInstance().startAfterActivity(BaseUIKit.AfterEnter);
     }
@@ -122,90 +113,6 @@ public abstract class BaseActivity<VM extends BaseActivityViewModel, VDB extends
      */
     public static BaseActivity getBaseActivity() {
         return baseActivity;
-    }
-
-    /**
-     * ----------------------------------------音频焦点监听---------------------------------------------
-     */
-    //音频焦点管理
-    private AudioManager audioManager;
-
-    /**
-     * 初始化音频焦点
-     */
-    public void initAudioFocus() {
-        if (audioManager == null) {
-            //音频焦点
-            audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                //AudioAttributes 配置(多媒体场景，申请的是音乐流)
-                AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build();
-                // 初始化AudioFocusRequest
-                AudioFocusRequest audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
-                        .setAudioAttributes(audioAttributes)
-                        //设置是否允许延迟获取焦点
-                        .setAcceptsDelayedFocusGain(true)
-                        //设置AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK会暂停，系统不会压低声音
-                        .setWillPauseWhenDucked(true)
-                        //设置焦点监听回调
-                        .setOnAudioFocusChangeListener(onAudioFocusChangeListener)
-                        .build();
-                //申请焦点
-                audioManager.requestAudioFocus(audioFocusRequest);
-            } else {
-                audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-            }
-        }
-    }
-
-    /**
-     * 注销音频焦点
-     */
-    public void abandonAudioFocus() {
-        if (audioManager != null) {
-            audioManager.abandonAudioFocus(onAudioFocusChangeListener);
-            audioManager = null;
-        }
-    }
-
-    /**
-     * 音频焦点监听
-     */
-    private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
-        @Override
-        public void onAudioFocusChange(int focusChange) {
-            switch (focusChange) {
-                case AudioManager.AUDIOFOCUS_LOSS:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    if (onAudioFocusListener != null) {
-                        onAudioFocusListener.onLossAudioFocus();
-                    }
-                    break;
-                case AudioManager.AUDIOFOCUS_GAIN:
-                    if (onAudioFocusListener != null) {
-                        onAudioFocusListener.onGainAudioFocus();
-                    }
-                    break;
-            }
-        }
-    };
-
-    private OnAudioFocusListener onAudioFocusListener;
-
-    public void setOnAudioFocusListener(OnAudioFocusListener onAudioFocusListener) {
-        this.onAudioFocusListener = onAudioFocusListener;
-    }
-
-    public interface OnAudioFocusListener {
-        //失去焦点
-        void onLossAudioFocus();
-
-        //获取焦点
-        void onGainAudioFocus();
     }
 
     /**
