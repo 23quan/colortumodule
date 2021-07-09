@@ -480,7 +480,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
      */
     @Override
     public void onNo() {
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 
     /**
@@ -490,7 +490,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
     public void onYes() {
         //确认结束自习室
         viewModel.getStudyStop(viewModel.roomid.get(), GetBeanDate.getUserUuid());
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 
     /**
@@ -498,7 +498,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
      */
     @Override
     public void onAffirm() {
-        dialogAffirm.cancel();
+        dialogAffirm.dismiss();
     }
 
     /**

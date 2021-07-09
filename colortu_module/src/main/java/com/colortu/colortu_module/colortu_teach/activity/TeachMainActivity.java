@@ -140,7 +140,7 @@ public class TeachMainActivity extends BaseActivity<TeachMainViewModel, Activity
      */
     @Override
     public void onNo() {
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 
     /**
@@ -150,6 +150,6 @@ public class TeachMainActivity extends BaseActivity<TeachMainViewModel, Activity
     public void onYes() {
         //删除
         viewModel.deleteTeachBookRunnable();
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 }

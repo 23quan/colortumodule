@@ -83,6 +83,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     private boolean isLoseFocus;
     //是否播放
     public boolean playing = false;
+    //播放结束
+    private boolean playingFinish;
     //调节音量
     private int volumeLevel;
     //播放下标
@@ -154,6 +156,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         }
 
         //设置初始数据
+        isShowAnswer.setValue(false);
         curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
         progress.set(0);
         speedtype = 2;
@@ -260,11 +263,13 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
             }
             //停止播放提示语音
             if (BaseApplication.isPlaying()) {
+                handler.removeCallbacks(showAnswerRunnable);
                 BaseApplication.onStopTipVoice();
             }
             //获取音频焦点
-            if (isLoseFocus) {
+            if (isLoseFocus || playingFinish) {
                 isLoseFocus = false;
+                playingFinish = false;
                 AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
             }
             onStopPlayer();
@@ -288,11 +293,13 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
             }
             //停止播放提示语音
             if (BaseApplication.isPlaying()) {
+                handler.removeCallbacks(showAnswerRunnable);
                 BaseApplication.onStopTipVoice();
             }
             //获取音频焦点
-            if (isLoseFocus) {
+            if (isLoseFocus || playingFinish) {
                 isLoseFocus = false;
+                playingFinish = false;
                 AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
             }
             onStopPlayer();
@@ -311,7 +318,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     public void onStartAudio() {
         if (isClick) {
             if (playing) {
-                onStopWords();
+                onStopWords(true);
             } else {
                 onPlayWords();
             }
@@ -325,6 +332,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         @Override
         public void run() {
             if (listenClassBean.get().size() != 0) {
+                //获取音频焦点
+                AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
                 isClick = true;
                 isPlay.setValue(true);
                 onPlaying();
@@ -340,13 +349,14 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         isLoseFocus = false;
         //获取音频焦点
         AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
-        //停止播放提示语音
-        if (BaseApplication.isPlaying()) {
-            BaseApplication.onStopTipVoice();
-        }
         //隐藏答案按钮
         if (isShowAnswer.getValue()) {
             isShowAnswer.setValue(false);
+        }
+        //停止播放提示语音
+        if (BaseApplication.isPlaying()) {
+            handler.removeCallbacks(showAnswerRunnable);
+            BaseApplication.onStopTipVoice();
         }
         playing = true;
         playicon.set(R.mipmap.icon_listen_play);
@@ -367,9 +377,12 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     /**
      * 暂停播放单词
      */
-    private void onStopWords() {
+    private void onStopWords(boolean isAbandon) {
         //解绑音频焦点
-        AudioFocusUtils.abandonAudioFocus();
+        if (isAbandon) {
+            AudioFocusUtils.abandonAudioFocus();
+        }
+
         //启动息屏app销毁
         SuicideUtils.onStartKill();
         //发送通知栏消息
@@ -484,8 +497,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                     progress.set(0);
                     curtime.set(String.valueOf((speedtime / 1000) - 1));
                     playicon.set(R.mipmap.icon_listen_stop);
-                    //解绑音频焦点
-                    AudioFocusUtils.abandonAudioFocus();
+
                     //播放提示语音
                     BaseApplication.onStartTipVoice(R.raw.music_play_end);
                     //显示答案按钮
@@ -518,6 +530,9 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     Runnable showAnswerRunnable = new Runnable() {
         @Override
         public void run() {
+            playingFinish = true;
+            //解绑音频焦点
+            AudioFocusUtils.abandonAudioFocus();
             isShowAnswer.setValue(true);
         }
     };
@@ -568,7 +583,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         }
         if (playing) {
             isLoseFocus = true;
-            onStopWords();
+            onStopWords(false);
         }
     }
 
@@ -612,7 +627,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     @Override
     public void onBluetoothDisConnected() {
         if (playing) {
-            onStopWords();
+            onStopWords(false);
         }
     }
 

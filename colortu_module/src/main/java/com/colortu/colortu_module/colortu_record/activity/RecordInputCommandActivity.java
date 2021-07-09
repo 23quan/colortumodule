@@ -112,6 +112,6 @@ public class RecordInputCommandActivity extends BaseActivity<RecordInputCommandV
      */
     @Override
     public void onAffirm() {
-        dialogAffirm.cancel();
+        dialogAffirm.dismiss();
     }
 }
