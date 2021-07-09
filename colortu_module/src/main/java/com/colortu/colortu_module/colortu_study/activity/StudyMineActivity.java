@@ -173,7 +173,7 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
      */
     @Override
     public void onNo() {
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 
     /**
@@ -187,6 +187,6 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
         } else {
             viewModel.getStudyClose(roomid);
         }
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 }

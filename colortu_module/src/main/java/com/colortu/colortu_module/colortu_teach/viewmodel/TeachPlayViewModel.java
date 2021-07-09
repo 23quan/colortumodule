@@ -76,29 +76,31 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
 
             @Override
             public void playerpause() {//暂停
-                unPlayer();
+                unPlayer(false);
             }
 
             @Override
             public void playerstop() {//停止
-                unPlayer();
+                unPlayer(true);
             }
 
             @Override
             public void playerfinish() {//完成
-                unPlayer();
+                unPlayer(true);
             }
 
             @Override
             public void playerfailure() {//失败
-                unPlayer();
+                unPlayer(true);
             }
         });
     }
 
-    private void unPlayer(){
-        //解绑音频焦点
-        AudioFocusUtils.abandonAudioFocus();
+    private void unPlayer(boolean isAbandon) {
+        if (isAbandon) {
+            //解绑音频焦点
+            AudioFocusUtils.abandonAudioFocus();
+        }
         //启动息屏app销毁
         SuicideUtils.onStartKill();
         //发送通知栏消息
@@ -116,6 +118,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 if (isPlayLiveData.getValue()) {
                     audioPlayer.onPause();
                 } else {
+                    isLoseFocus = false;
                     //获取音频焦点
                     AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
                     audioPlayer.onPlay(audiourl.get());
