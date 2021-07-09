@@ -13,7 +13,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
-import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
@@ -32,7 +31,7 @@ import java.util.List;
  * @describe :个性签名界面
  */
 @Route(path = BaseConstant.STUDY_SIGN)
-public class StudySignActivity extends BaseActivity<StudySignViewModel, ActivityStudySignBinding> implements AudioFocusService.OnAudioFocusListener {
+public class StudySignActivity extends BaseActivity<StudySignViewModel, ActivityStudySignBinding> {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -57,7 +56,6 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.signParentview);
-        AudioFocusService.setOnAudioFocusListener(this);
 
         isfirst = bundle.getInt("isfirst");
 
@@ -177,25 +175,5 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
                 binding.signPlay.setVisibility(View.VISIBLE);
             }
         }
-    }
-
-    /**
-     * 失去焦点
-     */
-    @Override
-    public void onLossAudioFocus() {
-        if (viewModel.audioPlayer != null) {
-            if (viewModel.audioPlayer.isPlay()) {
-                viewModel.audioPlayer.onStop();
-            }
-        }
-    }
-
-    /**
-     * 获取焦点
-     */
-    @Override
-    public void onGainAudioFocus() {
-
     }
 }

@@ -13,6 +13,7 @@ import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
@@ -26,8 +27,8 @@ import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUt
  * @module : TeachPlayViewModel
  * @describe :听力播放界面ViewModel
  */
-public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> implements NotificationClickReceiver.OnNotificationListener ,
-        BlueToothReceiver.OnBluetoothListener{
+public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> implements NotificationClickReceiver.OnNotificationListener,
+        BlueToothReceiver.OnBluetoothListener, AudioFocusUtils.OnAudioFocusListener {
     //暂停播放监听
     public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
 
@@ -41,6 +42,8 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
     public ObservableField<Integer> examid = new ObservableField<>();
     //语音播放工具类
     public AudioPlayer audioPlayer;
+    //是否音频焦点失去暂停播放
+    private boolean isLoseFocus;
 
     @Override
     protected void onCreate() {
@@ -48,6 +51,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         //实例化
         audioPlayer = new AudioPlayer();
         NotificationClickReceiver.setOnNotificationListener(this);
+        AudioFocusUtils.setOnAudioFocusListener(this);
 
         BlueToothReceiver.setOnBluetoothListener(this);
         isPlayLiveData.setValue(false);
@@ -72,44 +76,35 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
 
             @Override
             public void playerpause() {//暂停
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                //发送通知栏消息
-                NotificationUtil.createNotification(false);
-
-                isPlayLiveData.setValue(false);
+                unPlayer();
             }
 
             @Override
             public void playerstop() {//停止
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                //发送通知栏消息
-                NotificationUtil.createNotification(false);
-
-                isPlayLiveData.setValue(false);
+                unPlayer();
             }
 
             @Override
             public void playerfinish() {//完成
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                //发送通知栏消息
-                NotificationUtil.createNotification(false);
-
-                isPlayLiveData.setValue(false);
+                unPlayer();
             }
 
             @Override
             public void playerfailure() {//失败
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                //发送通知栏消息
-                NotificationUtil.createNotification(false);
-
-                isPlayLiveData.setValue(false);
+                unPlayer();
             }
         });
+    }
+
+    private void unPlayer(){
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
+        //启动息屏app销毁
+        SuicideUtils.onStartKill();
+        //发送通知栏消息
+        NotificationUtil.createNotification(false);
+
+        isPlayLiveData.setValue(false);
     }
 
     /**
@@ -121,6 +116,8 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 if (isPlayLiveData.getValue()) {
                     audioPlayer.onPause();
                 } else {
+                    //获取音频焦点
+                    AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
                     audioPlayer.onPlay(audiourl.get());
                 }
             }
@@ -154,16 +151,54 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         }
     }
 
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (audioPlayer != null) {
+            if (audioPlayer.isPlay()) {
+                isLoseFocus = true;
+                audioPlayer.onPause();
+            }
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+        if (isLoseFocus) {
+            //取消息屏app销毁
+            SuicideUtils.onCancelKill();
+            //发送通知栏消息
+            NotificationUtil.createNotification(false);
+            isLoseFocus = false;
+            isPlayLiveData.setValue(true);
+            onPlay();
+        }
+    }
+
+    /**
+     * 通知栏上一首
+     */
     @Override
     public void onNotificationLast() {
 
     }
 
+    /**
+     * 通知栏暂停播放
+     */
     @Override
     public void onNotificationPlay() {
         onPlay();
     }
 
+    /**
+     * 通知栏下一首
+     */
     @Override
     public void onNotificationNext() {
 
@@ -180,6 +215,8 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
         //销毁通知栏消息
         NotificationUtil.cancelNotification();
 

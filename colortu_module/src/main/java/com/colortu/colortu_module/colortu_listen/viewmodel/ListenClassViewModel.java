@@ -5,9 +5,12 @@ import android.os.Handler;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 
+import com.colortu.colortu_module.R;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.bean.ListenClassBean;
 
@@ -23,7 +26,7 @@ import retrofit2.Response;
  * @module : ListenClassViewModel
  * @describe :听写课界面ViewModel
  */
-public class ListenClassViewModel extends BaseActivityViewModel<BaseRequest> {
+public class ListenClassViewModel extends BaseActivityViewModel<BaseRequest> implements AudioFocusUtils.OnAudioFocusListener, BaseApplication.OnFinishTipVoiceListener {
     //获取课文及词汇请求
     private Call<ListenClassBean> listenClassBeanCall;
 
@@ -47,8 +50,41 @@ public class ListenClassViewModel extends BaseActivityViewModel<BaseRequest> {
         super.onCreate();
         //实例化
         handler = new Handler();
+        //获取音频焦点
+        AudioFocusUtils.setOnAudioFocusListener(this);
+        AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
+        //播放提示音
+        BaseApplication.setOnFinishTipVoiceListener(this);
+        BaseApplication.onStartTipVoice(R.raw.music_choose_class);
 
         getClassWordsRunnable();
+    }
+
+    /**
+     * 提示音播放结束
+     */
+    @Override
+    public void onFinishTipVoice() {
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
+    }
+
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (BaseApplication.isPlaying()) {
+            BaseApplication.onStopTipVoice();
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+
     }
 
     /**
@@ -85,5 +121,14 @@ public class ListenClassViewModel extends BaseActivityViewModel<BaseRequest> {
             public void onFailure(Call<ListenClassBean> call, Throwable t) {//请求失败
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
+        //停止播放，释放资源
+        BaseApplication.onStopTipVoice();
     }
 }

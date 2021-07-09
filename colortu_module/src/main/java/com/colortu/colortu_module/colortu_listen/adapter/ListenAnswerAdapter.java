@@ -49,7 +49,7 @@ public class ListenAnswerAdapter extends BaseRecyclerAdapter<ListenClassBean.Dat
         adapterListenAnswerBinding.answerPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickAnswerListener.OnClickAnswer(item, position);
+                onClickAnswerListener.OnClickAnswer(position,item.isPlaying(),item.getWordAudioUrl());
             }
         });
     }
@@ -61,6 +61,6 @@ public class ListenAnswerAdapter extends BaseRecyclerAdapter<ListenClassBean.Dat
     }
 
     public interface OnClickAnswerListener {
-        void OnClickAnswer(ListenClassBean.DataBean.PoetryVOSBean.WordsBean wordsBean, int position);
+        void OnClickAnswer(int position, boolean isplay, String audiourl);
     }
 }

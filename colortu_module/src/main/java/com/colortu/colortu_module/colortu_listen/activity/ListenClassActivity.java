@@ -59,8 +59,6 @@ public class ListenClassActivity extends BaseActivity<ListenClassViewModel, Acti
         viewModel.subjectid.set(type);
         viewModel.gid.set(GetBeanDate.getChooseGrade());
         viewModel.publisherid.set(publisherid);
-        //播放提示音
-        BaseApplication.onStartTipVoice(R.raw.music_choose_class);
 
         if (type == 1) {
             //语文、选择年级

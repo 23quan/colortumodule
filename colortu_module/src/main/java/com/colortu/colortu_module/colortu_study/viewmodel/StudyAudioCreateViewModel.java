@@ -14,6 +14,7 @@ import com.colortu.colortu_module.colortu_base.core.http.PostParams;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioRecord;
@@ -126,6 +127,8 @@ public class StudyAudioCreateViewModel extends BaseActivityViewModel<BaseRequest
 
             @Override
             public void onFailureRecorder() {//录音失败监听
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 TipToast.tipToastShort(BaseApplication.getContext().getString(R.string.record_failure));
                 if (audioRecord != null) {
                     audioRecord.onCancelRecorder();
@@ -266,5 +269,12 @@ public class StudyAudioCreateViewModel extends BaseActivityViewModel<BaseRequest
                 audioRecord.OnRecorder(false);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
     }
 }

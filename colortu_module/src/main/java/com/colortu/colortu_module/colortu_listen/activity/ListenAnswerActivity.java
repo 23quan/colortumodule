@@ -1,9 +1,8 @@
 package com.colortu.colortu_module.colortu_listen.activity;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -11,16 +10,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
-import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
-import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
-import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
-import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_listen.adapter.ListenAnswerAdapter;
 import com.colortu.colortu_module.colortu_base.bean.ListenClassBean;
 import com.colortu.colortu_module.colortu_listen.viewmodel.ListenAnswerViewModel;
 import com.colortu.colortu_module.databinding.ActivityListenAnswerBinding;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -35,9 +29,8 @@ public class ListenAnswerActivity extends BaseActivity<ListenAnswerViewModel, Ac
     @Autowired
     public Bundle bundle;
 
-    //是否播放
-    private boolean isPlay = false;
-    private MediaPlayer mediaPlayer;
+    //前一个item的position
+    private int itemposition;
     //听写答案列表适配器
     private ListenAnswerAdapter listenAnswerAdapter;
     //单词音频列表数据
@@ -70,87 +63,40 @@ public class ListenAnswerActivity extends BaseActivity<ListenAnswerViewModel, Ac
          */
         listenAnswerAdapter.setOnClickAnswerListener(new ListenAnswerAdapter.OnClickAnswerListener() {
             @Override
-            public void OnClickAnswer(final ListenClassBean.DataBean.PoetryVOSBean.WordsBean wordsBean, final int position) {
-                if (isPlay) {
-                    return;
+            public void OnClickAnswer(int position, boolean isplay, String audiourl) {
+                //前一个item刷新icon
+                if (itemposition != position) {
+                    viewModel.audioPlayer.onStop();
+                    wordsBeanList.get(itemposition).setPlaying(false);
+                    listenAnswerAdapter.notifyItemChanged(itemposition);
                 }
-                wordsBeanList.get(position).setPlaying(true);
+
+                //播放
+                if (isplay) {
+                    wordsBeanList.get(itemposition).setPlaying(false);
+                    viewModel.audioPlayer.onStop();
+                } else {
+                    wordsBeanList.get(itemposition).setPlaying(true);
+                    viewModel.audioPlayer.onPlay(BaseConstant.ListenAudioUrl + audiourl);
+                }
                 listenAnswerAdapter.notifyItemChanged(position);
-                isPlay = true;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //取消息屏app销毁
-                        SuicideUtils.onCancelKill();
 
-                        onStartDictationVoice(wordsBean, position);
-                    }
-                }).start();
-            }
-        });
-    }
-
-    /**
-     * 播放听写语音
-     *
-     * @param wordsBean
-     * @param position
-     */
-    private void onStartDictationVoice(ListenClassBean.DataBean.PoetryVOSBean.WordsBean wordsBean, final int position) {
-        mediaPlayer = new MediaPlayer();
-
-        try {
-            mediaPlayer.setDataSource(BaseConstant.ListenAudioUrl + wordsBean.getWordAudioUrl());
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (mediaPlayer == null) {
-            return;
-        }
-        mediaPlayer.setLooping(false);
-
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                onReleaseDictationVoice();
-
-                wordsBeanList.get(position).setPlaying(false);
-                listenAnswerAdapter.notifyItemChanged(position);
-                isPlay = false;
-
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
+                itemposition = position;
             }
         });
 
-        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        /**
+         * 监听是否播放完成
+         */
+        viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                if (mediaPlayer == mediaPlayer) {
-                    mediaPlayer.start();
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    //刷新当前item的icon
+                    wordsBeanList.get(itemposition).setPlaying(false);
+                    listenAnswerAdapter.notifyItemChanged(itemposition);
                 }
             }
         });
-        mediaPlayer.prepareAsync();
-    }
-
-    /**
-     * 释放开始听写语音
-     */
-    private void onReleaseDictationVoice() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.reset();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        onReleaseDictationVoice();
     }
 }

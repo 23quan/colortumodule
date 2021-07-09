@@ -15,6 +15,7 @@ import com.bytedance.boost_multidex.BoostMultiDex;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.http.NetWorkChangReceiver;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.UmengUtil;
@@ -218,6 +219,17 @@ public class BaseApplication extends Application {
         }
     }
 
+    /**
+     * 是否播放
+     */
+    public static boolean isPlaying() {
+        if (mediaPlayer != null) {
+            return mediaPlayer.isPlaying();
+        } else {
+            return false;
+        }
+    }
+
     private static OnFinishTipVoiceListener onFinishTipVoiceListener;
 
     public static void setOnFinishTipVoiceListener(OnFinishTipVoiceListener onFinishTipVoiceListener) {
@@ -351,6 +363,8 @@ public class BaseApplication extends Application {
      */
     public void exitApp() {
         try {
+            //解绑音频焦点
+            AudioFocusUtils.abandonAudioFocus();
             //关闭通知栏
             NotificationUtil.cancelNotification();
             //结束所有activity
