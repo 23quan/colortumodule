@@ -15,7 +15,8 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.api.PermissionListener;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
-import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
@@ -29,7 +30,7 @@ import com.colortu.colortu_module.databinding.ActivityStudyInputBinding;
  * @describe :录入个性语音界面
  */
 @Route(path = BaseConstant.STUDY_INPUT)
-public class StudyInputActivity extends BaseActivity<StudyInputViewModel, ActivityStudyInputBinding> implements AudioFocusService.OnAudioFocusListener{
+public class StudyInputActivity extends BaseActivity<StudyInputViewModel, ActivityStudyInputBinding> {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -49,7 +50,6 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.inputParentview);
-        AudioFocusService.setOnAudioFocusListener(this);
 
         /**
          * 检查是否有相应的权限
@@ -140,6 +140,8 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
      * 开始录音
      */
     private void OnStartRecorder() {
+        //抢占音频焦点
+        AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
         binding.inputInputview.setBackgroundColor(getResources().getColor(R.color.base_blue10));
         binding.inputGif.setVisibility(View.VISIBLE);
         viewModel.isstop.set(true);
@@ -150,28 +152,10 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
      * 结束录音
      */
     private void OnStopRecorder() {
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
         binding.inputInputview.setBackgroundColor(getResources().getColor(R.color.base_blue7));
         viewModel.isstop.set(false);
         viewModel.audioRecord.OnRecorder(false);
-    }
-
-    /**
-     * 失去焦点
-     */
-    @Override
-    public void onLossAudioFocus() {
-        if (viewModel.audioRecord != null) {
-            if (viewModel.audioRecord.isPlayer()) {
-                viewModel.audioRecord.OnPlayer(false);
-            }
-        }
-    }
-
-    /**
-     * 获取焦点
-     */
-    @Override
-    public void onGainAudioFocus() {
-
     }
 }

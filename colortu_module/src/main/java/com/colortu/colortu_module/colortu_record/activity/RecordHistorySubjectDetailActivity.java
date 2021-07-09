@@ -10,7 +10,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
-import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordHistorySubjectDetailAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordSubjectDetailBean;
@@ -26,8 +27,7 @@ import java.util.List;
  * @describe :历史科目详情界面
  */
 @Route(path = BaseConstant.RECORD_HISTORYSUBJECTDETAIL)
-public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHistorySubjectDetailViewModel, ActivityRecordHistorysubjectdetailBinding>
-        implements AudioFocusService.OnAudioFocusListener {
+public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHistorySubjectDetailViewModel, ActivityRecordHistorysubjectdetailBinding> {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -52,7 +52,6 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.historysubjectdetailParentview);
-        AudioFocusService.setOnAudioFocusListener(this);
 
         subjectname = bundle.getString("subjectname");
         subjectId = bundle.getInt("subjectId");
@@ -74,14 +73,19 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
             @Override
             public void OnClickPlay(int position, boolean isplay, String audiourl) {
                 //前一个item刷新icon
-                viewModel.recordSubjectDetailBeanLiveData.getValue().get(itemposition).setIsplay(false);
-                recordHistorySubjectDetailAdapter.notifyItemChanged(itemposition);
+                if (itemposition != position) {
+                    viewModel.audioPlayer.onStop();
+                    viewModel.recordSubjectDetailBeanLiveData.getValue().get(itemposition).setIsplay(false);
+                    recordHistorySubjectDetailAdapter.notifyItemChanged(itemposition);
+                }
 
                 //播放
                 if (isplay) {
                     viewModel.recordSubjectDetailBeanLiveData.getValue().get(position).setIsplay(false);
                     viewModel.audioPlayer.onStop();
                 } else {
+                    //获取音频焦点
+                    AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
                     viewModel.recordSubjectDetailBeanLiveData.getValue().get(position).setIsplay(true);
                     viewModel.audioPlayer.onPlay(audiourl);
                 }
@@ -119,24 +123,5 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
                 }
             }
         });
-    }
-
-    /**
-     * 失去焦点
-     */
-    @Override
-    public void onLossAudioFocus() {
-        if (viewModel.audioPlayer.isPlay()) {
-            //暂停当前播放
-            viewModel.audioPlayer.onStop();
-        }
-    }
-
-    /**
-     * 获取焦点
-     */
-    @Override
-    public void onGainAudioFocus() {
-
     }
 }

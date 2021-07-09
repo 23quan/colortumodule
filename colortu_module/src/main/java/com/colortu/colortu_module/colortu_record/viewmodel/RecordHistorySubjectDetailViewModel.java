@@ -7,6 +7,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioPlayer;
@@ -24,7 +25,7 @@ import retrofit2.Response;
  * @module : RecordHistorySubjectDetailViewModel
  * @describe :历史科目详情界面ViewModel
  */
-public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<BaseRequest> {
+public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<BaseRequest> implements AudioFocusUtils.OnAudioFocusListener {
     //作业列表详情请求
     private Call<RecordSubjectDetailBean> recordSubjectDetailBeanCall;
 
@@ -39,6 +40,7 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
     public ObservableField<Integer> subjectId = new ObservableField<>();
     //日期
     public ObservableField<String> date = new ObservableField<>();
+
     //播放器工具类
     public AudioPlayer audioPlayer;
 
@@ -47,6 +49,7 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
         super.onCreate();
         //实例化
         audioPlayer = new AudioPlayer();
+        AudioFocusUtils.setOnAudioFocusListener(this);
         initPlay();
 
         getSubjectDetail(GetBeanDate.getUserUuid(), date.get(), subjectId.get());
@@ -65,32 +68,51 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
 
             @Override
             public void playerpause() {//暂停
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
 
             @Override
             public void playerstop() {//停止
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
 
             @Override
             public void playerfinish() {//完成
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
 
             @Override
             public void playerfailure() {//失败
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
         });
+    }
+
+    private void unPlayer(){
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
+        //启动息屏app销毁
+        SuicideUtils.onStartKill();
+        isPlayLiveData.setValue(true);
+    }
+
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (audioPlayer.isPlay()) {
+            //暂停当前播放
+            audioPlayer.onStop();
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+
     }
 
     /**
@@ -119,6 +141,8 @@ public class RecordHistorySubjectDetailViewModel extends BaseActivityViewModel<B
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
         //暂停播放，释放资源
         if (audioPlayer != null) {
             audioPlayer.onRelease();

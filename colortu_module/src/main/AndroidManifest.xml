@@ -35,9 +35,6 @@
         <!--休息service-->
         <service android:name="com.colortu.colortu_module.colortu_base.core.service.RestTimesService"></service>
 
-        <!--音频焦点service-->
-        <service android:name="com.colortu.colortu_module.colortu_base.core.service.AudioFocusService"></service>
-
         <!--网络广播通知-->
         <receiver android:name="com.colortu.colortu_module.colortu_base.core.http.NetWorkChangReceiver"></receiver>
 

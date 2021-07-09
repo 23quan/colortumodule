@@ -19,6 +19,7 @@ import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioMngHelper;
@@ -45,7 +46,7 @@ import retrofit2.Response;
  * @describe :听力播放界面ViewModel
  */
 public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> implements DownloadAudio.DownloadAudioListener,
-        NotificationClickReceiver.OnNotificationListener, BaseApplication.OnFinishTipVoiceListener, BlueToothReceiver.OnBluetoothListener {
+        NotificationClickReceiver.OnNotificationListener, BlueToothReceiver.OnBluetoothListener, AudioFocusUtils.OnAudioFocusListener {
     //听写完成接口
     private Call<ListenFinishBean> listenFinishBeanCall;
 
@@ -78,10 +79,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     private int lessonid;
     //是否可以点击
     private boolean isClick = false;
-    //控制初始播放
-    public boolean isStart = false;
-    //监听提示音是否结束
-    private boolean isFinishTipVoice;
+    //是否音频焦点失去暂停播放
+    private boolean isLoseFocus;
     //是否播放
     public boolean playing = false;
     //调节音量
@@ -161,10 +160,14 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         speedtime = BaseConstant.LISTEN_SPEED_NORMAL;
         speedtext.set(BaseApplication.getContext().getResources().getString(R.string.normal));
 
+        //音频焦点监听
+        AudioFocusUtils.setOnAudioFocusListener(this);
+        AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
+        //蓝牙监听
         BlueToothReceiver.setOnBluetoothListener(this);
-        isFinishTipVoice = true;
-        BaseApplication.setOnFinishTipVoiceListener(this);
+        //提示语音
         BaseApplication.onStartTipVoice(R.raw.music_play_start);
+        //单词播放
         handler.postDelayed(initPlay, 8500);
     }
 
@@ -215,12 +218,12 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                 speedtime = BaseConstant.LISTEN_SPEED_SLOW;
                 speedtext.set(BaseApplication.getContext().getResources().getString(R.string.slow));
             }
-            onStopDictationVoice();
+            onStopPlayer();
             progressmax.set(speedtime);
             if (countDownTimer != null) {
                 countDownTimer.cancel();
             }
-            onPlayWords();
+            onPlaying();
         }
     }
 
@@ -230,7 +233,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     public void onJumpAnswer() {
         if (isClick) {
             if (mediaPlayer != null) {
-                onReleaseDictationVoice();
+                onReleasePlayer();
             }
             if (countDownTimer != null) {
                 countDownTimer.cancel();
@@ -247,18 +250,30 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      */
     public void onLast() {
         if (isClick) {
-            isShowAnswer.setValue(false);
             if (curItem == 0) {
                 TipToast.tipToastShort(BaseApplication.getContext().getResources().getString(R.string.last_topic));
                 return;
             }
-            onStopDictationVoice();
+            //隐藏答案按钮
+            if (isShowAnswer.getValue()) {
+                isShowAnswer.setValue(false);
+            }
+            //停止播放提示语音
+            if (BaseApplication.isPlaying()) {
+                BaseApplication.onStopTipVoice();
+            }
+            //获取音频焦点
+            if (isLoseFocus) {
+                isLoseFocus = false;
+                AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
+            }
+            onStopPlayer();
             if (countDownTimer != null) {
                 countDownTimer.cancel();
             }
             curItem--;
             curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
-            onPlayWords();
+            onPlaying();
         }
     }
 
@@ -271,13 +286,22 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                 TipToast.tipToastShort(BaseApplication.getContext().getResources().getString(R.string.next_topic));
                 return;
             }
-            onStopDictationVoice();
+            //停止播放提示语音
+            if (BaseApplication.isPlaying()) {
+                BaseApplication.onStopTipVoice();
+            }
+            //获取音频焦点
+            if (isLoseFocus) {
+                isLoseFocus = false;
+                AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
+            }
+            onStopPlayer();
             if (countDownTimer != null) {
                 countDownTimer.cancel();
             }
             curItem++;
             curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
-            onPlayWords();
+            onPlaying();
         }
     }
 
@@ -286,27 +310,9 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      */
     public void onStartAudio() {
         if (isClick) {
-            onStopDictationVoice();
             if (playing) {
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                //发送通知栏消息
-                NotificationUtil.createNotification(true);
-
-                playicon.set(R.mipmap.icon_listen_stop);
-                playing = false;
-                curtime.set(String.valueOf((speedtime / 1000) - 1));
-                if (countDownTimer != null) {
-                    countDownTimer.cancel();
-                }
-                progress.set(0);
+                onStopWords();
             } else {
-                playing = true;
-                isShowAnswer.setValue(false);
-                playicon.set(R.mipmap.icon_listen_play);
-                if (countDownTimer != null) {
-                    countDownTimer.cancel();
-                }
                 onPlayWords();
             }
         }
@@ -318,38 +324,58 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     Runnable initPlay = new Runnable() {
         @Override
         public void run() {
-            if (isStart) {
-                if (listenClassBean.get().size() != 0) {
-                    isClick = true;
-                    isPlay.setValue(true);
-                    onPlayWords();
-                }
-            } else {
-                onStopWords();
+            if (listenClassBean.get().size() != 0) {
+                isClick = true;
+                isPlay.setValue(true);
+                onPlaying();
+                handler.removeCallbacks(initPlay);
             }
         }
     };
 
     /**
-     * 播放听写
+     * 播放听写单词
      */
-    public void onPlayWords() {
+    private void onPlayWords() {
+        isLoseFocus = false;
+        //获取音频焦点
+        AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
+        //停止播放提示语音
+        if (BaseApplication.isPlaying()) {
+            BaseApplication.onStopTipVoice();
+        }
+        //隐藏答案按钮
+        if (isShowAnswer.getValue()) {
+            isShowAnswer.setValue(false);
+        }
+        playing = true;
+        playicon.set(R.mipmap.icon_listen_play);
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        onPlaying();
+    }
+
+    private void onPlaying() {
         progressmax.set(speedtime - 1000);
         curtime.set(String.valueOf((speedtime / 1000) - 1));
-
-        handler.removeCallbacks(dictationVoiceRunnable);
-        handler.post(dictationVoiceRunnable);
+        handler.removeCallbacks(playingRunnable);
+        handler.post(playingRunnable);
         setAudioProgress();
     }
 
     /**
-     * 暂停播放
+     * 暂停播放单词
      */
-    public void onStopWords() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.reset();
-        }
+    private void onStopWords() {
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
+        //启动息屏app销毁
+        SuicideUtils.onStartKill();
+        //发送通知栏消息
+        NotificationUtil.createNotification(true);
+
+        onStopPlayer();
         playicon.set(R.mipmap.icon_listen_stop);
         playing = false;
         curtime.set(String.valueOf((speedtime / 1000) - 1));
@@ -357,15 +383,12 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
             countDownTimer.cancel();
         }
         progress.set(0);
-        isClick = true;
-        isPlay.setValue(true);
-        handler.removeCallbacks(initPlay);
     }
 
     /**
      * 播放听写语音Runnable
      */
-    private Runnable dictationVoiceRunnable = new Runnable() {
+    private Runnable playingRunnable = new Runnable() {
         @Override
         public void run() {
             String path = "";
@@ -383,7 +406,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                 path = BaseConstant.ListenAudioUrl + listenClassBean.get().get(curItem).getWordAudioUrl();
             }
             Uri uri = Uri.parse(path);
-            onStartDictationVoice(uri);
+            onStartPlayer(uri);
         }
     };
 
@@ -392,7 +415,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      *
      * @param uri
      */
-    private void onStartDictationVoice(Uri uri) {
+    private void onStartPlayer(Uri uri) {
         //取消息屏app销毁
         SuicideUtils.onCancelKill();
         //发送通知栏消息
@@ -426,7 +449,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     /**
      * 暂停开始听写语音
      */
-    private void onStopDictationVoice() {
+    private void onStopPlayer() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.reset();
@@ -436,7 +459,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     /**
      * 释放开始听写语音
      */
-    private void onReleaseDictationVoice() {
+    private void onReleasePlayer() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.reset();
@@ -461,9 +484,11 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                     progress.set(0);
                     curtime.set(String.valueOf((speedtime / 1000) - 1));
                     playicon.set(R.mipmap.icon_listen_stop);
-                    isFinishTipVoice = false;
+                    //解绑音频焦点
+                    AudioFocusUtils.abandonAudioFocus();
+                    //播放提示语音
                     BaseApplication.onStartTipVoice(R.raw.music_play_end);
-
+                    //显示答案按钮
                     handler.postDelayed(showAnswerRunnable, 5000);
 
                     //听写完成上报数据
@@ -478,7 +503,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                 } else {
                     curItem++;
                     curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
-                    onPlayWords();
+                    onPlaying();
                 }
             }
         }.start();
@@ -531,16 +556,51 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         }
     }
 
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        isClick = true;
+        isPlay.setValue(true);
+        if (BaseApplication.isPlaying()) {
+            BaseApplication.onStopTipVoice();
+        }
+        if (playing) {
+            isLoseFocus = true;
+            onStopWords();
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+        if (isLoseFocus) {
+            onStartAudio();
+        }
+    }
+
+    /**
+     * 通知栏上一首
+     */
     @Override
     public void onNotificationLast() {
         onLast();
     }
 
+    /**
+     * 通知栏播放暂停
+     */
     @Override
     public void onNotificationPlay() {
         onStartAudio();
     }
 
+    /**
+     * 通知栏下一首
+     */
     @Override
     public void onNotificationNext() {
         onNext();
@@ -557,27 +617,23 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     }
 
     /**
-     * 提示音播放结束监听
-     */
-    @Override
-    public void onFinishTipVoice() {
-        if (isFinishTipVoice) {
-            isStart = true;
-            isPlay.setValue(true);
-        }
-    }
-
-    /**
      * 销毁资源
      */
     public void onDispose() {
+        //取消倒计时
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
+        //停止播放提示语音
         BaseApplication.onStopTipVoice();
-        onReleaseDictationVoice();
+        //释放开始听写语音
+        onReleasePlayer();
+        //移除runnable
+        handler.removeCallbacks(initPlay);
         handler.removeCallbacks(showAnswerRunnable);
-        handler.removeCallbacks(dictationVoiceRunnable);
+        handler.removeCallbacks(playingRunnable);
     }
 
     /**

@@ -6,14 +6,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/base_blue1_bg"
-        android:padding="@dimen/dimen_10">
+        android:background="@drawable/base_blue1_bg">
 
         <ImageView
             android:id="@+id/smallplayer_cancel"
             android:layout_width="@dimen/dimen_30"
             android:layout_height="@dimen/dimen_30"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10"
             android:scaleType="fitXY"
             android:src="@mipmap/icon_base_cancel"></ImageView>
 
@@ -30,6 +31,8 @@
                 android:layout_height="@dimen/dimen_30"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:scaleType="fitXY"></ImageView>
 
             <TextView

@@ -12,6 +12,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.http.PostParams;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioRecord;
@@ -30,7 +31,7 @@ import retrofit2.Response;
  * @module : StudyInputViewModel
  * @describe :录入个性语音ViewModel
  */
-public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
+public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> implements AudioFocusUtils.OnAudioFocusListener {
     //上传录音转翻译文本接口
     private Call<RecordTranslateBean> recordTranslateBeanCall;
     //post请求体参数
@@ -70,6 +71,7 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
         //实例化
         audioRecord = new AudioRecord();
         postParams = new PostParams();
+        AudioFocusUtils.setOnAudioFocusListener(this);
 
         isvisibleLiveData.setValue(true);
         isstop.set(false);
@@ -92,18 +94,24 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
 
             @Override
             public void onFinishPlayer() {//播放完成监听
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 isplay = false;
                 inputplayimg.set(R.mipmap.icon_play_stop);
             }
 
             @Override
             public void onStopPlayer() {//播放暂停监听
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 isplay = false;
                 inputplayimg.set(R.mipmap.icon_play_stop);
             }
 
             @Override
             public void onFailurePlayer() {//播放失败监听
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 isplay = false;
                 inputplayimg.set(R.mipmap.icon_play_stop);
             }
@@ -137,6 +145,8 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
 
             @Override
             public void onFailureRecorder() {//录音失败监听
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 TipToast.tipToastShort(BaseApplication.getContext().getString(R.string.record_failure));
                 if (audioRecord != null) {
                     audioRecord.onCancelRecorder();
@@ -170,6 +180,8 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
             if (isplay) {
                 audioRecord.OnPlayer(false);
             } else {
+                //抢占音频焦点
+                AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
                 audioRecord.OnPlayer(true);
             }
         }
@@ -179,6 +191,9 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
      * 重新录音
      */
     public void onAgainAudio() {
+        if (audioRecord.isPlayer()) {
+            audioRecord.OnPlayer(false);
+        }
         if (audioRecord != null) {
             audioRecord.onCancelRecorder();
         }
@@ -186,6 +201,26 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
         translate.set("");
         inputtip.set(BaseApplication.getContext().getString(R.string.input_message));
         isvisibleLiveData.setValue(true);
+    }
+
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (audioRecord != null) {
+            if (audioRecord.isPlayer()) {
+                audioRecord.OnPlayer(false);
+            }
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+
     }
 
     /**
@@ -240,5 +275,12 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
     }
 }

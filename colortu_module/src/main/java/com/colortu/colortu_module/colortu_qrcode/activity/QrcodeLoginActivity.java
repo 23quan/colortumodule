@@ -15,7 +15,6 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
-import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
@@ -174,14 +173,5 @@ public class QrcodeLoginActivity extends BaseActivity<QrcodeLoginViewModel, Acti
         }
         abandonFocus = true;
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //解绑音频焦点
-        if (!abandonFocus) {
-            AudioFocusService.stopAudioFocus(this);
-        }
     }
 }

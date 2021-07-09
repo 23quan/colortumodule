@@ -11,8 +11,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
-import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.dialog.DialogWhether;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_record.adapter.RecordSubjectDetailAdapter;
 import com.colortu.colortu_module.colortu_base.bean.RecordSubjectDetailBean;
@@ -28,8 +29,7 @@ import java.util.List;
  * @describe :录入科目详情界面
  */
 @Route(path = BaseConstant.RECORD_SUBJECTDETAIL)
-public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetailViewModel, ActivityRecordSubjectdetailBinding>
-        implements DialogWhether.OnWhetherListener, AudioFocusService.OnAudioFocusListener {
+public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetailViewModel, ActivityRecordSubjectdetailBinding> implements DialogWhether.OnWhetherListener {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -54,7 +54,6 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
     public void initView(Bundle savedInstanceState) {
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.subjectdetailParentview);
-        AudioFocusService.setOnAudioFocusListener(this);
 
         subjectname = bundle.getString("subjectname");
         subjectId = bundle.getInt("subjectId");
@@ -83,6 +82,8 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
                     viewModel.recordSubjectDetailBeanLiveData.getValue().get(position).setIsplay(false);
                     viewModel.audioPlayer.onStop();
                 } else {
+                    //获取音频焦点
+                    AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
                     viewModel.recordSubjectDetailBeanLiveData.getValue().get(position).setIsplay(true);
                     viewModel.audioPlayer.onPlay(audiourl);
                 }
@@ -166,24 +167,5 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
         //删除
         viewModel.deleteHomeWorkRunnable();
         dialogWhether.cancel();
-    }
-
-    /**
-     * 失去焦点
-     */
-    @Override
-    public void onLossAudioFocus() {
-        if (viewModel.audioPlayer.isPlay()) {
-            //暂停当前播放
-            viewModel.audioPlayer.onStop();
-        }
-    }
-
-    /**
-     * 获取焦点
-     */
-    @Override
-    public void onGainAudioFocus() {
-
     }
 }

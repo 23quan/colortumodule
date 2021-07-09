@@ -14,7 +14,7 @@ import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
-import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
@@ -125,32 +125,32 @@ public class StudyDetailViewModel extends BaseActivityViewModel<BaseRequest> {
 
             @Override
             public void playerpause() {//暂停
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
 
             @Override
             public void playerstop() {//停止
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
 
             @Override
             public void playerfinish() {//完成
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
 
             @Override
             public void playerfailure() {//失败
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
         });
+    }
+
+    private void unPlayer() {
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
+        //启动息屏app销毁
+        SuicideUtils.onStartKill();
+        isPlayLiveData.setValue(true);
     }
 
     /**
@@ -418,7 +418,8 @@ public class StudyDetailViewModel extends BaseActivityViewModel<BaseRequest> {
         if (handler != null) {
             handler.removeCallbacks(getStudyDetailRunnable);
         }
-
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
         //暂停播放，释放资源
         if (audioPlayer != null) {
             audioPlayer.onRelease();

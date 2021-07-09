@@ -13,7 +13,9 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.api.PermissionListener;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_study.viewmodel.StudyAudioCreateViewModel;
@@ -104,6 +106,8 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
      * 开始录音
      */
     private void OnStartRecorder() {
+        //抢占音频焦点
+        AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
         binding.audiocreateInputview.setBackgroundColor(getResources().getColor(R.color.base_blue10));
         binding.audiocreateGif.setVisibility(View.VISIBLE);
         viewModel.isstop.set(true);
@@ -114,6 +118,8 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
      * 结束录音
      */
     private void OnStopRecorder() {
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
         binding.audiocreateInputview.setBackgroundColor(getResources().getColor(R.color.base_blue7));
         viewModel.isstop.set(false);
         viewModel.audioRecord.OnRecorder(false);

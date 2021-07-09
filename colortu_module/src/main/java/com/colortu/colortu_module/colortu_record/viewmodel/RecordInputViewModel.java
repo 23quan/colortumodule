@@ -15,6 +15,7 @@ import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.Tools;
@@ -38,7 +39,7 @@ import retrofit2.Response;
  * @module : RecordInputViewModel
  * @describe :录音界面ViewModel
  */
-public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
+public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> implements AudioFocusUtils.OnAudioFocusListener {
     //上传录音转翻译文本请求
     private Call<RecordTranslateBean> recordTranslateBeanCall;
     //添加作业请求
@@ -90,6 +91,7 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
         //实例化
         audioRecord = new AudioRecord();
         postParams = new PostParams();
+        AudioFocusUtils.setOnAudioFocusListener(this);
 
         translate2 = "";
         isvisibleLiveData.setValue(true);
@@ -127,18 +129,24 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
 
             @Override
             public void onFinishPlayer() {//播放完成监听
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 isplay = false;
                 inputplayimg.set(R.mipmap.icon_play_stop);
             }
 
             @Override
             public void onStopPlayer() {//播放暂停监听
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 isplay = false;
                 inputplayimg.set(R.mipmap.icon_play_stop);
             }
 
             @Override
             public void onFailurePlayer() {//播放失败监听
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 isplay = false;
                 inputplayimg.set(R.mipmap.icon_play_stop);
             }
@@ -172,6 +180,8 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
 
             @Override
             public void onFailureRecorder() {//录音失败监听
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 TipToast.tipToastShort(BaseApplication.getContext().getString(R.string.record_failure));
                 if (audioRecord != null) {
                     audioRecord.onCancelRecorder();
@@ -228,6 +238,8 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
             if (isplay) {
                 audioRecord.OnPlayer(false);
             } else {
+                //抢占音频焦点
+                AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
                 audioRecord.OnPlayer(true);
             }
         }
@@ -284,6 +296,26 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
                 }
                 break;
         }
+    }
+
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (audioRecord != null) {
+            if (audioRecord.isPlayer()) {
+                audioRecord.OnPlayer(false);
+            }
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+
     }
 
     /**
@@ -374,5 +406,13 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
+        BaseApplication.getInstance().finishActivity(RecordInputActivity.class);
     }
 }

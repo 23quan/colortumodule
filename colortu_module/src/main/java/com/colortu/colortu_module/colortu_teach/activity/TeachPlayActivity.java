@@ -10,9 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
-import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothUtils;
-import com.colortu.colortu_module.colortu_base.core.service.AudioFocusService;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
@@ -26,7 +24,7 @@ import com.colortu.colortu_module.databinding.ActivityTeachPlayBinding;
  * @describe :听力播放界面
  */
 @Route(path = BaseConstant.TEACH_PLAY)
-public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, ActivityTeachPlayBinding> implements AudioFocusService.OnAudioFocusListener {
+public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, ActivityTeachPlayBinding> {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -55,7 +53,6 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
         viewModel.setAdapteScreen(binding.playParentview);
         //注册蓝牙广播
         BlueToothUtils.onRegisterBlueTooth(this);
-        AudioFocusService.setOnAudioFocusListener(this);
 
         classname = bundle.getString("classname");
         examid = bundle.getInt("examid");
@@ -98,32 +95,6 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
                 }
             }
         });
-    }
-
-    /**
-     * 失去焦点
-     */
-    @Override
-    public void onLossAudioFocus() {
-        if (viewModel.audioPlayer != null) {
-            if (viewModel.audioPlayer.isPlay()) {
-                viewModel.audioPlayer.onPause();
-            }
-        }
-    }
-
-    /**
-     * 获取焦点
-     */
-    @Override
-    public void onGainAudioFocus() {
-        //取消息屏app销毁
-        SuicideUtils.onCancelKill();
-        //发送通知栏消息
-        NotificationUtil.createNotification(false);
-
-        viewModel.onPlay();
-        viewModel.isPlayLiveData.setValue(true);
     }
 
     @Override
