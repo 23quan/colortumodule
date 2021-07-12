@@ -577,9 +577,13 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     @Override
     public void onLossAudioFocus() {
         isClick = true;
-        isPlay.setValue(true);
         if (BaseApplication.isPlaying()) {
             BaseApplication.onStopTipVoice();
+        }
+        if (!isPlay.getValue()) {
+            isPlay.setValue(true);
+            handler.removeCallbacks(initPlay);
+            onStopWords(false);
         }
         if (playing) {
             isLoseFocus = true;
