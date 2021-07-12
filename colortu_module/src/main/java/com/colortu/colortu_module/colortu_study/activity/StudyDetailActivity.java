@@ -59,6 +59,14 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
     private DialogWhether dialogWhether;
     //确定弹窗
     private DialogAffirm dialogAffirm;
+    //小时
+    private int hours;
+    //分
+    private int minutes;
+    //秒
+    private int seconds;
+    //是否中断重新进入自习室
+    private boolean againRoom;
     //倒计时
     private CountDownTimer countDownTimer;
     //个人签名播放控制
@@ -110,6 +118,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                 if (viewModel.isfirst == 2) {
                     TipToast.tipToastShort(getResources().getString(R.string.data_loading));
                 } else {
+                    againRoom = false;
                     if (study) {//结束
                         dialogWhether = new DialogWhether(StudyDetailActivity.this);
                         dialogWhether.setOnWhetherListener(StudyDetailActivity.this);
@@ -140,6 +149,9 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         viewModel.isStudyLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
+                hours = 0;
+                minutes = 0;
+                seconds = 0;
                 if (aBoolean) {
                     study = true;
                     viewModel.studytipicon.set(R.mipmap.icon_study_finish);
@@ -381,10 +393,37 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             public void onTick(long l) {
                 studyDetailAdapter.notifyDataSetChanged();
                 if (study) {
-                    if (viewModel.topUserBeanLiveData.getValue() != null) {
-                        //加入计时
-                        String times = Tools.dateDiff3(viewModel.topUserBeanLiveData.getValue().getLastJoinTime());
-                        binding.detailMinetime.setText(times);
+                    if (againRoom) {
+                        if (viewModel.topUserBeanLiveData.getValue() != null) {
+                            //加入计时
+                            String times = Tools.dateDiff3(viewModel.topUserBeanLiveData.getValue().getLastJoinTime());
+                            binding.detailMinetime.setText(times);
+                        }
+                    } else {
+                        String perTimes = "";
+                        if (seconds == 60) {
+                            seconds = 0;
+                            if (minutes == 60) {
+                                minutes = 1;
+                                hours++;
+                            } else {
+                                minutes++;
+                            }
+                        }
+                        seconds++;
+
+                        if (hours > 0) {
+                            perTimes = hours + "小时";
+                        }
+
+                        if (minutes > 0) {
+                            perTimes = perTimes + minutes + "分钟";
+                        }
+
+                        if (seconds > 0) {
+                            perTimes = perTimes + seconds + "秒";
+                        }
+                        binding.detailMinetime.setText(perTimes);
                     }
                 }
             }
