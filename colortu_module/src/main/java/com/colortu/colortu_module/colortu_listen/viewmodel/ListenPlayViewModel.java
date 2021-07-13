@@ -111,10 +111,15 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     private DownloadAudio downloadAudio;
 
     public void initData() {
+        //停止播放提示语音
+        BaseApplication.onStopTipVoice();
         //实例化
         handler = new Handler();
         audioMngHelper = new AudioMngHelper(BaseApplication.getContext());
         NotificationClickReceiver.setOnNotificationListener(this);
+        //音频焦点监听
+        AudioFocusUtils.setOnAudioFocusListener(this);
+        AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
 
         gradeid = GetBeanDate.getChooseGrade();
         //课目名字
@@ -156,6 +161,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         }
 
         //设置初始数据
+        isPlay.setValue(false);
         isShowAnswer.setValue(false);
         curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
         progress.set(0);
@@ -163,15 +169,27 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         speedtime = BaseConstant.LISTEN_SPEED_NORMAL;
         speedtext.set(BaseApplication.getContext().getResources().getString(R.string.normal));
 
-        //音频焦点监听
-        AudioFocusUtils.setOnAudioFocusListener(this);
-        AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
         //蓝牙监听
         BlueToothReceiver.setOnBluetoothListener(this);
         //提示语音
-        BaseApplication.onStartTipVoice(R.raw.music_play_start);
+        onStartTipVoice(R.raw.music_play_start);
         //单词播放
         handler.postDelayed(initPlay, 8500);
+    }
+
+    /**
+     * 开始播放提示语音
+     */
+    public void onStartTipVoice(int audio) {
+        mediaPlayer = new MediaPlayer().create(BaseApplication.getContext(), audio);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                onStopPlayer();
+            }
+        });
+        mediaPlayer.setLooping(false);
+        mediaPlayer.start();
     }
 
     /**
@@ -261,18 +279,13 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
             if (isShowAnswer.getValue()) {
                 isShowAnswer.setValue(false);
             }
-            //停止播放提示语音
-            if (BaseApplication.isPlaying()) {
-                handler.removeCallbacks(showAnswerRunnable);
-                BaseApplication.onStopTipVoice();
-            }
+            onStopPlayer();
             //获取音频焦点
             if (isLoseFocus || playingFinish) {
                 isLoseFocus = false;
                 playingFinish = false;
                 AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
             }
-            onStopPlayer();
             if (countDownTimer != null) {
                 countDownTimer.cancel();
             }
@@ -291,18 +304,13 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                 TipToast.tipToastShort(BaseApplication.getContext().getResources().getString(R.string.next_topic));
                 return;
             }
-            //停止播放提示语音
-            if (BaseApplication.isPlaying()) {
-                handler.removeCallbacks(showAnswerRunnable);
-                BaseApplication.onStopTipVoice();
-            }
+            onStopPlayer();
             //获取音频焦点
             if (isLoseFocus || playingFinish) {
                 isLoseFocus = false;
                 playingFinish = false;
                 AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
             }
-            onStopPlayer();
             if (countDownTimer != null) {
                 countDownTimer.cancel();
             }
@@ -332,8 +340,6 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         @Override
         public void run() {
             if (listenClassBean.get().size() != 0) {
-                //获取音频焦点
-                AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
                 isClick = true;
                 isPlay.setValue(true);
                 onPlaying();
@@ -346,17 +352,13 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      * 播放听写单词
      */
     private void onPlayWords() {
+        onStopPlayer();
         isLoseFocus = false;
         //获取音频焦点
         AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
         //隐藏答案按钮
         if (isShowAnswer.getValue()) {
             isShowAnswer.setValue(false);
-        }
-        //停止播放提示语音
-        if (BaseApplication.isPlaying()) {
-            handler.removeCallbacks(showAnswerRunnable);
-            BaseApplication.onStopTipVoice();
         }
         playing = true;
         playicon.set(R.mipmap.icon_listen_play);
@@ -378,17 +380,15 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      * 暂停播放单词
      */
     private void onStopWords(boolean isAbandon) {
+        onStopPlayer();
         //解绑音频焦点
         if (isAbandon) {
             AudioFocusUtils.abandonAudioFocus();
         }
-
         //启动息屏app销毁
         SuicideUtils.onStartKill();
         //发送通知栏消息
         NotificationUtil.createNotification(true);
-
-        onStopPlayer();
         playicon.set(R.mipmap.icon_listen_stop);
         playing = false;
         curtime.set(String.valueOf((speedtime / 1000) - 1));
@@ -499,9 +499,9 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                     playicon.set(R.mipmap.icon_listen_stop);
 
                     //播放提示语音
-                    BaseApplication.onStartTipVoice(R.raw.music_play_end);
+                    onStartTipVoice(R.raw.music_play_end);
                     //显示答案按钮
-                    handler.postDelayed(showAnswerRunnable, 5000);
+                    handler.postDelayed(showAnswerRunnable, 6000);
 
                     //听写完成上报数据
                     if (lessonid != 0) {
@@ -645,8 +645,6 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         }
         //解绑音频焦点
         AudioFocusUtils.abandonAudioFocus();
-        //停止播放提示语音
-        BaseApplication.onStopTipVoice();
         //释放开始听写语音
         onReleasePlayer();
         //移除runnable
