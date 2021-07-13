@@ -72,6 +72,11 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
         binding.signInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (viewModel.audioPlayer != null) {
+                    if (viewModel.audioPlayer.isPlay()) {
+                        viewModel.audioPlayer.onStop();
+                    }
+                }
                 Bundle bundle = new Bundle();
                 bundle.putInt("isfirst", isfirst);
                 BaseUIKit.startActivity(UIKitName.STUDY_SIGN, UIKitName.STUDY_INPUT, BaseConstant.STUDY_INPUT,
