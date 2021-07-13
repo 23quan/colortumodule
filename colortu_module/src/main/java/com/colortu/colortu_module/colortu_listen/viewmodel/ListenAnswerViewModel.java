@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
 import com.colortu.colortu_module.colortu_base.request.BaseRequest;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioPlayer;
 
@@ -13,7 +14,7 @@ import com.colortu.colortu_module.colortu_base.utils.audio.AudioPlayer;
  * @module : ListenAnswerViewModel
  * @describe :听写答案界面ViewModel
  */
-public class ListenAnswerViewModel extends BaseActivityViewModel<BaseRequest> {
+public class ListenAnswerViewModel extends BaseActivityViewModel<BaseRequest> implements AudioFocusUtils.OnAudioFocusListener {
     //判断是否播放完成
     public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
 
@@ -26,6 +27,7 @@ public class ListenAnswerViewModel extends BaseActivityViewModel<BaseRequest> {
         //实例化
         audioPlayer = new AudioPlayer();
         initPlay();
+        AudioFocusUtils.setOnAudioFocusListener(this);
     }
 
     /**
@@ -41,37 +43,58 @@ public class ListenAnswerViewModel extends BaseActivityViewModel<BaseRequest> {
 
             @Override
             public void playerpause() {//暂停
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
 
             @Override
             public void playerstop() {//停止
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
 
             @Override
             public void playerfinish() {//完成
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
 
             @Override
             public void playerfailure() {//失败
-                //启动息屏app销毁
-                SuicideUtils.onStartKill();
-                isPlayLiveData.setValue(true);
+                unPlayer();
             }
         });
+    }
+
+    private void unPlayer() {
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
+        //启动息屏app销毁
+        SuicideUtils.onStartKill();
+        isPlayLiveData.setValue(true);
+    }
+
+    /**
+     * 失去焦点
+     */
+    @Override
+    public void onLossAudioFocus() {
+        if (audioPlayer.isPlay()) {
+            //暂停当前播放
+            audioPlayer.onStop();
+        }
+    }
+
+    /**
+     * 获取焦点
+     */
+    @Override
+    public void onGainAudioFocus() {
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
         //暂停播放，释放资源
         if (audioPlayer != null) {
             audioPlayer.onRelease();

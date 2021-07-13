@@ -91,7 +91,7 @@ public class RecordSubjectActivity extends BaseActivity<RecordSubjectViewModel, 
      */
     @Override
     public void onNo() {
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 
     /**
@@ -100,6 +100,6 @@ public class RecordSubjectActivity extends BaseActivity<RecordSubjectViewModel, 
     @Override
     public void onYes() {
         viewModel.markFinishRunnable();
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 }

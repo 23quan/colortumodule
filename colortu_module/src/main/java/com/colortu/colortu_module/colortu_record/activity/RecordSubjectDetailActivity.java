@@ -73,9 +73,14 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
         recordSubjectDetailAdapter.setOnClickSubjectDetailListener(new RecordSubjectDetailAdapter.OnClickSubjectDetailListener() {
             @Override
             public void OnClickPlay(int position, boolean isplay, String audiourl) {
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 //刷新前一个item的icon
-                viewModel.recordSubjectDetailBeanLiveData.getValue().get(itemposition).setIsplay(false);
-                recordSubjectDetailAdapter.notifyItemChanged(itemposition);
+                if (itemposition != position) {
+                    viewModel.audioPlayer.onStop();
+                    viewModel.recordSubjectDetailBeanLiveData.getValue().get(itemposition).setIsplay(false);
+                    recordSubjectDetailAdapter.notifyItemChanged(itemposition);
+                }
 
                 //播放
                 if (isplay) {
@@ -156,7 +161,7 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
      */
     @Override
     public void onNo() {
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 
     /**
@@ -166,6 +171,6 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
     public void onYes() {
         //删除
         viewModel.deleteHomeWorkRunnable();
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 }

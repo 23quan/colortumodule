@@ -72,6 +72,8 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
         recordHistorySubjectDetailAdapter.setOnClickHistorySubjectDetailListener(new RecordHistorySubjectDetailAdapter.OnClickHistorySubjectDetailListener() {
             @Override
             public void OnClickPlay(int position, boolean isplay, String audiourl) {
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 //前一个item刷新icon
                 if (itemposition != position) {
                     viewModel.audioPlayer.onStop();
