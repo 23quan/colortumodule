@@ -255,6 +255,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             public void onClick(View view) {
                 //解绑音频焦点
                 AudioFocusUtils.abandonAudioFocus();
+                viewModel.typeplay.set(true);
                 //刷新当前item的icon
                 if (EmptyUtils.listIsEmpty(viewModel.plazaDetailLiveData.getValue())) {
                     if (viewModel.plazaDetailLiveData.getValue().get(itemposition).isIsplay()) {
@@ -263,9 +264,6 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                         studyDetailAdapter.notifyItemChanged(itemposition);
                     }
                 }
-
-                viewModel.typeplay.set(true);
-
                 //播放
                 if (mineplay) {
                     mineplay = false;
@@ -289,6 +287,9 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         binding.detailMinesign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(viewModel.audioPlayer.isPlay()){
+                    viewModel.audioPlayer.onStop();
+                }
                 Bundle bundle = new Bundle();
                 bundle.putInt("isfirst", viewModel.isfirst);
                 BaseUIKit.startActivity(UIKitName.STUDY_DETAIL, UIKitName.STUDY_SIGN, BaseConstant.STUDY_SIGN,
@@ -318,18 +319,23 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         studyDetailAdapter.setOnClickPlayListener(new StudyDetailAdapter.OnClickPlayListener() {
             @Override
             public void OnClickPlay(int position, boolean isplay, String audiourl) {
-                //播放
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
+                viewModel.typeplay.set(false);
+                //暂停个人签名播放
                 if (mineplay) {
                     mineplay = false;
                     viewModel.audioPlayer.onStop();
                     Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_stop).into(binding.detailMineplay);
                 }
-                viewModel.typeplay.set(false);
-
                 //前一个item刷新icon
-                viewModel.plazaDetailLiveData.getValue().get(itemposition).setIsplay(false);
-                studyDetailAdapter.notifyItemChanged(itemposition);
-
+                if (itemposition != position) {
+                    if (viewModel.audioPlayer.isPlay()) {
+                        viewModel.audioPlayer.onStop();
+                        viewModel.plazaDetailLiveData.getValue().get(itemposition).setIsplay(false);
+                        studyDetailAdapter.notifyItemChanged(itemposition);
+                    }
+                }
                 //播放
                 if (isplay) {
                     viewModel.plazaDetailLiveData.getValue().get(position).setIsplay(false);
@@ -371,6 +377,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
                     if (viewModel.typeplay.get()) {
+                        mineplay = false;
                         Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_stop).into(binding.detailMineplay);
                     } else {
                         //刷新当前item的icon

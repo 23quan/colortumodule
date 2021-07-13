@@ -123,7 +123,7 @@ public class RecordHistorySubjectActivity extends BaseActivity<RecordHistorySubj
      */
     @Override
     public void onNo() {
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 
     /**
@@ -132,6 +132,6 @@ public class RecordHistorySubjectActivity extends BaseActivity<RecordHistorySubj
     @Override
     public void onYes() {
         viewModel.markFinishRunnable();
-        dialogWhether.cancel();
+        dialogWhether.dismiss();
     }
 }

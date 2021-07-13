@@ -10,6 +10,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
+import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_listen.adapter.ListenAnswerAdapter;
 import com.colortu.colortu_module.colortu_base.bean.ListenClassBean;
 import com.colortu.colortu_module.colortu_listen.viewmodel.ListenAnswerViewModel;
@@ -64,6 +66,8 @@ public class ListenAnswerActivity extends BaseActivity<ListenAnswerViewModel, Ac
         listenAnswerAdapter.setOnClickAnswerListener(new ListenAnswerAdapter.OnClickAnswerListener() {
             @Override
             public void OnClickAnswer(int position, boolean isplay, String audiourl) {
+                //解绑音频焦点
+                AudioFocusUtils.abandonAudioFocus();
                 //前一个item刷新icon
                 if (itemposition != position) {
                     viewModel.audioPlayer.onStop();
@@ -73,10 +77,12 @@ public class ListenAnswerActivity extends BaseActivity<ListenAnswerViewModel, Ac
 
                 //播放
                 if (isplay) {
-                    wordsBeanList.get(itemposition).setPlaying(false);
+                    wordsBeanList.get(position).setPlaying(false);
                     viewModel.audioPlayer.onStop();
                 } else {
-                    wordsBeanList.get(itemposition).setPlaying(true);
+                    //获取音频焦点
+                    AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
+                    wordsBeanList.get(position).setPlaying(true);
                     viewModel.audioPlayer.onPlay(BaseConstant.ListenAudioUrl + audiourl);
                 }
                 listenAnswerAdapter.notifyItemChanged(position);
