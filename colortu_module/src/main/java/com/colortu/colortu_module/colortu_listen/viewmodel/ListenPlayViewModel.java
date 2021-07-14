@@ -50,7 +50,9 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     //听写完成接口
     private Call<ListenFinishBean> listenFinishBeanCall;
 
-    //课目id
+    //课名
+    public ObservableField<String> classname = new ObservableField<>();
+    //科目id
     public ObservableField<Integer> subjectid = new ObservableField<>();
     //版本id
     public ObservableField<Integer> versionid = new ObservableField<>();
@@ -388,7 +390,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         //启动息屏app销毁
         SuicideUtils.onStartKill();
         //发送通知栏消息
-        NotificationUtil.createNotification("");
+        NotificationUtil.createNotification(classname.get());
         playicon.set(R.mipmap.icon_listen_stop);
         playing = false;
         curtime.set(String.valueOf((speedtime / 1000) - 1));
@@ -432,7 +434,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         //取消息屏app销毁
         SuicideUtils.onCancelKill();
         //发送通知栏消息
-        NotificationUtil.createNotification("");
+        NotificationUtil.createNotification(classname.get());
 
         try {
             mediaPlayer = new MediaPlayer();
@@ -511,7 +513,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                     //启动息屏app销毁
                     SuicideUtils.onStartKill();
                     //发送通知栏消息
-                    NotificationUtil.createNotification("");
+                    NotificationUtil.createNotification(classname.get());
                 } else {
                     curItem++;
                     curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
