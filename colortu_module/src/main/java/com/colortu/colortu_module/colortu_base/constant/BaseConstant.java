@@ -163,7 +163,7 @@ public class BaseConstant {
      * listening(听写模块)
      */
     //听写启动界面
-    public static final String LISTEN_SPLASH = "/listensplash/ListenMainActivity";
+    public static final String LISTEN_SPLASH = "/listensplash/ListenSplashActivity";
     //听写主界面
     public static final String LISTEN_MAIN = "/listenmain/ListenMainActivity";
     //听写课目界面
