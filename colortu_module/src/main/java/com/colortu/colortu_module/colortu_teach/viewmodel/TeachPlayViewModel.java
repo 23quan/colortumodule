@@ -95,7 +95,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
                 //发送通知栏消息
-                NotificationUtil.createNotification("(" + classname.get() + ")");
+                NotificationUtil.createNotification(classname.get());
 
                 isPlayLiveData.setValue(true);
             }
@@ -130,7 +130,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         //启动息屏app销毁
         SuicideUtils.onStartKill();
         //发送通知栏消息
-        NotificationUtil.createNotification("(" + classname.get() + ")");
+        NotificationUtil.createNotification(classname.get());
 
         isPlayLiveData.setValue(false);
     }
@@ -227,7 +227,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
             //取消息屏app销毁
             SuicideUtils.onCancelKill();
             //发送通知栏消息
-            NotificationUtil.createNotification("(" + classname.get() + ")");
+            NotificationUtil.createNotification(classname.get());
             isLoseFocus = false;
             isPlayLiveData.setValue(true);
             onPlay();

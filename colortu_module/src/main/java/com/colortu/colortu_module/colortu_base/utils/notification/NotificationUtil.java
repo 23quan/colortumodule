@@ -133,11 +133,10 @@ public class NotificationUtil {
 
         if (BaseApplication.appType == 1) {
             remoteViews.setImageViewResource(R.id.smallplayer_icon, R.mipmap.icon_work_huaweilogo);
-            remoteViews.setTextViewText(R.id.smallplayer_title, context.getResources().getString(R.string.colortu_homework) + content);
         } else {
             remoteViews.setImageViewResource(R.id.smallplayer_icon, R.mipmap.icon_listen_logo);
-            remoteViews.setTextViewText(R.id.smallplayer_title, context.getResources().getString(R.string.colortu_listen) + content);
         }
+        remoteViews.setTextViewText(R.id.smallplayer_title, content);
 
         if (BaseApplication.isListen) {
             remoteViews.setImageViewResource(R.id.smallplayer_play, R.mipmap.icon_play_start);
@@ -167,11 +166,10 @@ public class NotificationUtil {
 
         if (BaseApplication.appType == 1) {
             remoteViews.setImageViewResource(R.id.bigplayer_icon, R.mipmap.icon_work_huaweilogo);
-            remoteViews.setTextViewText(R.id.bigplayer_title, context.getResources().getString(R.string.colortu_homework) + content);
         } else {
             remoteViews.setImageViewResource(R.id.bigplayer_icon, R.mipmap.icon_listen_logo);
-            remoteViews.setTextViewText(R.id.bigplayer_title, context.getResources().getString(R.string.colortu_listen) + content);
         }
+        remoteViews.setTextViewText(R.id.bigplayer_title, content);
 
         if (BaseApplication.isListen) {
             remoteViews.setImageViewResource(R.id.bigplayer_play, R.mipmap.icon_play_start);

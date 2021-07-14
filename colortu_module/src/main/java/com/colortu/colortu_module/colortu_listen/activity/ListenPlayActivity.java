@@ -43,6 +43,7 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
         //注册蓝牙广播
         BlueToothUtils.onRegisterBlueTooth(this);
 
+        viewModel.classname.set(bundle.getString("classname"));
         viewModel.subjectid.set(bundle.getInt("subjectid"));
         viewModel.versionid.set(bundle.getInt("versionid"));
         viewModel.listenClassBean.set((List<ListenClassBean.DataBean.PoetryVOSBean.WordsBean>) bundle.getSerializable("wordsbean"));

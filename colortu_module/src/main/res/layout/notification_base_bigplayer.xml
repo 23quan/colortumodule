@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/dimen_5"
+            android:layout_marginRight="@dimen/dimen_50"
             android:layout_toRightOf="@+id/notification_icon"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"

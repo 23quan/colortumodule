@@ -14,6 +14,7 @@ import com.colortu.colortu_module.colortu_base.bean.ListenClassBean;
 import com.colortu.colortu_module.databinding.AdapterListenClassBinding;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author : Code23
@@ -26,7 +27,7 @@ public class ListenClassAdapter extends BaseRecyclerAdapter<ListenClassBean.Data
     private int freecount;
     //0 不是会员 1是会员
     private int isVip;
-    //课目1.语文,2.英语
+    //科目1.语文,2.英语
     private int type;
     //版本id
     private int publisherid;
@@ -66,21 +67,11 @@ public class ListenClassAdapter extends BaseRecyclerAdapter<ListenClassBean.Data
             public void onClick(View view) {
                 if (isVip == 1) {
                     //跳转播放
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("subjectid", type);
-                    bundle.putInt("versionid", publisherid);
-                    bundle.putSerializable("wordsbean", (Serializable) item.getWords());
-                    BaseUIKit.startActivity(UIKitName.LISTEN_CLASS, UIKitName.LISTEN_PLAY,
-                            BaseConstant.LISTEN_PLAY, BaseUIKit.OTHER, bundle);
+                    onItentListenPlayActivity(item.getName(), item.getWords());
                 } else {
                     if (position < freecount) {
                         //跳转播放
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("subjectid", type);
-                        bundle.putInt("versionid", publisherid);
-                        bundle.putSerializable("wordsbean", (Serializable) item.getWords());
-                        BaseUIKit.startActivity(UIKitName.LISTEN_CLASS, UIKitName.LISTEN_PLAY,
-                                BaseConstant.LISTEN_PLAY, BaseUIKit.OTHER, bundle);
+                        onItentListenPlayActivity(item.getName(), item.getWords());
                     } else {
                         //扫描解锁
                         Bundle bundle = new Bundle();
@@ -91,5 +82,21 @@ public class ListenClassAdapter extends BaseRecyclerAdapter<ListenClassBean.Data
                 }
             }
         });
+    }
+
+    /**
+     * 跳转播放
+     *
+     * @param classname
+     * @param wordsBeanList
+     */
+    public void onItentListenPlayActivity(String classname, List<ListenClassBean.DataBean.PoetryVOSBean.WordsBean> wordsBeanList) {
+        Bundle bundle = new Bundle();
+        bundle.putString("classname", classname);
+        bundle.putInt("subjectid", type);
+        bundle.putInt("versionid", publisherid);
+        bundle.putSerializable("wordsbean", (Serializable) wordsBeanList);
+        BaseUIKit.startActivity(UIKitName.LISTEN_CLASS, UIKitName.LISTEN_PLAY,
+                BaseConstant.LISTEN_PLAY, BaseUIKit.OTHER, bundle);
     }
 }
