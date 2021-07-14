@@ -17,6 +17,7 @@ import com.colortu.colortu_module.colortu_base.utils.AudioFocusUtils;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.TipToast;
+import com.colortu.colortu_module.colortu_base.utils.audio.AudioMngHelper;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioPlayer;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationClickReceiver;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
@@ -40,6 +41,13 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
     public ObservableField<String> audiourl = new ObservableField<>();
     //课id
     public ObservableField<Integer> examid = new ObservableField<>();
+    //音量图标
+    public ObservableField<Integer> volumeicon = new ObservableField<>();
+
+    //调节音量
+    private int volumeLevel;
+    //媒体音量管理
+    private AudioMngHelper audioMngHelper;
     //语音播放工具类
     public AudioPlayer audioPlayer;
     //是否音频焦点失去暂停播放
@@ -50,12 +58,30 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         super.onCreate();
         //实例化
         audioPlayer = new AudioPlayer();
+        audioMngHelper = new AudioMngHelper(BaseApplication.getContext());
         NotificationClickReceiver.setOnNotificationListener(this);
         AudioFocusUtils.setOnAudioFocusListener(this);
 
         BlueToothReceiver.setOnBluetoothListener(this);
         isPlayLiveData.setValue(false);
         initPlay();
+
+        //设置媒体音量图标
+        try {
+            int volume = audioMngHelper.get100CurrentVolume();
+            if (volume <= 33) {
+                volumeLevel = 0;
+                volumeicon.set(R.mipmap.icon_listen_volume1);
+            } else if (volume > 33 && volume <= 66) {
+                volumeLevel = 1;
+                volumeicon.set(R.mipmap.icon_listen_volume2);
+            } else if (volume > 66) {
+                volumeLevel = 2;
+                volumeicon.set(R.mipmap.icon_listen_volume3);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -69,7 +95,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
                 //发送通知栏消息
-                NotificationUtil.createNotification(false);
+                NotificationUtil.createNotification("(" + classname.get() + ")");
 
                 isPlayLiveData.setValue(true);
             }
@@ -104,9 +130,34 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         //启动息屏app销毁
         SuicideUtils.onStartKill();
         //发送通知栏消息
-        NotificationUtil.createNotification(false);
+        NotificationUtil.createNotification("(" + classname.get() + ")");
 
         isPlayLiveData.setValue(false);
+    }
+
+    /**
+     * 调节音量
+     */
+    public void onAdjustVolume() {
+        volumeLevel = (volumeLevel + 1) % 3;
+        try {
+            switch (volumeLevel) {
+                case 0:
+                    audioMngHelper.setVoice100(33);
+                    volumeicon.set(R.mipmap.icon_listen_volume1);
+                    break;
+                case 1:
+                    audioMngHelper.setVoice100(66);
+                    volumeicon.set(R.mipmap.icon_listen_volume2);
+                    break;
+                case 2:
+                    audioMngHelper.setVoice100(100);
+                    volumeicon.set(R.mipmap.icon_listen_volume3);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -176,7 +227,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
             //取消息屏app销毁
             SuicideUtils.onCancelKill();
             //发送通知栏消息
-            NotificationUtil.createNotification(false);
+            NotificationUtil.createNotification("(" + classname.get() + ")");
             isLoseFocus = false;
             isPlayLiveData.setValue(true);
             onPlay();
@@ -188,7 +239,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
      */
     @Override
     public void onNotificationLast() {
-
+        TipToast.tipToastShort(BaseApplication.getContext().getResources().getString(R.string.not_last));
     }
 
     /**
@@ -204,7 +255,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
      */
     @Override
     public void onNotificationNext() {
-
+        TipToast.tipToastShort(BaseApplication.getContext().getResources().getString(R.string.not_next));
     }
 
     /**

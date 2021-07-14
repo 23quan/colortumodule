@@ -19,11 +19,14 @@
             android:id="@+id/play_classname"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_70"
-            android:ellipsize="end"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center"
-            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
             android:paddingLeft="@dimen/dimen_20"
             android:paddingRight="@dimen/dimen_20"
+            android:singleLine="true"
             android:text="@{viewmodel.classname}"
             android:textColor="@color/base_white1"
             android:textSize="@dimen/size_30"></TextView>
@@ -32,6 +35,24 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
+            <FrameLayout
+                android:id="@+id/play_volumeview"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:onClick="@{()->viewmodel.onAdjustVolume()}">
+
+                <ImageView
+                    android:id="@+id/play_volume"
+                    ressrc="@{viewmodel.volumeicon}"
+                    android:layout_width="@dimen/dimen_30"
+                    android:layout_height="@dimen/dimen_30"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:scaleType="fitXY"></ImageView>
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/play_start"
