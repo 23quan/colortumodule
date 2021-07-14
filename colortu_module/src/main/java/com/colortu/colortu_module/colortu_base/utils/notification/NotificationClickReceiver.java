@@ -3,6 +3,7 @@ package com.colortu.colortu_module.colortu_base.utils.notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
@@ -21,8 +22,10 @@ public class NotificationClickReceiver extends BroadcastReceiver {
         switch (action) {
             case NotificationUtil.CLICK_APP: //通知栏进入app
                 if (BaseApplication.appType == 1) {
+                    Log.e("123","WORK_SPLASH");
                     ARouter.getInstance().build(BaseConstant.WORK_SPLASH).navigation();
                 } else {
+                    Log.e("123","LISTEN_SPLASH");
                     ARouter.getInstance().build(BaseConstant.LISTEN_SPLASH).navigation();
                 }
                 break;
