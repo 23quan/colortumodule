@@ -11,6 +11,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseRecyclerAdapter;
 import com.colortu.colortu_module.colortu_base.bean.TeachAnswerItemBean;
 import com.colortu.colortu_module.colortu_base.bean.TeachTopicAnswerBean;
 import com.colortu.colortu_module.colortu_base.bean.TeachTopicItemBean;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.databinding.AdapterTeachAnswerBinding;
 
 import java.util.ArrayList;
@@ -49,7 +50,11 @@ public class TeachAnswerAdapter extends BaseRecyclerAdapter<TeachTopicAnswerBean
         //序号
         adapterTeachAnswerBinding.answerSerialnumber.setText(position + 1 + "、");
         //题目
-        adapterTeachAnswerBinding.answerTitle.setText(item.getTitle());
+        if(EmptyUtils.stringIsEmpty(item.getTitle())){
+            adapterTeachAnswerBinding.answerTitle.setText(item.getTitle());
+        }else {
+            adapterTeachAnswerBinding.answerTitle.setText(context.getResources().getString(R.string.omit));
+        }
 
         adapterTeachAnswerBinding.answerTopiclist.setVisibility(View.GONE);
         adapterTeachAnswerBinding.answerAnswerlist.setVisibility(View.GONE);

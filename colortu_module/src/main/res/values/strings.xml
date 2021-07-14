@@ -100,6 +100,8 @@
     <string name="check_answer">对答案</string>
     <string name="check_topic">点击查看原题</string>
     <string name="putaway_topic">收起原题</string>
+    <string name="not_last">没有上一首</string>
+    <string name="not_next">最后一首了</string>
 
     <string name="semester_last">上</string>
     <string name="semester_next">下</string>
