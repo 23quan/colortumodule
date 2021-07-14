@@ -88,8 +88,6 @@ public class NotificationUtil {
         builder.setContent(getSmallRemoteViews(context, content));
         //把自定义大的view放上
         builder.setCustomBigContentView(getBigRemoteViews(context, content));
-        //整个点击跳转activity
-        builder.setContentIntent(getPendingIntent(context, CLICK_APP));
 
         Notification notification = builder.build();
         notificationManager.notify(NOTIFY_ID, notification);
@@ -120,6 +118,8 @@ public class NotificationUtil {
     private static RemoteViews getSmallRemoteViews(Context context, String content) {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_smallplayer);
+        //点击view
+        remoteViews.setOnClickPendingIntent(R.id.smallplayer_parentview, getPendingIntent(context, CLICK_APP));
         //点击取消通知栏
         remoteViews.setOnClickPendingIntent(R.id.smallplayer_cancel, getPendingIntent(context, CLICK_CANCEL));
         //点击播放暂停
@@ -153,6 +153,8 @@ public class NotificationUtil {
     private static RemoteViews getBigRemoteViews(Context context, String content) {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_bigplayer);
+        //点击view
+        remoteViews.setOnClickPendingIntent(R.id.bigplayer_parentview, getPendingIntent(context, CLICK_APP));
         //点击取消通知栏
         remoteViews.setOnClickPendingIntent(R.id.bigplayer_cancel, getPendingIntent(context, CLICK_CANCEL));
         //点击播放暂停

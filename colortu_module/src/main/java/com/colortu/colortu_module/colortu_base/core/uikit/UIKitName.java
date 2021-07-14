@@ -21,7 +21,7 @@ public class UIKitName {
      * 作业主界面
      */
     public static final String WORK_SPLASH = "WorkSplashActivity";
-    public static final String WORK_MAIN = "MainActivity";
+    public static final String WORK_MAIN = "WorkMainActivity";
 
     /**
      * 二维码模块
@@ -117,7 +117,7 @@ public class UIKitName {
      * listening(听写模块)
      */
     //听写启动界面
-    public static final String LISTEN_SPLASH = "ListenMainActivity";
+    public static final String LISTEN_SPLASH = "ListenSplashActivity";
     //听写主界面
     public static final String LISTEN_MAIN = "ListenMainActivity";
     //听写课目界面
