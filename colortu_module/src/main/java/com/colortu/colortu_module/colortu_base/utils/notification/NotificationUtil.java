@@ -1,5 +1,7 @@
 package com.colortu.colortu_module.colortu_base.utils.notification;
 
+import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,9 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.widget.RemoteViews;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
@@ -22,8 +21,8 @@ import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
  * @describe :通知栏
  */
 public class NotificationUtil {
-    private static final CharSequence CHANNEL_NAME = "homework";
-    private static final String CHANNEL_ID = "homework_play";
+    private static final CharSequence CHANNEL_NAME = "colortu";
+    private static final String CHANNEL_ID = "1020308";
     private final static int NOTIFY_ID = 1008800;
     public static boolean isExistNotification = false;
 
@@ -51,16 +50,21 @@ public class NotificationUtil {
         }
     }
 
+    @SuppressLint("NewApi")
     private static void create(String content) {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//适配一下高版本
+        Notification.Builder builder = new Notification.Builder(context);
+
+        // 通知框兼容 android 8 及以上
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-            //关了通知默认提示音
+            notificationChannel.enableLights(true);
+            notificationChannel.setShowBadge(true);
             notificationChannel.setSound(null, null);
             notificationManager.createNotificationChannel(notificationChannel);
+            builder.setChannelId(CHANNEL_ID);
         }
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         //设置小图标
         if (BaseApplication.appType == 1) {
             builder.setSmallIcon(R.mipmap.icon_work_huaweilogo);
@@ -76,8 +80,8 @@ public class NotificationUtil {
         //整个点击跳转activity
         builder.setContentIntent(getPendingIntent(CLICK_APP));
 
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+        Notification notification = builder.build();
+        notificationManager.notify(NOTIFY_ID, notification);
         isExistNotification = true;
     }
 
