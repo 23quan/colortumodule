@@ -173,6 +173,7 @@ public class NotificationUtil {
      */
     private static PendingIntent getPendingIntent(String action) {
         Intent intent = new Intent(action);
+        intent.setClass(context, NotificationClickReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pendingIntent;
     }
