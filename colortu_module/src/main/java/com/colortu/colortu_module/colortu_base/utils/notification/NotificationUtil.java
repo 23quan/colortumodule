@@ -15,6 +15,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
+import com.colortu.colortu_module.colortu_teach.activity.TeachPlayActivity;
 
 /**
  * @author : Code23
@@ -74,8 +75,11 @@ public class NotificationUtil {
         builder.setCustomContentView(getSmallRemoteViews(context, content));
         //把自定义大的view放上
         builder.setCustomBigContentView(getBigRemoteViews(context, content));
+
+        Intent intent = new Intent(context, TeachPlayActivity.class);
+        PendingIntent notifyPendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         //整个点击跳转activity
-        builder.setContentIntent(getPendingIntent(context, CLICK_APP));
+        builder.setContentIntent(notifyPendingIntent);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(NOTIFY_ID, builder.build());
