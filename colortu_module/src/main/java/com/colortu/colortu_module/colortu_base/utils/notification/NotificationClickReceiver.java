@@ -33,15 +33,15 @@ public class NotificationClickReceiver extends BroadcastReceiver {
                 BaseApplication.getInstance().exitApp();
                 break;
             case NotificationUtil.CLICK_LAST://通知栏上一首
-                Log.e("123","CLICK_CANCEL");
+                Log.e("123","CLICK_LAST");
                 onNotificationListener.onNotificationLast();
                 break;
             case NotificationUtil.CLICK_PLAY://通知栏播放和暂停
-                Log.e("123","CLICK_CANCEL");
+                Log.e("123","CLICK_PLAY");
                 onNotificationListener.onNotificationPlay();
                 break;
             case NotificationUtil.CLICK_NEXT://通知栏下一首
-                Log.e("123","CLICK_CANCEL");
+                Log.e("123","CLICK_NEXT");
                 onNotificationListener.onNotificationNext();
                 break;
         }
