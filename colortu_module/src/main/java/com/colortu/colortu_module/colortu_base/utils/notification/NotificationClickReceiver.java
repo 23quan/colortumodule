@@ -21,24 +21,27 @@ public class NotificationClickReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         switch (action) {
             case NotificationUtil.CLICK_APP: //通知栏进入app
+                Log.e("123","CLICK_APP");
                 if (BaseApplication.appType == 1) {
-                    Log.e("123","WORK_SPLASH");
                     ARouter.getInstance().build(BaseConstant.WORK_SPLASH).navigation();
                 } else {
-                    Log.e("123","LISTEN_SPLASH");
                     ARouter.getInstance().build(BaseConstant.LISTEN_SPLASH).navigation();
                 }
                 break;
             case NotificationUtil.CLICK_CANCEL://通知栏取消
+                Log.e("123","CLICK_CANCEL");
                 BaseApplication.getInstance().exitApp();
                 break;
             case NotificationUtil.CLICK_LAST://通知栏上一首
+                Log.e("123","CLICK_CANCEL");
                 onNotificationListener.onNotificationLast();
                 break;
             case NotificationUtil.CLICK_PLAY://通知栏播放和暂停
+                Log.e("123","CLICK_CANCEL");
                 onNotificationListener.onNotificationPlay();
                 break;
             case NotificationUtil.CLICK_NEXT://通知栏下一首
+                Log.e("123","CLICK_CANCEL");
                 onNotificationListener.onNotificationNext();
                 break;
         }
