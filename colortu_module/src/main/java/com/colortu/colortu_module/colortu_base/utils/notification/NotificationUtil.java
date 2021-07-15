@@ -10,6 +10,7 @@ import android.os.Build;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
@@ -53,7 +54,6 @@ public class NotificationUtil {
 
     private static void create(String content) {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//适配一下高版本
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             //关了通知默认提示音
@@ -77,8 +77,8 @@ public class NotificationUtil {
         //整个点击跳转activity
         builder.setContentIntent(getPendingIntent(context, CLICK_APP));
 
-        Notification notification = builder.build();
-        notificationManager.notify(NOTIFY_ID, notification);
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
+        notificationManagerCompat.notify(NOTIFY_ID, builder.build());
         isExistNotification = true;
     }
 
