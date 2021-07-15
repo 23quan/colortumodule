@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -192,6 +193,7 @@ public class NotificationUtil {
      * @return
      */
     private static PendingIntent getPendingIntent(Context context, String action) {
+        Log.e("123","action:"+action);
         Intent intent = new Intent(context, NotificationClickReceiver.class);
         intent.setAction(action);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
