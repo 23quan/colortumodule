@@ -121,7 +121,7 @@ public class NotificationUtil {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_smallplayer);
         //点击item进入app
-        remoteViews.setOnClickPendingIntent(R.id.smallplayer_parentview, getPendingIntent(context, CLICK_APP));
+        //remoteViews.setOnClickPendingIntent(R.id.smallplayer_parentview, getPendingIntent(context, CLICK_APP));
         //点击取消通知栏
         remoteViews.setOnClickPendingIntent(R.id.smallplayer_cancel, getPendingIntent(context, CLICK_CANCEL));
         //点击播放暂停
@@ -156,7 +156,7 @@ public class NotificationUtil {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_bigplayer);
         //点击item进入app
-        remoteViews.setOnClickPendingIntent(R.id.bigplayer_parentview, getPendingIntent(context, CLICK_APP));
+        //remoteViews.setOnClickPendingIntent(R.id.bigplayer_parentview, getPendingIntent(context, CLICK_APP));
         //点击取消通知栏
         remoteViews.setOnClickPendingIntent(R.id.bigplayer_cancel, getPendingIntent(context, CLICK_CANCEL));
         //点击播放暂停
