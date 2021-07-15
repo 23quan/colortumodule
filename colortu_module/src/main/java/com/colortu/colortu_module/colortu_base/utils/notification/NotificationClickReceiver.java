@@ -3,7 +3,6 @@ package com.colortu.colortu_module.colortu_base.utils.notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
@@ -21,7 +20,6 @@ public class NotificationClickReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         switch (action) {
             case NotificationUtil.CLICK_APP: //通知栏进入app
-                Log.e("123","CLICK_APP");
                 if (BaseApplication.appType == 1) {
                     ARouter.getInstance().build(BaseConstant.WORK_SPLASH).navigation();
                 } else {
@@ -29,20 +27,22 @@ public class NotificationClickReceiver extends BroadcastReceiver {
                 }
                 break;
             case NotificationUtil.CLICK_CANCEL://通知栏取消
-                Log.e("123","CLICK_CANCEL");
                 BaseApplication.getInstance().exitApp();
                 break;
             case NotificationUtil.CLICK_LAST://通知栏上一首
-                Log.e("123","CLICK_LAST");
-                onNotificationListener.onNotificationLast();
+                if (onNotificationListener != null) {
+                    onNotificationListener.onNotificationLast();
+                }
                 break;
             case NotificationUtil.CLICK_PLAY://通知栏播放和暂停
-                Log.e("123","CLICK_PLAY");
-                onNotificationListener.onNotificationPlay();
+                if (onNotificationListener != null) {
+                    onNotificationListener.onNotificationPlay();
+                }
                 break;
             case NotificationUtil.CLICK_NEXT://通知栏下一首
-                Log.e("123","CLICK_NEXT");
-                onNotificationListener.onNotificationNext();
+                if (onNotificationListener != null) {
+                    onNotificationListener.onNotificationNext();
+                }
                 break;
         }
     }
