@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -16,10 +15,6 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 
-import static android.app.Notification.CATEGORY_MESSAGE;
-import static android.app.Notification.DEFAULT_ALL;
-import static androidx.core.app.NotificationCompat.PRIORITY_MAX;
-
 /**
  * @author : Code23
  * @time : 2021/4/29
@@ -27,9 +22,9 @@ import static androidx.core.app.NotificationCompat.PRIORITY_MAX;
  * @describe :通知栏
  */
 public class NotificationUtil {
-    private static final CharSequence CHANNEL_NAME = "HOMEWORK";
+    private static final CharSequence CHANNEL_NAME = "homework";
     private static final String CHANNEL_ID = "homework_play";
-    private final static int NOTIFY_ID = 1001;
+    private final static int NOTIFY_ID = 1008800;
     public static boolean isExistNotification = false;
 
     public final static String CLICK_APP = "click_app";
@@ -73,20 +68,10 @@ public class NotificationUtil {
         } else {
             builder.setSmallIcon(R.mipmap.icon_listen_logo);
         }
-        //设置类别
-        builder.setCategory(CATEGORY_MESSAGE);
-        //设置默认的
-        builder.setDefaults(DEFAULT_ALL);
-        //设置是否正在通知
-        builder.setOngoing(true);
         //点击不让消失
         builder.setAutoCancel(false);
-        //设置优先级
-        builder.setPriority(PRIORITY_MAX);
-        //设置只提醒一次
-        builder.setOnlyAlertOnce(true);
         //把自定义小的view放上
-        builder.setContent(getSmallRemoteViews(context, content));
+        builder.setCustomContentView(getSmallRemoteViews(context, content));
         //把自定义大的view放上
         builder.setCustomBigContentView(getBigRemoteViews(context, content));
         //整个点击跳转activity
@@ -121,8 +106,6 @@ public class NotificationUtil {
     private static RemoteViews getSmallRemoteViews(Context context, String content) {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_smallplayer);
-        //点击item进入app
-        //remoteViews.setOnClickPendingIntent(R.id.smallplayer_parentview, getPendingIntent(context, CLICK_APP));
         //点击取消通知栏
         remoteViews.setOnClickPendingIntent(R.id.smallplayer_cancel, getPendingIntent(context, CLICK_CANCEL));
         //点击播放暂停
@@ -156,8 +139,6 @@ public class NotificationUtil {
     private static RemoteViews getBigRemoteViews(Context context, String content) {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_bigplayer);
-        //点击item进入app
-        //remoteViews.setOnClickPendingIntent(R.id.bigplayer_parentview, getPendingIntent(context, CLICK_APP));
         //点击取消通知栏
         remoteViews.setOnClickPendingIntent(R.id.bigplayer_cancel, getPendingIntent(context, CLICK_CANCEL));
         //点击播放暂停
@@ -193,7 +174,6 @@ public class NotificationUtil {
      * @return
      */
     private static PendingIntent getPendingIntent(Context context, String action) {
-        Log.e("123","action:"+action);
         Intent intent = new Intent(context, NotificationClickReceiver.class);
         intent.setAction(action);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
