@@ -1,7 +1,6 @@
 package com.colortu.colortu_module.colortu_base.utils.notification;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.widget.RemoteViews;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
@@ -53,35 +55,30 @@ public class NotificationUtil {
     @SuppressLint("NewApi")
     private static void create(String content) {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification.Builder builder = new Notification.Builder(context);
-
         // 通知框兼容 android 8 及以上
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.enableLights(true);
-            notificationChannel.setShowBadge(true);
             notificationChannel.setSound(null, null);
             notificationManager.createNotificationChannel(notificationChannel);
-            builder.setChannelId(CHANNEL_ID);
         }
-
-        //设置小图标
-        if (BaseApplication.appType == 1) {
-            builder.setSmallIcon(R.mipmap.icon_work_huaweilogo);
-        } else {
-            builder.setSmallIcon(R.mipmap.icon_listen_logo);
-        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
+        //设置优先级
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
         //点击不让消失
-        builder.setAutoCancel(false);
+        builder.setAutoCancel(true);
+        //自定义view
+        builder.setContent(getSmallRemoteViews(content));
         //把自定义小的view放上
-        builder.setCustomContentView(getSmallRemoteViews(context, content));
+        builder.setCustomContentView(getSmallRemoteViews(content));
         //把自定义大的view放上
-        builder.setCustomBigContentView(getBigRemoteViews(context, content));
+        builder.setCustomBigContentView(getBigRemoteViews(content));
+        //设置全屏意图
+        builder.setFullScreenIntent(getPendingIntent(CLICK_APP), true);
         //整个点击跳转activity
         builder.setContentIntent(getPendingIntent(CLICK_APP));
-
-        Notification notification = builder.build();
-        notificationManager.notify(NOTIFY_ID, notification);
+        //显示通知
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
+        notificationManagerCompat.notify(NOTIFY_ID, builder.build());
         isExistNotification = true;
     }
 
@@ -97,7 +94,7 @@ public class NotificationUtil {
     private static void cancel() {
         if (isExistNotification) {
             if (notificationManager != null) {
-                notificationManager.cancel(NOTIFY_ID);
+                notificationManager.cancelAll();
                 isExistNotification = false;
             }
         }
@@ -106,7 +103,7 @@ public class NotificationUtil {
     /**
      * 自定义小的界面
      */
-    private static RemoteViews getSmallRemoteViews(Context context, String content) {
+    private static RemoteViews getSmallRemoteViews(String content) {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_smallplayer);
         //点击取消通知栏
@@ -139,7 +136,7 @@ public class NotificationUtil {
     /**
      * 自定义大的界面
      */
-    private static RemoteViews getBigRemoteViews(Context context, String content) {
+    private static RemoteViews getBigRemoteViews(String content) {
         //自定义界面
         RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_bigplayer);
         //点击取消通知栏
@@ -176,9 +173,9 @@ public class NotificationUtil {
      * @return
      */
     private static PendingIntent getPendingIntent(String action) {
-        Intent intent = new Intent(action);
-        intent.setClass(context, NotificationClickReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(context, NotificationClickReceiver.class);
+        intent.setAction(action);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         return pendingIntent;
     }
 }
