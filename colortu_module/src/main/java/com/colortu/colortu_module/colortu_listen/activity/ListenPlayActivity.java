@@ -26,10 +26,15 @@ import java.util.List;
  * @describe :听力播放界面
  */
 @Route(path = BaseConstant.LISTEN_PLAY)
-public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, ActivityListenPlayBinding>{
+public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, ActivityListenPlayBinding> {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
+
+    //课名
+    private String classname;
+    //通知栏
+    private NotificationUtil notificationUtil;
 
     @Override
     public int getLayoutId() {
@@ -43,10 +48,11 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
         //注册蓝牙广播
         BlueToothUtils.onRegisterBlueTooth(this);
 
-        viewModel.classname.set(bundle.getString("classname"));
+        classname = bundle.getString("classname");
         viewModel.subjectid.set(bundle.getInt("subjectid"));
         viewModel.versionid.set(bundle.getInt("versionid"));
         viewModel.listenClassBean.set((List<ListenClassBean.DataBean.PoetryVOSBean.WordsBean>) bundle.getSerializable("wordsbean"));
+        notificationUtil = new NotificationUtil(this);
 
         if (viewModel.listenClassBean.get() != null) {
             if (viewModel.listenClassBean.get().size() == 0) {
@@ -83,12 +89,36 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
             }
         });
 
+        /**
+         * 播放和暂停监听刷新icon
+         */
+        viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                //发送通知栏消息
+                notificationUtil.createNotification(classname);
+            }
+        });
+
+        /**
+         * 监听是否播放完成
+         */
+        viewModel.isPlayFinish.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                //销毁通知栏消息
+                notificationUtil.cancelNotification();
+            }
+        });
+
         viewModel.initData();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //销毁通知栏消息
+        notificationUtil.cancelNotification();
         //注销蓝牙广播
         BlueToothUtils.onUnRegisterBlueTooth(this);
         //销毁资源

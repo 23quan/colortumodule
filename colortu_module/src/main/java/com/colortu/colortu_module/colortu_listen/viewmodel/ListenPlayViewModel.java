@@ -25,7 +25,6 @@ import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_base.utils.audio.AudioMngHelper;
 import com.colortu.colortu_module.colortu_base.utils.download.DownloadAudio;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationClickReceiver;
-import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_base.utils.string.StringUtil;
 import com.colortu.colortu_module.colortu_base.bean.ListenClassBean;
 import com.colortu.colortu_module.colortu_base.bean.ListenFinishBean;
@@ -50,8 +49,6 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     //听写完成接口
     private Call<ListenFinishBean> listenFinishBeanCall;
 
-    //课名
-    public ObservableField<String> classname = new ObservableField<>();
     //科目id
     public ObservableField<Integer> subjectid = new ObservableField<>();
     //版本id
@@ -73,6 +70,10 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     public ObservableField<Integer> progress = new ObservableField<>();
     //播放倒计时
     public ObservableField<String> curtime = new ObservableField<>();
+    //暂停播放监听
+    public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
+    //是否播放完成
+    public MutableLiveData<Boolean> isPlayFinish = new MutableLiveData<>();
 
     private Handler handler;
     //年级id
@@ -255,6 +256,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      */
     public void onJumpAnswer() {
         if (isClick) {
+            isPlayFinish.setValue(true);
             if (mediaPlayer != null) {
                 onReleasePlayer();
             }
@@ -389,8 +391,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         }
         //启动息屏app销毁
         SuicideUtils.onStartKill();
-        //发送通知栏消息
-        NotificationUtil.createNotification(classname.get());
+        isPlayLiveData.setValue(true);
         playicon.set(R.mipmap.icon_listen_stop);
         playing = false;
         curtime.set(String.valueOf((speedtime / 1000) - 1));
@@ -433,8 +434,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     private void onStartPlayer(Uri uri) {
         //取消息屏app销毁
         SuicideUtils.onCancelKill();
-        //发送通知栏消息
-        NotificationUtil.createNotification(classname.get());
+        isPlayLiveData.setValue(true);
 
         try {
             mediaPlayer = new MediaPlayer();
@@ -512,8 +512,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
 
                     //启动息屏app销毁
                     SuicideUtils.onStartKill();
-                    //发送通知栏消息
-                    NotificationUtil.createNotification(classname.get());
+                    isPlayFinish.setValue(true);
                 } else {
                     curItem++;
                     curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
@@ -641,8 +640,6 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      * 销毁资源
      */
     public void onDispose() {
-        //销毁通知栏消息
-        NotificationUtil.cancelNotification();
         //取消倒计时
         if (countDownTimer != null) {
             countDownTimer.cancel();

@@ -365,8 +365,6 @@ public class BaseApplication extends Application {
         try {
             //解绑音频焦点
             AudioFocusUtils.abandonAudioFocus();
-            //关闭通知栏
-            NotificationUtil.cancelNotification();
             //结束所有activity
             finishAllActivity();
             //从系统中kill掉应用程序

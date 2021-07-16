@@ -41,6 +41,8 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
     private int freecount;
     //0 不是会员 1是会员
     private int isVip;
+    //通知栏
+    private NotificationUtil notificationUtil;
 
     @Override
     public int getLayoutId() {
@@ -64,6 +66,7 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
 
         freecount = GetBeanDate.getFreeExamCount();
         isVip = GetBeanDate.getIsBookVIP();
+        notificationUtil = new NotificationUtil(this);
 
         /**
          * 锁显示
@@ -87,10 +90,25 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
         viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
+                //发送通知栏消息
+                notificationUtil.createNotification(classname);
                 if (aBoolean) {
                     binding.playStart.setImageResource(R.mipmap.icon_play_start);
                 } else {
                     binding.playStart.setImageResource(R.mipmap.icon_play_stop);
+                }
+            }
+        });
+
+        /**
+         * 监听是否播放完成
+         */
+        viewModel.isPlayFinish.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    //销毁通知栏消息
+                    notificationUtil.cancelNotification();
                 }
             }
         });
@@ -99,6 +117,8 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //销毁通知栏消息
+        notificationUtil.cancelNotification();
         //注销蓝牙广播
         BlueToothUtils.onUnRegisterBlueTooth(this);
         //销毁资源
