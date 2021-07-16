@@ -63,7 +63,7 @@ public class NotificationUtil {
                 builder.setSmallIcon(R.mipmap.icon_listen_logo);
             }
             //自定义通知栏
-            builder.setContent(getSmallRemoteViews(content));
+            //builder.setContent(getSmallRemoteViews(content));
             //设置优先级
             builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
             //通知栏点击
