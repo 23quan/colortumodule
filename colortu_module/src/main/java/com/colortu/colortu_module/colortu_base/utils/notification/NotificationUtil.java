@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.widget.RemoteViews;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
@@ -21,9 +24,9 @@ import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
  * @describe :通知栏
  */
 public class NotificationUtil {
-    private static final CharSequence CHANNEL_NAME = "colortu";
-    private static final String CHANNEL_ID = "1020308";
-    private final static int NOTIFY_ID = 1008800;
+    private static String CHANNEL_NAME = "colortu";
+    private static String CHANNEL_ID = "1020308";
+    private static int NOTIFY_ID = 1008800;
     public static boolean isExistNotification = false;
 
     public final static String CLICK_APP = "click_app";
@@ -32,14 +35,8 @@ public class NotificationUtil {
     public final static String CLICK_PLAY = "click_play";
     public final static String CLICK_NEXT = "click_next";
 
-    //上下文
-    private static Context context;
     //通知管理器
     private static NotificationManager notificationManager;
-
-    public static void setContext(Context context) {
-        NotificationUtil.context = context;
-    }
 
     /**
      * 创建通知栏
@@ -52,31 +49,33 @@ public class NotificationUtil {
 
     @SuppressLint("NewApi")
     private static void create(String content) {
-        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification.Builder builder = new Notification.Builder(context);
-
+        notificationManager = (NotificationManager) BaseApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         // 通知框兼容 android 8 及以上
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.setSound(null, null);
             notificationManager.createNotificationChannel(notificationChannel);
-            builder.setChannelId(CHANNEL_ID);
         }
-
+        //显示通知栏
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(BaseApplication.getContext(), CHANNEL_ID);
         //设置小图标
         if (BaseApplication.appType == 1) {
             builder.setSmallIcon(R.mipmap.icon_work_huaweilogo);
         } else {
             builder.setSmallIcon(R.mipmap.icon_listen_logo);
         }
-        //点击不让消失
-        builder.setAutoCancel(false);
+        //设置优先级
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        //通知栏点击
+        builder.setContentIntent(getPendingIntent(CLICK_APP));
+        //设置是否自动销毁
+        builder.setAutoCancel(true);
         //把自定义小的view放上
-        builder.setCustomContentView(getSmallRemoteViews(content));
+        builder.setContent(getSmallRemoteViews(content));
         //把自定义大的view放上
         builder.setCustomBigContentView(getBigRemoteViews(content));
-        //整个点击跳转activity
-        builder.setContentIntent(getPendingIntent(CLICK_APP));
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(BaseApplication.getContext());
+        notificationManagerCompat.notify(NOTIFY_ID, builder.build());
 
         Notification notification = builder.build();
         notificationManager.notify(NOTIFY_ID, notification);
@@ -88,15 +87,11 @@ public class NotificationUtil {
      */
     public static void cancelNotification() {
         if (ChannelUtil.isHuaWei()) {
-            cancel();
-        }
-    }
-
-    private static void cancel() {
-        if (isExistNotification) {
-            if (notificationManager != null) {
-                notificationManager.cancel(NOTIFY_ID);
-                isExistNotification = false;
+            if (isExistNotification) {
+                if (notificationManager != null) {
+                    notificationManager.cancelAll();
+                    isExistNotification = false;
+                }
             }
         }
     }
@@ -174,9 +169,9 @@ public class NotificationUtil {
      * @return
      */
     private static PendingIntent getPendingIntent(String action) {
-        Intent intent = new Intent(action);
-        intent.setClass(context, NotificationClickReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(BaseApplication.getContext(), NotificationClickReceiver.class);
+        intent.setAction(action);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(BaseApplication.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pendingIntent;
     }
 }
