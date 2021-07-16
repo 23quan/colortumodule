@@ -61,7 +61,6 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
         viewModel.classname.set(classname);
         viewModel.examid.set(examid);
         viewModel.audiourl.set(BaseConstant.HomeWorkImgUrl + audiourl);
-        NotificationUtil.setContext(this);
 
         freecount = GetBeanDate.getFreeExamCount();
         isVip = GetBeanDate.getIsBookVIP();
@@ -102,5 +101,7 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
         super.onDestroy();
         //注销蓝牙广播
         BlueToothUtils.onUnRegisterBlueTooth(this);
+        //销毁资源
+        viewModel.onDispose();
     }
 }

@@ -641,6 +641,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      * 销毁资源
      */
     public void onDispose() {
+        //销毁通知栏消息
+        NotificationUtil.cancelNotification();
         //取消倒计时
         if (countDownTimer != null) {
             countDownTimer.cancel();

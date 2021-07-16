@@ -266,13 +266,14 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         onPlay();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //解绑音频焦点
-        AudioFocusUtils.abandonAudioFocus();
+    /**
+     * 销毁资源
+     */
+    public void onDispose() {
         //销毁通知栏消息
         NotificationUtil.cancelNotification();
+        //解绑音频焦点
+        AudioFocusUtils.abandonAudioFocus();
 
         //暂停播放，释放资源
         if (audioPlayer != null) {

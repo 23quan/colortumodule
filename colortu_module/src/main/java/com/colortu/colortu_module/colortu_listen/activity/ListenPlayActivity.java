@@ -47,7 +47,6 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
         viewModel.subjectid.set(bundle.getInt("subjectid"));
         viewModel.versionid.set(bundle.getInt("versionid"));
         viewModel.listenClassBean.set((List<ListenClassBean.DataBean.PoetryVOSBean.WordsBean>) bundle.getSerializable("wordsbean"));
-        NotificationUtil.setContext(this);
 
         if (viewModel.listenClassBean.get() != null) {
             if (viewModel.listenClassBean.get().size() == 0) {
@@ -90,8 +89,6 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //销毁通知栏消息
-        NotificationUtil.cancelNotification();
         //注销蓝牙广播
         BlueToothUtils.onUnRegisterBlueTooth(this);
         //销毁资源
