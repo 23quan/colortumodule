@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
-//启用Jitpack插件
+//jitpack
 apply plugin: 'com.github.dcendents.android-maven'
-//设置Jitpack发布的Group,换成自己得github账号名
-group = 'com.github.23quan'
+group='com.github.23quan'
+
 
 android {
     compileSdkVersion 28
