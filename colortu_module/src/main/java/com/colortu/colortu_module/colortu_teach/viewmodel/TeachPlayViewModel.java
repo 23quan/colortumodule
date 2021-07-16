@@ -32,8 +32,6 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         BlueToothReceiver.OnBluetoothListener, AudioFocusUtils.OnAudioFocusListener {
     //暂停播放监听
     public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
-    //是否播放完成
-    public MutableLiveData<Boolean> isPlayFinish = new MutableLiveData<>();
 
     //true 解锁 false 去解锁
     public ObservableField<Boolean> isVip = new ObservableField<>();
@@ -96,6 +94,9 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
             public void playerstart() {//播放
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
+                //发送通知栏消息
+                NotificationUtil.createNotification(classname.get());
+
                 isPlayLiveData.setValue(true);
             }
 
@@ -107,19 +108,16 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
             @Override
             public void playerstop() {//停止
                 unPlayer(true);
-                isPlayFinish.setValue(true);
             }
 
             @Override
             public void playerfinish() {//完成
                 unPlayer(true);
-                isPlayFinish.setValue(true);
             }
 
             @Override
             public void playerfailure() {//失败
                 unPlayer(true);
-                isPlayFinish.setValue(true);
             }
         });
     }
@@ -131,6 +129,9 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         }
         //启动息屏app销毁
         SuicideUtils.onStartKill();
+        //发送通知栏消息
+        NotificationUtil.createNotification(classname.get());
+
         isPlayLiveData.setValue(false);
     }
 
@@ -225,6 +226,8 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         if (isLoseFocus) {
             //取消息屏app销毁
             SuicideUtils.onCancelKill();
+            //发送通知栏消息
+            NotificationUtil.createNotification(classname.get());
             isLoseFocus = false;
             isPlayLiveData.setValue(true);
             onPlay();
@@ -267,6 +270,8 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
      * 销毁资源
      */
     public void onDispose() {
+        //销毁通知栏消息
+        NotificationUtil.cancelNotification();
         //解绑音频焦点
         AudioFocusUtils.abandonAudioFocus();
 
