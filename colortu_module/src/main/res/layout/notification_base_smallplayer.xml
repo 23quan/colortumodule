@@ -39,12 +39,7 @@
             android:layout_marginLeft="@dimen/dimen_5"
             android:layout_marginRight="@dimen/dimen_50"
             android:layout_toRightOf="@+id/notification_icon"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
+            android:lines="1"
             android:textColor="@color/base_white1"
             android:textSize="@dimen/size_18"
             android:textStyle="bold"></TextView>
