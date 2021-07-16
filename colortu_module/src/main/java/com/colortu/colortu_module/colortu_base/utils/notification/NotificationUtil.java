@@ -62,6 +62,11 @@ public class NotificationUtil {
             notificationManager.createNotificationChannel(notificationChannel);
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
+        if (BaseApplication.appType == 1) {
+            builder.setSmallIcon(R.mipmap.icon_work_huaweilogo);
+        } else {
+            builder.setSmallIcon(R.mipmap.icon_listen_logo);
+        }
         //设置优先级
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
         //点击不让消失
