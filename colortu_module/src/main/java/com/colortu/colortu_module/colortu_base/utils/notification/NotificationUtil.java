@@ -10,9 +10,15 @@ import android.content.Intent;
 import android.os.Build;
 import android.widget.RemoteViews;
 
+import androidx.core.app.NotificationCompat;
+
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
+
+import static android.app.Notification.CATEGORY_MESSAGE;
+import static android.app.Notification.DEFAULT_ALL;
+import static androidx.core.app.NotificationCompat.PRIORITY_MAX;
 
 /**
  * @author : Code23
@@ -53,26 +59,35 @@ public class NotificationUtil {
     @SuppressLint("NewApi")
     private static void create(String content) {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification.Builder builder = new Notification.Builder(context);
 
-        // 通知框兼容 android 8 及以上
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//适配一下高版本
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            //关了通知默认提示音
             notificationChannel.setSound(null, null);
             notificationManager.createNotificationChannel(notificationChannel);
-            builder.setChannelId(CHANNEL_ID);
         }
 
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         //设置小图标
         if (BaseApplication.appType == 1) {
             builder.setSmallIcon(R.mipmap.icon_work_huaweilogo);
         } else {
             builder.setSmallIcon(R.mipmap.icon_listen_logo);
         }
+        //设置类别
+        builder.setCategory(CATEGORY_MESSAGE);
+        //设置默认的
+        builder.setDefaults(DEFAULT_ALL);
+        //设置是否正在通知
+        builder.setOngoing(true);
         //点击不让消失
         builder.setAutoCancel(false);
+        //设置优先级
+        builder.setPriority(PRIORITY_MAX);
+        //设置只提醒一次
+        builder.setOnlyAlertOnce(true);
         //把自定义小的view放上
-        builder.setCustomContentView(getSmallRemoteViews(content));
+        builder.setContent(getSmallRemoteViews(content));
         //把自定义大的view放上
         builder.setCustomBigContentView(getBigRemoteViews(content));
         //整个点击跳转activity
@@ -174,8 +189,8 @@ public class NotificationUtil {
      * @return
      */
     private static PendingIntent getPendingIntent(String action) {
-        Intent intent = new Intent(action);
-        intent.setClass(context, NotificationClickReceiver.class);
+        Intent intent = new Intent(context, NotificationClickReceiver.class);
+        intent.setAction(action);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pendingIntent;
     }

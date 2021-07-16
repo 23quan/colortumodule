@@ -12,7 +12,6 @@ import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothUtils;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
-import com.colortu.colortu_module.colortu_base.utils.SuicideUtils;
 import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_teach.viewmodel.TeachPlayViewModel;
 import com.colortu.colortu_module.databinding.ActivityTeachPlayBinding;
