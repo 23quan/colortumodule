@@ -47,9 +47,7 @@ public class StudyMineJoinAdapter extends BaseRecyclerAdapter<StudyMineBean.Data
             adapterStudyMineBinding.mineCommand.setText("口令:\n" + item.getPassword());
         }
 
-        /**
-         * 点击升级自习室
-         */
+        //点击升级自习室
         adapterStudyMineBinding.mineUpgrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,9 +59,7 @@ public class StudyMineJoinAdapter extends BaseRecyclerAdapter<StudyMineBean.Data
             }
         });
 
-        /**
-         * 点击item跳转详情
-         */
+        //点击item跳转详情
         adapterStudyMineBinding.mineItemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

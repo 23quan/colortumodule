@@ -115,9 +115,7 @@ public class QrcodeLoginActivity extends BaseActivity<QrcodeLoginViewModel, Acti
             }
         });
 
-        /**
-         * 登录二维码监听
-         */
+       //登录二维码监听
         viewModel.codeimg.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -135,9 +133,7 @@ public class QrcodeLoginActivity extends BaseActivity<QrcodeLoginViewModel, Acti
             }
         });
 
-        /**
-         * 监听登录成功
-         */
+       //监听登录成功
         viewModel.isLoginLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

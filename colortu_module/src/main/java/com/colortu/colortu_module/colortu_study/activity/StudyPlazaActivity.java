@@ -52,9 +52,7 @@ public class StudyPlazaActivity extends BaseActivity<StudyPlazaViewModel, Activi
         binding.plazaOfficiallist.setLayoutManager(linearLayoutManager1);
         binding.plazaOfficiallist.setAdapter(studyPlazaOfficialAdapter);
 
-        /**
-         * 官方自习列表数据监听
-         */
+        //官方自习列表数据监听
         viewModel.officialLiveData.observe(this, new Observer<List<StudyPlazaBean.DataBean.OfficialBean>>() {
             @Override
             public void onChanged(List<StudyPlazaBean.DataBean.OfficialBean> officialBeans) {
@@ -78,9 +76,7 @@ public class StudyPlazaActivity extends BaseActivity<StudyPlazaViewModel, Activi
         binding.plazaPersonlist.setLayoutManager(linearLayoutManager2);
         binding.plazaPersonlist.setAdapter(studyPlazaPersonAdapter);
 
-        /**
-         * 个人自习列表数据监听
-         */
+       //个人自习列表数据监听
         viewModel.personLiveData.observe(this, new Observer<List<StudyPlazaBean.DataBean.PersonalBean>>() {
             @Override
             public void onChanged(List<StudyPlazaBean.DataBean.PersonalBean> personalBeans) {
@@ -98,9 +94,7 @@ public class StudyPlazaActivity extends BaseActivity<StudyPlazaViewModel, Activi
             }
         });
 
-        /**
-         * 跳转自习广场列表筛选界面
-         */
+        //跳转自习广场列表筛选界面
         binding.plazaFiltrate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -63,9 +63,7 @@ public class QrcodeAccountActivity extends BaseActivity<QrcodeAccountViewModel, 
         binding.accountList.setLayoutManager(linearLayoutManager);
         binding.accountList.setAdapter(qrcodeAccountAdapter);
 
-        /**
-         * 选择账号监听
-         */
+        //选择账号监听
         qrcodeAccountAdapter.setOnClickChooseAccountListener(new QrcodeAccountAdapter.OnClickChooseAccountListener() {
             @Override
             public void OnClickChooseAccount(QrcodeUserInfoBean.DataBean.UserListBean userListBean) {
@@ -75,9 +73,7 @@ public class QrcodeAccountActivity extends BaseActivity<QrcodeAccountViewModel, 
             }
         });
 
-        /**
-         * 账号列表数据监听
-         */
+        //账号列表数据监听
         viewModel.userListLiveData.observe(this, new Observer<List<QrcodeUserInfoBean.DataBean.UserListBean>>() {
             @Override
             public void onChanged(List<QrcodeUserInfoBean.DataBean.UserListBean> userListBeans) {

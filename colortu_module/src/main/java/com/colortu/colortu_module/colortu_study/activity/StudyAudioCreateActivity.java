@@ -46,9 +46,7 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.audiocreateParentview);
 
-        /**
-         * 检查是否有相应的权限
-         */
+        //检查是否有相应的权限
         if (ChannelUtil.isHuaWei()) {
             checkDevicePermission(permissions, new PermissionListener() {
                 @Override
@@ -65,9 +63,7 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
 
         binding.audiocreateTranslate.setMovementMethod(ScrollingMovementMethod.getInstance());
 
-        /**
-         * 录音监听
-         */
+        //录音监听
         viewModel.isvisibleLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -82,9 +78,7 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
             }
         });
 
-        /**
-         * 录音按钮监听
-         */
+        //录音按钮监听
         binding.audiocreateInputview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -102,9 +96,7 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
         });
     }
 
-    /**
-     * 开始录音
-     */
+    //开始录音
     private void OnStartRecorder() {
         //抢占音频焦点
         AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
@@ -114,9 +106,7 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
         viewModel.audioRecord.OnRecorder(true);
     }
 
-    /**
-     * 结束录音
-     */
+    //结束录音
     private void OnStopRecorder() {
         //解绑音频焦点
         AudioFocusUtils.abandonAudioFocus();

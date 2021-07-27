@@ -61,9 +61,7 @@ public class TeachChooseGradeClassAdapter extends BaseRecyclerAdapter<TeachChoos
             adapterTeachChoosegradeclassBinding.choosegradeChoose.setImageResource(R.mipmap.icon_circle_nochoose);
         }
 
-        /**
-         * 选择年级教辅
-         */
+        //选择年级教辅
         adapterTeachChoosegradeclassBinding.choosegradeItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

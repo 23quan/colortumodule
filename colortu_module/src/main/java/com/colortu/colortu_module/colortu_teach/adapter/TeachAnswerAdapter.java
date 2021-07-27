@@ -210,7 +210,6 @@ public class TeachAnswerAdapter extends BaseRecyclerAdapter<TeachTopicAnswerBean
                 }
             }
         }
-
         return list;
     }
 
@@ -293,7 +292,6 @@ public class TeachAnswerAdapter extends BaseRecyclerAdapter<TeachTopicAnswerBean
                 }
             }
         }
-
         return list;
     }
 }

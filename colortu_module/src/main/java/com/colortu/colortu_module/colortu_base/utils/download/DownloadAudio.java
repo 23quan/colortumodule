@@ -59,11 +59,10 @@ public class DownloadAudio {
     }
 
     /**
-     * @author : Code23
-     * @time : 2020/11/5
-     * @name : downloadFile
-     * @Parameters : [url, name, dowloadpath]
-     * @describe :
+     * 下载音频
+     *
+     * @param url
+     * @param i
      */
     @SuppressLint("NewApi")
     public void OkHttpDownloadAudio(final String url, final int i) {

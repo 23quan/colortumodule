@@ -43,9 +43,7 @@ public class ListenAnswerAdapter extends BaseRecyclerAdapter<ListenClassBean.Dat
             Glide.with(context).load(R.mipmap.icon_listen_stop).into(adapterListenAnswerBinding.answerPlay);
         }
 
-        /**
-         * 播放按钮
-         */
+        //播放按钮
         adapterListenAnswerBinding.answerPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

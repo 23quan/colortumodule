@@ -56,9 +56,7 @@ public class RecordInputCommandActivity extends BaseActivity<RecordInputCommandV
         binding.inputcommandKeyboardlist.setLayoutManager(gridLayoutManager);
         binding.inputcommandKeyboardlist.setAdapter(recordKeyBoardAdapter);
 
-        /**
-         * 数字键盘列表item时间监听
-         */
+        //数字键盘列表item时间监听
         recordKeyBoardAdapter.setOnClickKeyBoardListener(new RecordKeyBoardAdapter.OnClickKeyBoardListener() {
             @Override
             public void OnClickKeyBoard(String key) {//数字按钮
@@ -75,9 +73,7 @@ public class RecordInputCommandActivity extends BaseActivity<RecordInputCommandV
             }
         });
 
-        /**
-         * 数字键盘列表数据监听
-         */
+        //数字键盘列表数据监听
         viewModel.keyboardLiveData.observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> strings) {
@@ -88,9 +84,7 @@ public class RecordInputCommandActivity extends BaseActivity<RecordInputCommandV
             }
         });
 
-        /**
-         * 监听判断口令是否正确
-         */
+        //监听判断口令是否正确
         viewModel.isright.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

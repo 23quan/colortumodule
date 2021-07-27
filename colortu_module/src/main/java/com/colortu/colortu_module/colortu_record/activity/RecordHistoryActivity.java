@@ -52,9 +52,7 @@ public class RecordHistoryActivity extends BaseActivity<RecordHistoryViewModel, 
         binding.historyList.setLayoutManager(linearLayoutManager);
         binding.historyList.setAdapter(recordHistoryAdapter);
 
-        /**
-         * 作业历史列表item事件监听
-         */
+        //作业历史列表item事件监听
         recordHistoryAdapter.setOnClickHistoryListener(new RecordHistoryAdapter.OnClickHistoryListener() {
             @Override
             public void OnClickHistory(String day, String date) {
@@ -68,9 +66,7 @@ public class RecordHistoryActivity extends BaseActivity<RecordHistoryViewModel, 
             }
         });
 
-        /**
-         * 作业历史列表数据监听
-         */
+        //作业历史列表数据监听
         viewModel.recordHistoryBeanLiveData.observe(this, new Observer<List<RecordHistoryBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<RecordHistoryBean.DataBean.RecordsBean> recordsBeans) {

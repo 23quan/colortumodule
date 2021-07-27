@@ -64,9 +64,7 @@ public class SuicideUtils {
         }
     }
 
-    /**
-     * 倒计时
-     */
+    //倒计时
     private static CountDownTimer countDownTimer;
 
     private static void onCountDownTimer(long times) {

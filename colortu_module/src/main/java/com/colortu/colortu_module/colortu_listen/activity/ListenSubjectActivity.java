@@ -48,9 +48,7 @@ public class ListenSubjectActivity extends BaseActivity<ListenSubjectViewModel, 
         binding.listensubjectList.setLayoutManager(linearLayoutManager);
         binding.listensubjectList.setAdapter(listenSubjectAdapter);
 
-        /**
-         * 科目点击监听
-         */
+        //科目点击监听
         listenSubjectAdapter.setOnClickChooseSubjectListener(new ListenSubjectAdapter.OnClickChooseSubjectListener() {
             @Override
             public void OnClickChooseSubject(int id) {
@@ -58,9 +56,7 @@ public class ListenSubjectActivity extends BaseActivity<ListenSubjectViewModel, 
             }
         });
 
-        /**
-         * 科目数据监听
-         */
+        //科目数据监听
         viewModel.listenSubjectBeanLiveData.observe(this, new Observer<List<ListenSubjectBean>>() {
             @Override
             public void onChanged(List<ListenSubjectBean> listenSubjectBeans) {

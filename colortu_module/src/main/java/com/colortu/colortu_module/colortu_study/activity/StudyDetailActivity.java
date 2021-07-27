@@ -109,9 +109,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
      * 初始化数据
      */
     private void initData() {
-        /**
-         * 开始自习/结束自习
-         */
+       //开始自习/结束自习
         binding.detailStudyview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,9 +141,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 是否入座/结束自习室监听
-         */
+       //是否入座/结束自习室监听
         viewModel.isStudyLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -166,9 +162,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 自习室详情数据监听
-         */
+        //自习室详情数据监听
         viewModel.studyRoomBeanLiveData.observe(this, new Observer<StudyDetailBean.DataBean.StudyRoomBean>() {
             @Override
             public void onChanged(final StudyDetailBean.DataBean.StudyRoomBean studyRoomBean) {
@@ -202,9 +196,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 邀请同学
-         */
+        //邀请同学
         binding.detailInvite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,9 +211,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 自习广场个人详情列表数据监听
-         */
+        //自习广场个人详情列表数据监听
         viewModel.topUserBeanLiveData.observe(this, new Observer<StudyDetailBean.DataBean.TopUserBean>() {
             @Override
             public void onChanged(StudyDetailBean.DataBean.TopUserBean topUserBean) {
@@ -237,9 +227,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 点赞
-         */
+        //点赞
         binding.detailMinelikeview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,9 +235,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 播放自己个性语音签名
-         */
+       //播放自己个性语音签名
         binding.detailMineplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -281,9 +267,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 更改个人签名数据
-         */
+        //更改个人签名数据
         binding.detailMinesign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -303,9 +287,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         binding.detailList.setLayoutManager(linearLayoutManager);
         binding.detailList.setAdapter(studyDetailAdapter);
 
-        /**
-         * 点赞
-         */
+        //点赞
         studyDetailAdapter.setOnClickLikeListener(new StudyDetailAdapter.OnClickLikeListener() {
             @Override
             public void OnClickLike(String uuid) {
@@ -313,9 +295,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 播放个性签名语音
-         */
+        //播放个性签名语音
         studyDetailAdapter.setOnClickPlayListener(new StudyDetailAdapter.OnClickPlayListener() {
             @Override
             public void OnClickPlay(int position, boolean isplay, String audiourl) {
@@ -354,9 +334,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 自习广场列表详情列表数据监听
-         */
+        //自习广场列表详情列表数据监听
         viewModel.plazaDetailLiveData.observe(this, new Observer<List<StudyDetailBean.DataBean.UserDetailsBean>>() {
             @Override
             public void onChanged(List<StudyDetailBean.DataBean.UserDetailsBean> userDetailsBeans) {
@@ -369,9 +347,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-        /**
-         * 监听是否播放完成
-         */
+        //监听是否播放完成
         viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

@@ -54,9 +54,7 @@ public class StudyPlazaFiltrateActivity extends BaseActivity<StudyPlazaFiltrateV
         binding.plazafiltrateAreaist.setLayoutManager(gridLayoutManager1);
         binding.plazafiltrateAreaist.setAdapter(studyPlazaFiltrateAreaAdapter);
 
-        /**
-         * 区域item选择监听
-         */
+        //区域item选择监听
         studyPlazaFiltrateAreaAdapter.setOnClickFiltrateAreaListener(new StudyPlazaFiltrateAreaAdapter.OnClickFiltrateAreaListener() {
             @Override
             public void OnClickFiltrateArea(String item) {
@@ -66,9 +64,7 @@ public class StudyPlazaFiltrateActivity extends BaseActivity<StudyPlazaFiltrateV
             }
         });
 
-        /**
-         * 区域数据列表监听
-         */
+       //区域数据列表监听
         viewModel.areaLiveData.observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> strings) {
@@ -93,9 +89,7 @@ public class StudyPlazaFiltrateActivity extends BaseActivity<StudyPlazaFiltrateV
         binding.plazafiltrateGradelist.setLayoutManager(gridLayoutManager2);
         binding.plazafiltrateGradelist.setAdapter(studyPlazaFiltrateGradeAdapter);
 
-        /**
-         * 年级item选择监听
-         */
+        //年级item选择监听
         studyPlazaFiltrateGradeAdapter.setOnClickFiltrateGradeListener(new StudyPlazaFiltrateGradeAdapter.OnClickFiltrateGradeListener() {
             @Override
             public void OnClickFiltrateGrade(String item) {
@@ -105,9 +99,7 @@ public class StudyPlazaFiltrateActivity extends BaseActivity<StudyPlazaFiltrateV
             }
         });
 
-        /**
-         * 年级数据列表监听
-         */
+        //年级数据列表监听
         viewModel.gradeLiveData.observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> strings) {

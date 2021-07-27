@@ -47,9 +47,7 @@ public class StudyMinePastAdapter extends BaseRecyclerAdapter<StudyMineBean.Data
             adapterStudyMineBinding.mineCommand.setText("口令:\n" + item.getPassword());
         }
 
-        /**
-         * 点击升级自习室
-         */
+        //点击升级自习室
         adapterStudyMineBinding.mineUpgrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

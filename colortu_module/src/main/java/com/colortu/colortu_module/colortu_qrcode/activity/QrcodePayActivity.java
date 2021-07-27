@@ -93,9 +93,7 @@ public class QrcodePayActivity extends BaseActivity<QrcodePayViewModel, Activity
             viewModel.onRequestPay();
         }
 
-        /**
-         * 二维码监听
-         */
+        //二维码监听
         viewModel.codeimg.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -113,9 +111,7 @@ public class QrcodePayActivity extends BaseActivity<QrcodePayViewModel, Activity
             }
         });
 
-        /**
-         * 支付成功监听
-         */
+        //支付成功监听
         viewModel.paysuccess.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

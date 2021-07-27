@@ -58,9 +58,7 @@ public class RecordSubjectAdapter extends BaseRecyclerAdapter<RecordSubjectBean.
             adapterRecordSubjectBinding.recordsubjectChoose.setImageResource(R.mipmap.icon_square_nochoose);
         }
 
-        /**
-         * 科目item
-         */
+        //科目item
         adapterRecordSubjectBinding.recordsubjectItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,9 +71,7 @@ public class RecordSubjectAdapter extends BaseRecyclerAdapter<RecordSubjectBean.
             }
         });
 
-        /**
-         * 是否完成
-         */
+        //是否完成
         adapterRecordSubjectBinding.recordsubjectChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

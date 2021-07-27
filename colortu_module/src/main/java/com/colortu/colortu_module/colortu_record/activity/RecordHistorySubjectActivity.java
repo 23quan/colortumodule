@@ -68,9 +68,7 @@ public class RecordHistorySubjectActivity extends BaseActivity<RecordHistorySubj
         binding.historysubjectList.setLayoutManager(linearLayoutManager);
         binding.historysubjectList.setAdapter(recordHistorySubjectAdapter);
 
-        /**
-         * 历史课目item点击监听
-         */
+        //历史课目item点击监听
         recordHistorySubjectAdapter.setOnClickSubjectDetailListener(new RecordHistorySubjectAdapter.OnClickSubjectDetailListener() {
             @Override
             public void OnClickSubjectDetail(String subjectname, int subjectId) {
@@ -102,9 +100,7 @@ public class RecordHistorySubjectActivity extends BaseActivity<RecordHistorySubj
             }
         });
 
-        /**
-         * 历史科目列表数据监听
-         */
+        //历史科目列表数据监听
         viewModel.recordSubjectLiveData.observe(this, new Observer<List<RecordSubjectBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<RecordSubjectBean.DataBean.RecordsBean> recordsBeans) {

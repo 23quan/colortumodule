@@ -45,9 +45,7 @@ public class ListenVersionAdapter extends BaseRecyclerAdapter<ListenVersionBean.
             adapterListenVersionBinding.versionItembg.setColorFilter(0x00000000);
         }
 
-        /**
-         * 版本item点击
-         */
+        //版本item点击
         adapterListenVersionBinding.versionItemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

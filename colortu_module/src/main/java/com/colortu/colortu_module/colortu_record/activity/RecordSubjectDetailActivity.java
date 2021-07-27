@@ -67,9 +67,7 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
         binding.subjectdetailList.setLayoutManager(linearLayoutManager);
         binding.subjectdetailList.setAdapter(recordSubjectDetailAdapter);
 
-        /**
-         * 录入科目详情列表item事件监听
-         */
+        //录入科目详情列表item事件监听
         recordSubjectDetailAdapter.setOnClickSubjectDetailListener(new RecordSubjectDetailAdapter.OnClickSubjectDetailListener() {
             @Override
             public void OnClickPlay(int position, boolean isplay, String audiourl) {
@@ -109,9 +107,7 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
             }
         });
 
-        /**
-         * 录入科目详情列表数据监听
-         */
+        //录入科目详情列表数据监听
         viewModel.recordSubjectDetailBeanLiveData.observe(this, new Observer<List<RecordSubjectDetailBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<RecordSubjectDetailBean.DataBean.RecordsBean> recordsBeans) {
@@ -124,9 +120,7 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
             }
         });
 
-        /**
-         * 监听是否播放完成
-         */
+        //监听是否播放完成
         viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -138,9 +132,7 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
             }
         });
 
-        /**
-         * 编辑和完成转换监听
-         */
+        //编辑和完成转换监听
         viewModel.switchLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

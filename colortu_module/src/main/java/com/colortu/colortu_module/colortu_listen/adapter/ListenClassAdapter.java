@@ -59,9 +59,7 @@ public class ListenClassAdapter extends BaseRecyclerAdapter<ListenClassBean.Data
             }
         }
 
-        /**
-         * item点击监听
-         */
+        //item点击监听
         adapterListenClassBinding.className.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

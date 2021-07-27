@@ -33,9 +33,7 @@ public class RecordKeyBoardAdapter extends BaseRecyclerAdapter<String> {
             adapterRecordKeyboardBinding.keyboardKey.setBackgroundResource(R.drawable.base_blue4_bg);
         }
 
-        /**
-         * 键盘item点击
-         */
+        //键盘item点击
         adapterRecordKeyboardBinding.keyboardKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,9 +45,7 @@ public class RecordKeyBoardAdapter extends BaseRecyclerAdapter<String> {
             }
         });
 
-        /**
-         * 键盘item触目监听
-         */
+        //键盘item触目监听
         adapterRecordKeyboardBinding.keyboardKey.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

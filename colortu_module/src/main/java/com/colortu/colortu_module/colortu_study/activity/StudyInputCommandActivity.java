@@ -55,9 +55,7 @@ public class StudyInputCommandActivity extends BaseActivity<StudyInputCommandVie
         binding.inputcommandList.setLayoutManager(gridLayoutManager);
         binding.inputcommandList.setAdapter(studyKeyBoardAdapter);
 
-        /**
-         * 数字键盘列表item时间监听
-         */
+        //数字键盘列表item时间监听
         studyKeyBoardAdapter.setOnClickKeyBoardListener(new StudyKeyBoardAdapter.OnClickKeyBoardListener() {
             @Override
             public void OnClickKeyBoard(String key) {//数字按钮
@@ -78,9 +76,7 @@ public class StudyInputCommandActivity extends BaseActivity<StudyInputCommandVie
             }
         });
 
-        /**
-         * 数字键盘列表数据监听
-         */
+        //数字键盘列表数据监听
         viewModel.keyboardLiveData.observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> strings) {

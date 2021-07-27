@@ -51,9 +51,7 @@ public class TeachMainActivity extends BaseActivity<TeachMainViewModel, Activity
         binding.teachmainList.setLayoutManager(linearLayoutManager);
         binding.teachmainList.setAdapter(teachMainAdapter);
 
-        /**
-         * item事件监听
-         */
+        //item事件监听
         teachMainAdapter.setOnClickSubjectDetailListener(new TeachMainAdapter.OnClickSubjectDetailListener() {
             @Override
             public void OnClickDelete(int ids) {
@@ -79,9 +77,7 @@ public class TeachMainActivity extends BaseActivity<TeachMainViewModel, Activity
             }
         });
 
-        /**
-         * 是否显示删除按钮监听
-         */
+        //是否显示删除按钮监听
         viewModel.booleanLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -95,9 +91,7 @@ public class TeachMainActivity extends BaseActivity<TeachMainViewModel, Activity
             }
         });
 
-        /**
-         * 我的教辅列表数据监听
-         */
+        //我的教辅列表数据监听
         viewModel.teachMainBeanLiveData.observe(this, new Observer<List<TeachMainBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<TeachMainBean.DataBean.RecordsBean> recordsBeans) {
@@ -110,9 +104,7 @@ public class TeachMainActivity extends BaseActivity<TeachMainViewModel, Activity
             }
         });
 
-        /**
-         * 判断我的教辅是否为空
-         */
+        //判断我的教辅是否为空
         viewModel.isEmpty.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

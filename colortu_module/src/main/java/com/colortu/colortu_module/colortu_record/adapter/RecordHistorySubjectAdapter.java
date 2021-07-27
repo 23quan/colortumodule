@@ -48,9 +48,7 @@ public class RecordHistorySubjectAdapter extends BaseRecyclerAdapter<RecordSubje
             adapterRecordHistorysubjectBinding.historysubjectSelect.setImageResource(R.mipmap.icon_square_nochoose);
         }
 
-        /**
-         * item事件监听
-         */
+        //item事件监听
         adapterRecordHistorysubjectBinding.historysubjectItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,9 +56,7 @@ public class RecordHistorySubjectAdapter extends BaseRecyclerAdapter<RecordSubje
             }
         });
 
-        /**
-         * 是否完成
-         */
+        //是否完成
         adapterRecordHistorysubjectBinding.historysubjectSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

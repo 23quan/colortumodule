@@ -41,9 +41,7 @@ public class StudyPlazaFiltrateGradeAdapter extends BaseRecyclerAdapter<String> 
         }
         adapterStudyPlazafiltrateBinding.plazafiltrateText.setText(item);
 
-        /**
-         * item点击监听
-         */
+        //item点击监听
         adapterStudyPlazafiltrateBinding.plazafiltrateItemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

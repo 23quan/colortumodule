@@ -66,9 +66,7 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
         binding.signList.setLayoutManager(gridLayoutManager);
         binding.signList.setAdapter(studySignAdapter);
 
-        /**
-         * 跳转录入个性语音界面
-         */
+        //跳转录入个性语音界面
         binding.signInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,9 +82,7 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
             }
         });
 
-        /**
-         * 确定修改
-         */
+        //确定修改
         binding.signSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,9 +102,7 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
             }
         });
 
-        /**
-         * 播放暂停监听
-         */
+        //播放暂停监听
         viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -120,9 +114,7 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
             }
         });
 
-        /**
-         * 个性状态选择
-         */
+        //个性状态选择
         studySignAdapter.setOnClickStudySignListener(new StudySignAdapter.OnClickStudySignListener() {
             @Override
             public void OnClickStudySign(int position, int id) {
@@ -135,9 +127,7 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
             }
         });
 
-        /**
-         * 个性签名列表数据监听
-         */
+        //个性签名列表数据监听
         viewModel.studysignLiveData.observe(this, new Observer<List<StudySignBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<StudySignBean.DataBean.RecordsBean> recordsBeans) {
@@ -150,9 +140,7 @@ public class StudySignActivity extends BaseActivity<StudySignViewModel, Activity
             }
         });
 
-        /**
-         * 确定按钮背景颜色监听
-         */
+        //确定按钮背景颜色监听
         viewModel.sureBgColor.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

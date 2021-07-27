@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/study_plaza"
-                android:textColor="@color/white"
+                android:textColor="@color/base_white1"
                 android:textSize="@dimen/size_30"
                 android:textStyle="bold"></TextView>
         </LinearLayout>
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mine_studyroom"
-                android:textColor="@color/white"
+                android:textColor="@color/base_white1"
                 android:textSize="@dimen/size_30"
                 android:textStyle="bold"></TextView>
         </LinearLayout>

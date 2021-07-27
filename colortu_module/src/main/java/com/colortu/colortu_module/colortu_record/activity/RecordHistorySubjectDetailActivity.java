@@ -66,9 +66,7 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
         binding.historysubjectdetailList.setLayoutManager(linearLayoutManager);
         binding.historysubjectdetailList.setAdapter(recordHistorySubjectDetailAdapter);
 
-        /**
-         * 历史科目详情列表item事件监听
-         */
+        //历史科目详情列表item事件监听
         recordHistorySubjectDetailAdapter.setOnClickHistorySubjectDetailListener(new RecordHistorySubjectDetailAdapter.OnClickHistorySubjectDetailListener() {
             @Override
             public void OnClickPlay(int position, boolean isplay, String audiourl) {
@@ -97,9 +95,7 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
             }
         });
 
-        /**
-         * 历史科目详情列表数据监听
-         */
+        //历史科目详情列表数据监听
         viewModel.recordSubjectDetailBeanLiveData.observe(this, new Observer<List<RecordSubjectDetailBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<RecordSubjectDetailBean.DataBean.RecordsBean> recordsBeans) {
@@ -112,9 +108,7 @@ public class RecordHistorySubjectDetailActivity extends BaseActivity<RecordHisto
             }
         });
 
-        /**
-         * 监听是否播放完成
-         */
+        //监听是否播放完成
         viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

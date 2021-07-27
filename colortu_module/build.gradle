@@ -53,8 +53,6 @@ android {
 
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
-    api 'com.google.android.support:wearable:2.8.1'
-    api 'com.google.android.gms:play-services-wearable:17.0.0'
     api 'androidx.recyclerview:recyclerview:1.1.0'
     api 'androidx.appcompat:appcompat:1.2.0'
 
@@ -73,7 +71,7 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
     //LiveData
     api 'androidx.lifecycle:lifecycle-livedata:2.2.0'
-    //Lifecycles only (without ViewModel or LiveData)
+    //Lifecycles
     api 'androidx.lifecycle:lifecycle-runtime:2.2.0'
     //arouter
     api 'com.alibaba:arouter-api:1.5.1'
@@ -86,8 +84,6 @@ dependencies {
 
     //pinyin4j
     api files('libs/pinyin4j-2.5.0.jar')
-    //toast
-    api 'com.hjq:toast:5.8'
     //gson
     api 'com.google.code.gson:gson:2.8.4'
     //fastjson

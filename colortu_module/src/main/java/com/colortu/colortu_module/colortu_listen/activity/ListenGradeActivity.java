@@ -57,9 +57,7 @@ public class ListenGradeActivity extends BaseActivity<ListenGradeViewModel, Acti
         binding.gradeList.setLayoutManager(gridLayoutManager);
         binding.gradeList.setAdapter(listenGradeAdapter);
 
-        /**
-         * 选择年级监听
-         */
+        //选择年级监听
         listenGradeAdapter.setOnClickChooseGradeListener(new ListenGradeAdapter.OnClickChooseGradeListener() {
             @Override
             public void OnClickChooseGrade(int id) {
@@ -67,9 +65,7 @@ public class ListenGradeActivity extends BaseActivity<ListenGradeViewModel, Acti
             }
         });
 
-        /**
-         * 年级列表数据监听
-         */
+        //年级列表数据监听
         viewModel.integerLiveData.observe(this, new Observer<List<Integer>>() {
             @Override
             public void onChanged(List<Integer> integers) {
