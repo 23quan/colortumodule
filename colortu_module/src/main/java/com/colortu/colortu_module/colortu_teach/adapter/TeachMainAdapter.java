@@ -56,9 +56,7 @@ public class TeachMainAdapter extends BaseRecyclerAdapter<TeachMainBean.DataBean
             adapterTeachMainBinding.teachDelete.setVisibility(View.GONE);
         }
 
-        /**
-         * 删除
-         */
+        //删除
         adapterTeachMainBinding.teachDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,9 +64,7 @@ public class TeachMainAdapter extends BaseRecyclerAdapter<TeachMainBean.DataBean
             }
         });
 
-        /**
-         * item点击
-         */
+        //item点击
         adapterTeachMainBinding.teachView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

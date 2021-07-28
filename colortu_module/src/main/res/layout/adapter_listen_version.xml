@@ -34,7 +34,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:maxLines="1"
-                android:textColor="@color/white"
+                android:textColor="@color/base_white1"
                 android:textSize="@dimen/size_25" />
 
             <TextView
@@ -46,7 +46,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:maxLines="1"
-                android:textColor="@color/white"
+                android:textColor="@color/base_white1"
                 android:textSize="@dimen/size_18"
                 android:visibility="gone" />
         </LinearLayout>

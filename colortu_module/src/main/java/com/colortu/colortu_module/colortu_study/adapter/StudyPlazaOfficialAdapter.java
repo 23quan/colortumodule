@@ -42,9 +42,7 @@ public class StudyPlazaOfficialAdapter extends BaseRecyclerAdapter<StudyPlazaBea
         adapterStudyPlazaofficialBinding.plazaofficialNum.setText(Math.abs(item.getCurrentNumOfPeople()) + "人");
         adapterStudyPlazaofficialBinding.plazaofficialLikenum.setText(String.valueOf(Math.abs(item.getTotalLikeNum())));
 
-        /**
-         * item点击监听
-         */
+        //item点击监听
         adapterStudyPlazaofficialBinding.plazaofficialItemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

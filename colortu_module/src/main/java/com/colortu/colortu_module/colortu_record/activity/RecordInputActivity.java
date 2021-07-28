@@ -54,9 +54,7 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
         viewModel.setAdapteScreen(binding.inputParentview);
         BaseApplication.getInstance().addActivity(this);
 
-        /**
-         * 检查是否有相应的权限
-         */
+        //检查是否有相应的权限
         if (ChannelUtil.isHuaWei()) {
             checkDevicePermission(permissions, new PermissionListener() {
                 @Override
@@ -81,9 +79,7 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
 
         binding.inputTranslate.setMovementMethod(ScrollingMovementMethod.getInstance());
 
-        /**
-         * 会员提示监听
-         */
+       //会员提示监听
         viewModel.isvisibleVip.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -93,9 +89,7 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
             }
         });
 
-        /**
-         * 录音监听
-         */
+        //录音监听
         viewModel.isvisibleLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

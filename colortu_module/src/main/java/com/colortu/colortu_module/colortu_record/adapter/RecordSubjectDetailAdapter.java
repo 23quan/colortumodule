@@ -73,9 +73,7 @@ public class RecordSubjectDetailAdapter extends BaseRecyclerAdapter<RecordSubjec
             adapterRecordSubjectdetailBinding.subjectdetailDelete.setVisibility(View.GONE);
         }
 
-        /**
-         * 播放
-         */
+        //播放
         adapterRecordSubjectdetailBinding.subjectdetailPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,9 +81,7 @@ public class RecordSubjectDetailAdapter extends BaseRecyclerAdapter<RecordSubjec
             }
         });
 
-        /**
-         * 删除
-         */
+        //删除
         adapterRecordSubjectdetailBinding.subjectdetailDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

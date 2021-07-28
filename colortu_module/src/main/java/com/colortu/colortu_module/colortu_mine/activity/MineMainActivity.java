@@ -45,9 +45,7 @@ public class MineMainActivity extends BaseActivity<MineMainViewModel, ActivityMi
             binding.minemainPrivacypolicy.setVisibility(View.VISIBLE);
         }
 
-        /**
-         * 是否登录监听
-         */
+        //是否登录监听
         viewModel.islogin.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

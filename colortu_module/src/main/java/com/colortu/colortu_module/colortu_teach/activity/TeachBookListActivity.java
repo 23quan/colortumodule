@@ -73,9 +73,7 @@ public class TeachBookListActivity extends BaseActivity<TeachBookListViewModel, 
         binding.booklistList.setLayoutManager(linearLayoutManager2);
         binding.booklistList.setAdapter(teachBookAdapter);
 
-        /**
-         * 教辅系列下教辅列表数据监听
-         */
+        //教辅系列下教辅列表数据监听
         viewModel.teachBookBeanLiveData.observe(this, new Observer<List<TeachBookBean.DataBean.ListBeanX>>() {
             @Override
             public void onChanged(List<TeachBookBean.DataBean.ListBeanX> listBeanXES) {

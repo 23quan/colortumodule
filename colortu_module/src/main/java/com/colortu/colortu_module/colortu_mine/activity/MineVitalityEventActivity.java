@@ -44,9 +44,7 @@ public class MineVitalityEventActivity extends BaseActivity<MineVitalityEventVie
         binding.vitalityeventList.setLayoutManager(linearLayoutManager);
         binding.vitalityeventList.setAdapter(mineVitalityEventAdapter);
 
-        /**
-         * 元气活动列表数据监听
-         */
+        //元气活动列表数据监听
         viewModel.vitalityEventLiveData.observe(this, new Observer<List<MineVitalityEventBean.DataBeanX.DataBean>>() {
             @Override
             public void onChanged(List<MineVitalityEventBean.DataBeanX.DataBean> dataBeans) {

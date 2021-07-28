@@ -26,9 +26,7 @@ public class ListenSubjectAdapter extends BaseRecyclerAdapter<ListenSubjectBean>
         AdapterListenSubjectBinding adapterListenSubjectBinding = (AdapterListenSubjectBinding) binding;
         adapterListenSubjectBinding.subjectText.setText(item.getName());
 
-        /**
-         * 科目点击监听
-         */
+        //科目点击监听
         adapterListenSubjectBinding.subjectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

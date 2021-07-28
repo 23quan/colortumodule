@@ -164,7 +164,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dimen_15"
                 android:text="@{viewmodel.curtime}"
-                android:textColor="@color/white"
+                android:textColor="@color/base_white1"
                 android:textSize="@dimen/size_25"
                 android:visibility="gone" />
 
@@ -175,7 +175,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="@string/starting"
-                android:textColor="@color/white"
+                android:textColor="@color/base_white1"
                 android:textSize="@dimen/size_25"
                 android:visibility="visible" />
         </RelativeLayout>

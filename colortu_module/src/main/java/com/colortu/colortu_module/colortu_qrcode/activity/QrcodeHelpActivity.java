@@ -36,9 +36,7 @@ public class QrcodeHelpActivity extends BaseActivity<QrcodeHelpViewModel, Activi
 
         Glide.with(QrcodeHelpActivity.this).load(R.drawable.base_img_loading).into(binding.teachhelpCodeimg);
 
-        /**
-         * 二维码监听
-         */
+        //二维码监听
         viewModel.codeimg.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {

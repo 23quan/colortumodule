@@ -78,9 +78,7 @@ public class TeachChooseGradeClassActivity extends BaseActivity<TeachChooseGrade
             teachChooseGradeClassAdapter.setDataBean(dataBean);
         }
 
-        /**
-         * 选择item监听
-         */
+        //选择item监听
         teachChooseGradeClassAdapter.setOnClickChooseGeadeListener(new TeachChooseGradeClassAdapter.OnClickChooseGeadeListener() {
             @Override
             public void OnClickChooseGeade(int position, TeachChooseGradeBean.DataBean.ListBean listBean) {
@@ -105,9 +103,7 @@ public class TeachChooseGradeClassActivity extends BaseActivity<TeachChooseGrade
             }
         });
 
-        /**
-         * 选择教辅年级数据监听
-         */
+        //选择教辅年级数据监听
         viewModel.teachChooseGradeBeanLiveData.observe(this, new Observer<List<TeachChooseGradeBean.DataBean.ListBean>>() {
             @Override
             public void onChanged(List<TeachChooseGradeBean.DataBean.ListBean> listBeans) {

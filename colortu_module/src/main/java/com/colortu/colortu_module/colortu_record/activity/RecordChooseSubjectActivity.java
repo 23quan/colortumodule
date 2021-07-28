@@ -63,9 +63,7 @@ public class RecordChooseSubjectActivity extends BaseActivity<RecordChooseSubjec
         binding.choosesubjectList.setLayoutManager(linearLayoutManager);
         binding.choosesubjectList.setAdapter(recordChooseSubjectAdapter);
 
-        /**
-         * 选择科目列表事件监听
-         */
+        //选择科目列表事件监听
         recordChooseSubjectAdapter.setOnClickSelectListener(new RecordChooseSubjectAdapter.OnClickSelectListener() {
             @Override
             public void OnClickSelect(String subjectname, int id) {//选择科目
@@ -75,9 +73,7 @@ public class RecordChooseSubjectActivity extends BaseActivity<RecordChooseSubjec
             }
         });
 
-        /**
-         * 选择科目列表数据监听
-         */
+        //选择科目列表数据监听
         viewModel.recordChooseSubjectLiveData.observe(this, new Observer<List<RecordChooseSubjectBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<RecordChooseSubjectBean.DataBean.RecordsBean> recordsBeans) {

@@ -70,10 +70,7 @@ public class StudyDetailAdapter extends BaseRecyclerAdapter<StudyDetailBean.Data
             Glide.with(context).load(R.mipmap.icon_play_stop).into(adapterStudyDetailBinding.studydetailPlay);
         }
 
-
-        /**
-         * 点赞
-         */
+        //点赞
         adapterStudyDetailBinding.studydetailLikeview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,9 +78,7 @@ public class StudyDetailAdapter extends BaseRecyclerAdapter<StudyDetailBean.Data
             }
         });
 
-        /**
-         * 播放语音签名
-         */
+        //播放语音签名
         adapterStudyDetailBinding.studydetailPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

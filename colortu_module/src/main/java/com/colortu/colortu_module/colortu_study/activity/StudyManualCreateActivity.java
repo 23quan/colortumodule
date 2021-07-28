@@ -30,9 +30,7 @@ public class StudyManualCreateActivity extends BaseActivity<StudyManualCreateVie
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.manualcreateParentview);
 
-        /**
-         * 清除输入名称
-         */
+        //清除输入名称
         binding.manualcreateClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,9 +38,7 @@ public class StudyManualCreateActivity extends BaseActivity<StudyManualCreateVie
             }
         });
 
-        /**
-         * 创建自习室
-         */
+        //创建自习室
         binding.manualcreateCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

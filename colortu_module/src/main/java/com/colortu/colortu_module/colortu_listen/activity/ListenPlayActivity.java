@@ -26,7 +26,7 @@ import java.util.List;
  * @describe :听力播放界面
  */
 @Route(path = BaseConstant.LISTEN_PLAY)
-public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, ActivityListenPlayBinding>{
+public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, ActivityListenPlayBinding> {
     //bundle传递数据
     @Autowired
     public Bundle bundle;
@@ -56,9 +56,7 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
             }
         }
 
-        /**
-         * 开始播放监听
-         */
+        //开始播放监听
         viewModel.isPlay.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -70,9 +68,7 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
             }
         });
 
-        /**
-         * 答案显示监听
-         */
+        //答案显示监听
         viewModel.isShowAnswer.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

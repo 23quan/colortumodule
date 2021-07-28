@@ -63,9 +63,7 @@ public class TeachGradeClassActivity extends BaseActivity<TeachGradeClassViewMod
         binding.gradeclassList.setLayoutManager(linearLayoutManager);
         binding.gradeclassList.setAdapter(teachGradeClassAdapter);
 
-        /**
-         * 年级课列表数据监听
-         */
+        //年级课列表数据监听
         viewModel.teachGradeClassBeanLiveData.observe(this, new Observer<List<TeachGradeClassBean.DataBean.ListBeanX>>() {
             @Override
             public void onChanged(List<TeachGradeClassBean.DataBean.ListBeanX> listBeanXES) {

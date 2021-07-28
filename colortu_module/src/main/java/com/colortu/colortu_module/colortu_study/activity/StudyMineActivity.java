@@ -52,9 +52,7 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.mineParentview);
 
-        /**
-         * false无数据,true有数据
-         */
+        //false无数据,true有数据
         viewModel.isshow.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -74,9 +72,7 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
         binding.mineCreatelist.setLayoutManager(linearLayoutManager1);
         binding.mineCreatelist.setAdapter(studyMineCreateAdapter);
 
-        /**
-         * 我创建的列表数据监听
-         */
+        //我创建的列表数据监听
         viewModel.myCreateBeanLiveData.observe(this, new Observer<List<StudyMineBean.DataBean.MyCreateBean>>() {
             @Override
             public void onChanged(List<StudyMineBean.DataBean.MyCreateBean> myCreateBeans) {
@@ -94,9 +90,7 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
             }
         });
 
-        /**
-         * 自习室开关监听
-         */
+        //自习室开关监听
         studyMineCreateAdapter.setOnClickSwitchListener(new StudyMineCreateAdapter.OnClickSwitchListener() {
             @Override
             public void OnClickSwitch(int isOpen, int id) {
@@ -121,9 +115,7 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
         binding.mineJoinlist.setLayoutManager(linearLayoutManager2);
         binding.mineJoinlist.setAdapter(studyMineJoinAdapter);
 
-        /**
-         * 我加入的列表数据监听
-         */
+        //我加入的列表数据监听
         viewModel.myInJoinBeanLiveData.observe(this, new Observer<List<StudyMineBean.DataBean.MyInJoinBean>>() {
             @Override
             public void onChanged(List<StudyMineBean.DataBean.MyInJoinBean> myInJoinBeans) {
@@ -147,9 +139,7 @@ public class StudyMineActivity extends BaseActivity<StudyMineViewModel, Activity
         binding.minePastlist.setLayoutManager(linearLayoutManager3);
         binding.minePastlist.setAdapter(studyMinePastAdapter);
 
-        /**
-         * 已过期的列表数据监听
-         */
+        //已过期的列表数据监听
         viewModel.deprecatedBeaLiveData.observe(this, new Observer<List<StudyMineBean.DataBean.DeprecatedBean>>() {
             @Override
             public void onChanged(List<StudyMineBean.DataBean.DeprecatedBean> deprecatedBeans) {

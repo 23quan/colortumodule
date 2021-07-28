@@ -31,6 +31,12 @@ public class DownloadImg {
         this.savePath = savePath;
     }
 
+    /**
+     * 下载图片
+     *
+     * @param url
+     * @param name
+     */
     @SuppressLint("NewApi")
     public void dowloadRequest(final String url, final String name) {
         OkHttpClient okHttpClient = new OkHttpClient();

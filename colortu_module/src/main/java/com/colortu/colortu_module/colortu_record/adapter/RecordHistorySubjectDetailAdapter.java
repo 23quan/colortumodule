@@ -46,9 +46,7 @@ public class RecordHistorySubjectDetailAdapter extends BaseRecyclerAdapter<Recor
             Glide.with(context).load(R.mipmap.icon_play_stop).into(adapterRecordHistorysubjectdetailBinding.historysubjectdetailPlay);
         }
 
-        /**
-         * 播放事件监听
-         */
+        //播放事件监听
         adapterRecordHistorysubjectdetailBinding.historysubjectdetailPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

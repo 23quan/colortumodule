@@ -47,9 +47,7 @@ public class RecordSubjectActivity extends BaseActivity<RecordSubjectViewModel, 
         binding.recordsubjectList.setLayoutManager(linearLayoutManager);
         binding.recordsubjectList.setAdapter(recordSubjectAdapter);
 
-        /**
-         *今日作业列表item事件监听
-         */
+       //今日作业列表item事件监听
         recordSubjectAdapter.setOnClickListener(new RecordSubjectAdapter.OnClickListener() {
             @Override
             public void OnClickIsFinish(RecordSubjectBean.DataBean.RecordsBean recordsBean) {
@@ -70,9 +68,7 @@ public class RecordSubjectActivity extends BaseActivity<RecordSubjectViewModel, 
             }
         });
 
-        /**
-         * 今日作业列表数据监听
-         */
+        //今日作业列表数据监听
         viewModel.recordSubjectBeanLiveData.observe(this, new Observer<List<RecordSubjectBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<RecordSubjectBean.DataBean.RecordsBean> recordsBeans) {

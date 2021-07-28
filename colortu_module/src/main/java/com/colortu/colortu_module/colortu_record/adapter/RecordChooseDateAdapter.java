@@ -45,9 +45,7 @@ public class RecordChooseDateAdapter extends BaseRecyclerAdapter<RecordChooseDat
         recordChooseMonthAdapter.addAll(item.getMonths());
         recordChooseMonthAdapter.notifyDataSetChanged();
 
-        /**
-         * 选择日期事件监听
-         */
+        //选择日期事件监听
         recordChooseMonthAdapter.setOnClickChooseMonthListener(new RecordChooseMonthAdapter.OnClickChooseMonthListener() {
             @Override
             public void OnClickChooseMonth(String month) {

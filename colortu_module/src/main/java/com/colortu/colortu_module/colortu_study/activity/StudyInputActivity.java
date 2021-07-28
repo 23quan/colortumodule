@@ -51,9 +51,7 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.inputParentview);
 
-        /**
-         * 检查是否有相应的权限
-         */
+        //检查是否有相应的权限
         if (ChannelUtil.isHuaWei()) {
             checkDevicePermission(permissions, new PermissionListener() {
                 @Override
@@ -72,9 +70,7 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
 
         binding.inputTranslate.setMovementMethod(ScrollingMovementMethod.getInstance());
 
-        /**
-         * 录音监听
-         */
+        //录音监听
         viewModel.isvisibleLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -89,9 +85,7 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
             }
         });
 
-        /**
-         * 保存录音
-         */
+        //保存录音
         binding.inputSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,9 +110,7 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
             }
         });
 
-        /**
-         * 录音按钮监听
-         */
+        //录音按钮监听
         binding.inputInputview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

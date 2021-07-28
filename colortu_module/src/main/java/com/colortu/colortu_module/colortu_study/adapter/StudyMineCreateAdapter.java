@@ -51,9 +51,7 @@ public class StudyMineCreateAdapter extends BaseRecyclerAdapter<StudyMineBean.Da
             Glide.with(context).load(R.mipmap.icon_study_open).into(adapterStudyMineBinding.mineSwitch);
         }
 
-        /**
-         * 自习室开关
-         */
+        //自习室开关
         adapterStudyMineBinding.mineSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,9 +59,7 @@ public class StudyMineCreateAdapter extends BaseRecyclerAdapter<StudyMineBean.Da
             }
         });
 
-        /**
-         * 点击升级自习室
-         */
+        //点击升级自习室
         adapterStudyMineBinding.mineUpgrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,9 +71,7 @@ public class StudyMineCreateAdapter extends BaseRecyclerAdapter<StudyMineBean.Da
             }
         });
 
-        /**
-         * 点击item跳转详情
-         */
+        //点击item跳转详情
         adapterStudyMineBinding.mineItemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

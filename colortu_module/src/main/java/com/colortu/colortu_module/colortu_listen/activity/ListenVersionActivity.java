@@ -62,9 +62,7 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
         binding.versionList.setLayoutManager(linearLayoutManager);
         binding.versionList.setAdapter(listenVersionAdapter);
 
-        /**
-         * 版本item点击监听
-         */
+        //版本item点击监听
         listenVersionAdapter.setOnClickChooseVersionListener(new ListenVersionAdapter.OnClickChooseVersionListener() {
             @Override
             public void OnClickChooseVersion(int id) {
@@ -82,9 +80,7 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
             }
         });
 
-        /**
-         * 版本数据刷新监听
-         */
+        //版本数据刷新监听
         viewModel.listenVersionBeanLiveData.observe(this, new Observer<List<ListenVersionBean.DataBean.RecordsBean>>() {
             @Override
             public void onChanged(List<ListenVersionBean.DataBean.RecordsBean> recordsBeans) {
@@ -93,9 +89,7 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
             }
         });
 
-        /**
-         * 跳转换年级
-         */
+        //跳转换年级
         binding.versionGrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

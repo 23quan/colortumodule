@@ -32,7 +32,6 @@ public abstract class BaseFragment<VM extends BaseFragmentViewModel, VDB extends
 
     //设置layoutId
     protected abstract int getLayoutId();
-
     //初始化视图
     protected abstract void initView(Bundle savedInstanceState);
 

@@ -46,9 +46,7 @@ public class RecordChooseDateActivity extends BaseActivity<RecordChooseDateViewM
         binding.choosedateDatelist.setLayoutManager(linearLayoutManager);
         binding.choosedateDatelist.setAdapter(recordChooseDateAdapter);
 
-        /**
-         * 选择日期
-         */
+        //选择日期
         recordChooseDateAdapter.setOnClickChooseDateListener(new RecordChooseDateAdapter.OnClickChooseDateListener() {
             @Override
             public void OnClickChoose(String year, String month) {
@@ -60,9 +58,7 @@ public class RecordChooseDateActivity extends BaseActivity<RecordChooseDateViewM
             }
         });
 
-        /**
-         * 选择日期列表数据监听
-         */
+        //选择日期列表数据监听
         viewModel.recordChooseDateLiveData.observe(this, new Observer<List<RecordChooseDateBean>>() {
             @Override
             public void onChanged(List<RecordChooseDateBean> recordChooseDateBeans) {

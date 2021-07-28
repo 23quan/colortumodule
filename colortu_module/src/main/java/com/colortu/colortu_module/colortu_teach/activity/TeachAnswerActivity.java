@@ -59,9 +59,7 @@ public class TeachAnswerActivity extends BaseActivity<TeachAnswerViewModel, Acti
         binding.answerList.setLayoutManager(linearLayoutManager);
         binding.answerList.setAdapter(teachAnswerAdapter);
 
-        /**
-         * 原题答案列表数据监听
-         */
+        //原题答案列表数据监听
         viewModel.teachTopicAnswerBeanLiveData.observe(this, new Observer<List<TeachTopicAnswerBean.DataBean.QuestionBean>>() {
             @Override
             public void onChanged(List<TeachTopicAnswerBean.DataBean.QuestionBean> questionBeans) {

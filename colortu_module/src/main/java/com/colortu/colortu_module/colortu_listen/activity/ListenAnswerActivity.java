@@ -60,9 +60,7 @@ public class ListenAnswerActivity extends BaseActivity<ListenAnswerViewModel, Ac
         listenAnswerAdapter.addAll(wordsBeanList);
         listenAnswerAdapter.notifyDataSetChanged();
 
-        /**
-         * 播放监听
-         */
+        //播放监听
         listenAnswerAdapter.setOnClickAnswerListener(new ListenAnswerAdapter.OnClickAnswerListener() {
             @Override
             public void OnClickAnswer(int position, boolean isplay, String audiourl) {
@@ -91,9 +89,7 @@ public class ListenAnswerActivity extends BaseActivity<ListenAnswerViewModel, Ac
             }
         });
 
-        /**
-         * 监听是否播放完成
-         */
+        //监听是否播放完成
         viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

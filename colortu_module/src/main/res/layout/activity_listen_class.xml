@@ -31,7 +31,7 @@
                 android:ellipsize="end"
                 android:gravity="left"
                 android:text="@{viewmodel.nametip}"
-                android:textColor="@color/white"
+                android:textColor="@color/base_white1"
                 android:textSize="@dimen/size_20" />
 
             <TextView

@@ -32,9 +32,7 @@ public class StudyKeyBoardAdapter extends BaseRecyclerAdapter<String> {
             adapterStudyKeyboardBinding.keyboardKey.setBackgroundResource(R.drawable.base_blue8_bg);
         }
 
-        /**
-         * 键盘item点击
-         */
+        //键盘item点击
         adapterStudyKeyboardBinding.keyboardKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,9 +44,7 @@ public class StudyKeyBoardAdapter extends BaseRecyclerAdapter<String> {
             }
         });
 
-        /**
-         * 键盘item触目监听
-         */
+        //键盘item触目监听
         adapterStudyKeyboardBinding.keyboardKey.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

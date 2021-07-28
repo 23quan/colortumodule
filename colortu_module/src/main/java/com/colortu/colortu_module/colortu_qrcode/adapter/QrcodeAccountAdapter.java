@@ -57,9 +57,7 @@ public class QrcodeAccountAdapter extends BaseRecyclerAdapter<QrcodeUserInfoBean
             adapterQrcodeAccountBinding.accountContent.setText(content + context.getString(R.string.vip));
         }
 
-        /**
-         * 选择账号
-         */
+        //选择账号
         adapterQrcodeAccountBinding.accountItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -81,9 +81,7 @@ public class ListenClassActivity extends BaseActivity<ListenClassViewModel, Acti
         binding.classList.setLayoutManager(linearLayoutManager);
         binding.classList.setAdapter(listenClassAdapter);
 
-        /**
-         * 课列表数据监听
-         */
+        //课列表数据监听
         viewModel.listenClassBeanLiveData.observe(this, new Observer<List<ListenClassBean.DataBean.PoetryVOSBean>>() {
             @Override
             public void onChanged(List<ListenClassBean.DataBean.PoetryVOSBean> poetryVOSBeans) {
@@ -96,9 +94,7 @@ public class ListenClassActivity extends BaseActivity<ListenClassViewModel, Acti
             }
         });
 
-        /**
-         *换年级/换版本
-         */
+        //换年级/换版本
         binding.classClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

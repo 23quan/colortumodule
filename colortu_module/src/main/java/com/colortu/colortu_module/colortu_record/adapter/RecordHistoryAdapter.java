@@ -49,9 +49,7 @@ public class RecordHistoryAdapter extends BaseRecyclerAdapter<RecordHistoryBean.
             adapterRecordHistoryBinding.historyIsfinish.setText(context.getString(R.string.unfinished));
         }
 
-        /**
-         * 科目列表item事件监听
-         */
+        //科目列表item事件监听
         adapterRecordHistoryBinding.historyItemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

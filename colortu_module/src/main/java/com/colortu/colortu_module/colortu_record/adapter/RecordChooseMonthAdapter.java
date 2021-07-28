@@ -26,9 +26,7 @@ public class RecordChooseMonthAdapter extends BaseRecyclerAdapter<String> {
         //月份
         adapterRecordMonthsBinding.choosedateMonth.setText(item + "月");
 
-        /**
-         * 选择月份
-         */
+        //选择月份
         adapterRecordMonthsBinding.choosedateMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -30,7 +30,7 @@
                 android:layout_marginBottom="@dimen/dimen_10"
                 android:gravity="center"
                 android:text="@string/none_studyroom"
-                android:textColor="@color/white"
+                android:textColor="@color/base_white1"
                 android:textSize="@dimen/size_25"></TextView>
 
             <LinearLayout

@@ -26,9 +26,7 @@ public class RecordChooseSubjectAdapter extends BaseRecyclerAdapter<RecordChoose
         AdapterRecordChoosesubjectBinding adapterRecordChoosesubjectBinding = (AdapterRecordChoosesubjectBinding) binding;
         adapterRecordChoosesubjectBinding.choosesubjectItem.setText(item.getSubjectName());
 
-        /**
-         * 选择科目
-         */
+        //选择科目
         adapterRecordChoosesubjectBinding.choosesubjectItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

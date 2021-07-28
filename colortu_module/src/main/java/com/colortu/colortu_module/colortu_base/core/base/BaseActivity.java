@@ -42,10 +42,8 @@ public abstract class BaseActivity<VM extends BaseActivityViewModel, VDB extends
 
     //记录处于前台的Activity
     private static BaseActivity baseActivity = null;
-
     //设置layoutId
     public abstract int getLayoutId();
-
     //初始化视图
     public abstract void initView(Bundle savedInstanceState);
 

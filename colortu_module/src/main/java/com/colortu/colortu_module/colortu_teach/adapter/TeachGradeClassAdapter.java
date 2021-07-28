@@ -53,9 +53,7 @@ public class TeachGradeClassAdapter extends BaseRecyclerAdapter<TeachGradeClassB
             }
         }
 
-        /**
-         * 跳转答案or听写
-         */
+        //跳转答案or听写
         adapterTeachGradeclassBinding.gradeclassName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

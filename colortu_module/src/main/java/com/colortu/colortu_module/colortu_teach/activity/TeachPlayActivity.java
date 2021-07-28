@@ -65,9 +65,7 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
         freecount = GetBeanDate.getFreeExamCount();
         isVip = GetBeanDate.getIsBookVIP();
 
-        /**
-         * 锁显示
-         */
+        //锁显示
         if (isVip == 1) {
             viewModel.isVip.set(true);
             binding.playLock.setVisibility(View.GONE);
@@ -81,9 +79,7 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
             }
         }
 
-        /**
-         * 播放和暂停监听刷新icon
-         */
+        //播放和暂停监听刷新icon
         viewModel.isPlayLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

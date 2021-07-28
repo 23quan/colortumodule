@@ -41,9 +41,7 @@ public class ListenGradeAdapter extends BaseRecyclerAdapter<Integer> {
             adapterListenGradeBinding.gradeGradeimg.setColorFilter(0x00000000);
         }
 
-        /**
-         * 选择年级
-         */
+        //选择年级
         adapterListenGradeBinding.gradeGradeimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -43,9 +43,7 @@ public class StudySignAdapter extends BaseRecyclerAdapter<StudySignBean.DataBean
             adapterStudySignBinding.signItemview.setBackground(context.getResources().getDrawable(R.drawable.base_blue5_bg));
         }
 
-        /**
-         * 选择个性状态
-         */
+        //选择个性状态
         adapterStudySignBinding.signItemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
