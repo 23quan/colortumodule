@@ -81,7 +81,7 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> imp
     //上传语音翻译参数
     private String translate2;
     //0 不是会员 1是会员
-    private int isVip;
+    public int isVip;
     //录音工具类
     public AudioRecord audioRecord;
 
@@ -100,20 +100,8 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> imp
         inputplayimg.set(R.mipmap.icon_play_stop);
         isVip = GetBeanDate.getIsTranslateVIP();
 
-        if (isVip == 1) {
-            String time = Tools.dateDiff(GetBeanDate.getTranslateVIPTime());
-            if (EmptyUtils.stringIsEmpty(time)) {
-                isvisibleVip.setValue(false);
-                viptip.set(BaseApplication.getContext().getString(R.string.vip_time) + time);
-            } else {
-                isvisibleVip.setValue(true);
-            }
-        } else {
-            isvisibleVip.setValue(false);
-            viptip.set(BaseApplication.getContext().getString(R.string.vip_scancode));
-        }
-
         initPlay();
+        showVipTip();
     }
 
     /**
@@ -188,6 +176,24 @@ public class RecordInputViewModel extends BaseActivityViewModel<BaseRequest> imp
                 }
             }
         });
+    }
+
+    /**
+     * 显示vip时间提示
+     */
+    public void showVipTip() {
+        if (isVip == 1) {
+            String time = Tools.dateDiff(GetBeanDate.getTranslateVIPTime());
+            if (EmptyUtils.stringIsEmpty(time)) {
+                isvisibleVip.setValue(false);
+                viptip.set(BaseApplication.getContext().getString(R.string.vip_time) + time);
+            } else {
+                isvisibleVip.setValue(true);
+            }
+        } else {
+            isvisibleVip.setValue(false);
+            viptip.set(BaseApplication.getContext().getString(R.string.vip_scancode));
+        }
     }
 
     /**

@@ -45,13 +45,13 @@ public class BaseConstant {
     public static final int REQUEDT_STUDYTIME = 800;
 
     //较慢
-    public static final int LISTEN_SPEED_SLOW = 21000;
+    public static final int LISTEN_SPEED_SLOW = 23000;
     //正常
-    public static final int LISTEN_SPEED_NORMAL = 16000;
+    public static final int LISTEN_SPEED_NORMAL = 18000;
     //快速
-    public static final int LISTEN_SPEED_QUICK = 11000;
+    public static final int LISTEN_SPEED_QUICK = 13000;
     //飞快播放速度
-    public static final int PLAYLISTEN_SPEED_FAST = 6000;
+    public static final int PLAYLISTEN_SPEED_FAST = 8000;
 
     //---------------------------------------------跳转路由路径-----------------------------------------------------
     //隐私/用户协议界面

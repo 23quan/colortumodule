@@ -67,7 +67,7 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
         }
 
         viewModel.isfirst.set(bundle.getInt("isfirst"));
-
+        binding.inputTimetip.setText(getResources().getString(R.string.record_message3));
         binding.inputTranslate.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         //录音监听
@@ -116,10 +116,12 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN://按下
+                        binding.inputInputview.setKeepScreenOn(true);
                         OnStartRecorder();
                         break;
                     case MotionEvent.ACTION_UP://离开or取消
                     case MotionEvent.ACTION_CANCEL:
+                        binding.inputInputview.setKeepScreenOn(true);
                         OnStopRecorder();
                         break;
                 }

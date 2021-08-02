@@ -61,6 +61,7 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
             });
         }
 
+        binding.audiocreateTimetip.setText(getResources().getString(R.string.record_message2));
         binding.audiocreateTranslate.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         //录音监听
@@ -84,10 +85,12 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN://按下
+                        binding.audiocreateInputview.setKeepScreenOn(true);
                         OnStartRecorder();
                         break;
                     case MotionEvent.ACTION_UP://离开or取消
                     case MotionEvent.ACTION_CANCEL:
+                        binding.audiocreateInputview.setKeepScreenOn(false);
                         OnStopRecorder();
                         break;
                 }

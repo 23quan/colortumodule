@@ -60,6 +60,7 @@
     <string name="recordwork">作业记录</string>
     <string name="recordwork2">记录作业</string>
     <string name="work_history">作业历史</string>
+    <string name="none_recordwork">暂无作业记录</string>
     <string name="none_history">暂无历史记录</string>
     <string name="choose_month">选月份</string>
     <string name="choose_month2">选择月份</string>
@@ -74,6 +75,8 @@
     <string name="vip_scancode">点击扫码解锁语音翻译功能</string>
     <string name="input_message">按住按钮录入\n松开结束</string>
     <string name="record_message">录音不能小于3秒</string>
+    <string name="record_message2">录音不能大于于10秒</string>
+    <string name="record_message3">录音不能大于于30秒</string>
     <string name="record_failure">录音失败</string>
     <string name="record_translate">录音翻译中</string>
     <string name="record_uploadfailure">录音上传失败</string>

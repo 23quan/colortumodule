@@ -172,7 +172,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                     isLoseFocus = false;
                     //获取音频焦点
                     AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
-                    audioPlayer.onPlay(audiourl.get());
+                    audioPlayer.onPlay(BaseConstant.HomeWorkImgUrl + audiourl.get());
                 }
             }
         } else {
