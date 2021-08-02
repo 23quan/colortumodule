@@ -91,6 +91,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         viewModel.setAdapteScreen(binding.detailParentview);
         AudioFocusUtils.setOnAudioFocusListener(this);
 
+        againRoom = bundle.getBoolean("againRoom");
         viewModel.roomid.set(bundle.getInt("id"));
         viewModel.channel.set(bundle.getString("channel"));
         GetBeanDate.putStudyRoomId(viewModel.roomid.get());
@@ -116,13 +117,13 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                 if (viewModel.isfirst == 2) {
                     TipToast.tipToastShort(getResources().getString(R.string.data_loading));
                 } else {
-                    againRoom = false;
                     if (study) {//结束
                         dialogWhether = new DialogWhether(StudyDetailActivity.this);
                         dialogWhether.setOnWhetherListener(StudyDetailActivity.this);
                         dialogWhether.setContent(getResources().getString(R.string.study_finishmessage));
                         dialogWhether.show();
                     } else {
+                        againRoom = false;
                         if (viewModel.isfirst == 0) {//第一次入座
                             Bundle bundle = new Bundle();
                             bundle.putInt("isfirst", 0);
@@ -510,6 +511,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
      */
     @Override
     public void onYes() {
+        againRoom = false;
         //确认结束自习室
         viewModel.getStudyStop(viewModel.roomid.get(), GetBeanDate.getUserUuid());
         dialogWhether.dismiss();

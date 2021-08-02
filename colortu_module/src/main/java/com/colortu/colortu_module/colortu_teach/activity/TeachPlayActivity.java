@@ -28,12 +28,6 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
     @Autowired
     public Bundle bundle;
 
-    //课名
-    private String classname;
-    //课id
-    private int examid;
-    //语音url
-    private String audiourl;
     //item的下标
     private int position;
     //免费课数
@@ -53,13 +47,10 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
         //注册蓝牙广播
         BlueToothUtils.onRegisterBlueTooth(this);
 
-        classname = bundle.getString("classname");
-        examid = bundle.getInt("examid");
-        audiourl = bundle.getString("audiourl");
         position = bundle.getInt("position");
-        viewModel.classname.set(classname);
-        viewModel.examid.set(examid);
-        viewModel.audiourl.set(BaseConstant.HomeWorkImgUrl + audiourl);
+        viewModel.classname.set(bundle.getString("classname"));
+        viewModel.examid.set(bundle.getInt("examid"));
+        viewModel.audiourl.set(bundle.getString("audiourl"));
         NotificationUtil.setContext(this);
 
         freecount = GetBeanDate.getFreeExamCount();

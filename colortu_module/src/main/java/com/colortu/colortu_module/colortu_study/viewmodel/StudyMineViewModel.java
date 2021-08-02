@@ -63,7 +63,7 @@ public class StudyMineViewModel extends BaseActivityViewModel<BaseRequest> {
      * 跳转创建自习室界面
      */
     public void onJumpMineCreate() {
-        if (ChannelUtil.isXiaoMi()) {
+        if (ChannelUtil.isXiaoMi() || ChannelUtil.isReadBoy()) {
             BaseUIKit.startActivity(UIKitName.STUDY_MINE, UIKitName.STUDY_AUDIOCREATE,
                     BaseConstant.STUDY_AUDIOCREATE, BaseUIKit.OTHER, null);
         } else {

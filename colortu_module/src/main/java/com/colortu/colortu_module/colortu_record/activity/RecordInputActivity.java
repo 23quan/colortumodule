@@ -79,7 +79,7 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
 
         binding.inputTranslate.setMovementMethod(ScrollingMovementMethod.getInstance());
 
-       //会员提示监听
+        //会员提示监听
         viewModel.isvisibleVip.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -117,10 +117,15 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN://按下
+                        binding.inputViptip.setVisibility(View.VISIBLE);
+                        binding.inputViptip.setText(getResources().getString(R.string.record_message3));
+                        binding.inputInputview.setKeepScreenOn(true);
                         OnStartRecorder();
                         break;
                     case MotionEvent.ACTION_UP://离开or取消
                     case MotionEvent.ACTION_CANCEL:
+                        viewModel.showVipTip();
+                        binding.inputInputview.setKeepScreenOn(false);
                         OnStopRecorder();
                         break;
                 }

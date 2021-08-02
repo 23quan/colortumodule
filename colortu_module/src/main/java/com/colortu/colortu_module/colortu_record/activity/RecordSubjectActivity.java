@@ -1,6 +1,7 @@
 package com.colortu.colortu_module.colortu_record.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,7 +48,7 @@ public class RecordSubjectActivity extends BaseActivity<RecordSubjectViewModel, 
         binding.recordsubjectList.setLayoutManager(linearLayoutManager);
         binding.recordsubjectList.setAdapter(recordSubjectAdapter);
 
-       //今日作业列表item事件监听
+        //今日作业列表item事件监听
         recordSubjectAdapter.setOnClickListener(new RecordSubjectAdapter.OnClickListener() {
             @Override
             public void OnClickIsFinish(RecordSubjectBean.DataBean.RecordsBean recordsBean) {
@@ -75,7 +76,10 @@ public class RecordSubjectActivity extends BaseActivity<RecordSubjectViewModel, 
                 //今日作业列表数据刷新
                 recordSubjectAdapter.clear();
                 if (EmptyUtils.listIsEmpty(recordsBeans)) {
+                    binding.recordsubjectNone.setVisibility(View.GONE);
                     recordSubjectAdapter.addAll(recordsBeans);
+                } else {
+                    binding.recordsubjectNone.setVisibility(View.VISIBLE);
                 }
                 recordSubjectAdapter.notifyDataSetChanged();
             }

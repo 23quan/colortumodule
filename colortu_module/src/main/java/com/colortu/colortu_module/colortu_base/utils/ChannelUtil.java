@@ -55,4 +55,8 @@ public class ChannelUtil {
     public static boolean isZY() {
         return "zy".equals(Channel());
     }
+
+    public static boolean isReadBoy() {
+        return "readboy".equals(Channel());
+    }
 }
