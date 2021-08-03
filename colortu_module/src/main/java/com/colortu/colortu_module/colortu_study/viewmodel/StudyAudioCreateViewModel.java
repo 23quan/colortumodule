@@ -140,7 +140,7 @@ public class StudyAudioCreateViewModel extends BaseActivityViewModel<BaseRequest
     /**
      * 录音时间，最多30秒
      */
-    private CountDownTimer countDownTimer = new CountDownTimer(BaseConstant.MAX_DURATION, 1000) {
+    private CountDownTimer countDownTimer = new CountDownTimer(BaseConstant.MIN_DURATION, 1000) {
         @Override
         public void onTick(long l) {
             count++;

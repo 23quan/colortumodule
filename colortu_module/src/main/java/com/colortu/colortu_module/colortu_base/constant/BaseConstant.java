@@ -28,6 +28,8 @@ public class BaseConstant {
     //sp文件名
     public static final String SP_NAME = "Homework";
     //录音最大时长
+    //录音最大时长
+    public static final long MIN_DURATION = 10000;
     public static final long MAX_DURATION = 30000;
 
     //小天才退出app时间
