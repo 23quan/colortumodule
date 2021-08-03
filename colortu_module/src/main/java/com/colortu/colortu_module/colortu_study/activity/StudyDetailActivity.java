@@ -110,7 +110,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
      * 初始化数据
      */
     private void initData() {
-       //开始自习/结束自习
+        //开始自习/结束自习
         binding.detailStudyview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,7 +142,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-       //是否入座/结束自习室监听
+        //是否入座/结束自习室监听
         viewModel.isStudyLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -236,7 +236,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
             }
         });
 
-       //播放自己个性语音签名
+        //播放自己个性语音签名
         binding.detailMineplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -272,7 +272,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         binding.detailMinesign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(viewModel.audioPlayer.isPlay()){
+                if (viewModel.audioPlayer.isPlay()) {
                     viewModel.audioPlayer.onStop();
                 }
                 Bundle bundle = new Bundle();
@@ -384,30 +384,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                             binding.detailMinetime.setText(times);
                         }
                     } else {
-                        String perTimes = "";
-                        if (seconds == 60) {
-                            seconds = 0;
-                            if (minutes == 60) {
-                                minutes = 1;
-                                hours++;
-                            } else {
-                                minutes++;
-                            }
-                        }
-                        seconds++;
-
-                        if (hours > 0) {
-                            perTimes = hours + "小时";
-                        }
-
-                        if (minutes > 0) {
-                            perTimes = perTimes + minutes + "分钟";
-                        }
-
-                        if (seconds > 0) {
-                            perTimes = perTimes + seconds + "秒";
-                        }
-                        binding.detailMinetime.setText(perTimes);
+                        updateTimes();
                     }
                 }
             }
@@ -420,6 +397,36 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                 }
             }
         }.start();
+    }
+
+    /**
+     * 刷新时间
+     */
+    public void updateTimes() {
+        String perTimes = "";
+        if (seconds == 60) {
+            seconds = 0;
+            if (minutes == 60) {
+                minutes = 1;
+                hours++;
+            } else {
+                minutes++;
+            }
+        }
+        seconds++;
+
+        if (hours > 0) {
+            perTimes = hours + "小时";
+        }
+
+        if (minutes > 0) {
+            perTimes = perTimes + minutes + "分钟";
+        }
+
+        if (seconds > 0) {
+            perTimes = perTimes + seconds + "秒";
+        }
+        binding.detailMinetime.setText(perTimes);
     }
 
     /**
@@ -441,9 +448,6 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         } else {
             binding.detailMinename.setText(getResources().getString(R.string.not_login2));
         }
-        //加入计时
-        String times = Tools.dateDiff3(topUserBean.getLastJoinTime());
-        binding.detailMinetime.setText(times);
         //设置状态
         binding.detailMinestatetip.setText(topUserBean.getDescribe());
         Glide.with(StudyDetailActivity.this).load(BaseConstant.HomeWorkImgUrl + topUserBean.getStatusImageUrl()).into(binding.detailMinestateicon);
