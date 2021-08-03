@@ -11,7 +11,7 @@
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginRight="@dimen/dimen_20"
         android:layout_marginBottom="@dimen/dimen_10"
-        android:background="@mipmap/icon_colortu_btnbg">
+        android:background="@mipmap/icon_base_btnbg">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:layout_centerInParent="true"
             android:layout_marginRight="@dimen/dimen_15"
             android:scaleType="fitXY"
-            android:src="@mipmap/icon_colortu_delete"
+            android:src="@mipmap/icon_base_delete"
             android:visibility="gone"></ImageView>
     </RelativeLayout>
 </layout>

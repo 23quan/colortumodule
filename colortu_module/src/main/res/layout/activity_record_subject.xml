@@ -41,7 +41,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:layout_marginRight="@dimen/dimen_10"
-                android:background="@mipmap/icon_colortu_btnbg"
+                android:background="@mipmap/icon_base_btnbg"
                 android:gravity="center"
                 android:onClick="@{()->viewmodel.onJumpInput()}"
                 android:text="@string/input"

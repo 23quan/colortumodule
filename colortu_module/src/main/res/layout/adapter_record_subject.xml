@@ -21,7 +21,7 @@
             android:layout_marginLeft="@dimen/dimen_15"
             android:layout_marginRight="@dimen/dimen_15"
             android:layout_marginBottom="@dimen/dimen_10"
-            android:background="@mipmap/icon_colortu_btnbg"
+            android:background="@mipmap/icon_base_btnbg"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 

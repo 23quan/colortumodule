@@ -35,7 +35,7 @@ public class StudyPlazaFiltrateAreaAdapter extends BaseRecyclerAdapter<String> {
     public void bindView(ViewDataBinding binding, final String item, final int position) {
         final AdapterStudyPlazafiltrateBinding adapterStudyPlazafiltrateBinding = (AdapterStudyPlazafiltrateBinding) binding;
         if (filtrate != null && filtrate.equals(item)) {
-            adapterStudyPlazafiltrateBinding.plazafiltrateItemview.setBackground(context.getResources().getDrawable(R.mipmap.icon_colortu_btnbg));
+            adapterStudyPlazafiltrateBinding.plazafiltrateItemview.setBackground(context.getResources().getDrawable(R.mipmap.icon_base_btnbg));
         } else {
             adapterStudyPlazafiltrateBinding.plazafiltrateItemview.setBackground(context.getResources().getDrawable(R.drawable.base_blue5_bg));
         }

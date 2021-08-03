@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_160"
         android:layout_marginBottom="@dimen/dimen_10"
-        android:background="@mipmap/icon_colortu_btnbg"
+        android:background="@mipmap/icon_base_btnbg"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dimen_10"
