@@ -119,7 +119,7 @@ public class StudyInputViewModel extends BaseActivityViewModel<BaseRequest> impl
             @Override
             public void onStartRecorder() {//录音开始监听
                 inputtip.set("0''");
-                inputgif.set(R.mipmap.icon_play_audiogif);
+                inputgif.set(R.raw.icon_play_audiogif);
                 countDownTimer.start();
             }
 

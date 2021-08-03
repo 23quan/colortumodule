@@ -72,7 +72,7 @@
                     android:layout_height="@dimen/dimen_50"
                     android:layout_marginRight="@dimen/dimen_20"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/icon_colortu_delete"
+                    android:src="@mipmap/icon_base_delete"
                     android:visibility="gone"></ImageView>
             </LinearLayout>
         </LinearLayout>

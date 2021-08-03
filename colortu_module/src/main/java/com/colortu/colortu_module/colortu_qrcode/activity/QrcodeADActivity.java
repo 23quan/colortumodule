@@ -114,7 +114,7 @@ public class QrcodeADActivity extends BaseActivity<QrcodeADViewModel, ActivityQr
 
         } else {
             //二维码
-            Glide.with(this).load(R.mipmap.icon_colortu_qrcode).into(binding.adCodeimg);
+            Glide.with(this).load(R.mipmap.icon_base_qrcode).into(binding.adCodeimg);
             //菜单文字提示
             viewModel.canceltip.set(getResources().getString(R.string.cancel));
             viewModel.suretip.set(getResources().getString(R.string.affirm));

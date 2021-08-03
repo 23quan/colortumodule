@@ -36,7 +36,7 @@
             android:layout_marginLeft="@dimen/dimen_20"
             android:layout_marginRight="@dimen/dimen_20"
             android:layout_marginBottom="@dimen/dimen_20"
-            android:background="@mipmap/icon_colortu_btnbg"
+            android:background="@mipmap/icon_base_btnbg"
             android:gravity="center"
             android:onClick="@{()->viewmodel.onJumpShop()}"
             android:text="元气商城"

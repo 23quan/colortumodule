@@ -38,7 +38,7 @@ public class StudySignAdapter extends BaseRecyclerAdapter<StudySignBean.DataBean
         Glide.with(context).load(BaseConstant.HomeWorkImgUrl + item.getImageUrl()).into(adapterStudySignBinding.signIcon);
         //修改图标
         if (item.isChoose()) {
-            adapterStudySignBinding.signItemview.setBackground(context.getResources().getDrawable(R.mipmap.icon_colortu_btnbg));
+            adapterStudySignBinding.signItemview.setBackground(context.getResources().getDrawable(R.mipmap.icon_base_btnbg));
         } else {
             adapterStudySignBinding.signItemview.setBackground(context.getResources().getDrawable(R.drawable.base_blue5_bg));
         }

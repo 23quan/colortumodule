@@ -14,7 +14,7 @@
             android:layout_marginLeft="@dimen/dimen_20"
             android:layout_marginRight="@dimen/dimen_20"
             android:layout_marginBottom="@dimen/dimen_15"
-            android:background="@mipmap/icon_colortu_btnbg"
+            android:background="@mipmap/icon_base_btnbg"
             android:gravity="center_vertical|left"
             android:paddingLeft="@dimen/dimen_20"
             android:paddingRight="@dimen/dimen_20"

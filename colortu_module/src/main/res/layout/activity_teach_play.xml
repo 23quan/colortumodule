@@ -96,7 +96,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/dimen_20"
                 android:scaleType="fitXY"
-                android:src="@mipmap/icon_colortu_lock"></ImageView>
+                android:src="@mipmap/icon_base_lock"></ImageView>
         </LinearLayout>
     </LinearLayout>
 </layout>

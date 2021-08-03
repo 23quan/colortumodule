@@ -42,7 +42,7 @@ public class StudyPlazaPersonAdapter extends BaseRecyclerAdapter<StudyPlazaBean.
         if (item.getIsVIP() == 1) {
             adapterStudyPlazapersonBinding.plazapersonItemview.setBackground(context.getResources().getDrawable(R.drawable.base_red1_bg));
         } else {
-            adapterStudyPlazapersonBinding.plazapersonItemview.setBackground(context.getResources().getDrawable(R.mipmap.icon_colortu_btnbg));
+            adapterStudyPlazapersonBinding.plazapersonItemview.setBackground(context.getResources().getDrawable(R.mipmap.icon_base_btnbg));
         }
         adapterStudyPlazapersonBinding.plazapersonTitle.setText(item.getName());
         Glide.with(context).load(BaseConstant.HomeWorkImgUrl + item.getLevelImageUrl()).into(adapterStudyPlazapersonBinding.plazapersonRank);

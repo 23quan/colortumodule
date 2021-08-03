@@ -40,7 +40,7 @@
                 android:layout_height="@dimen/dimen_50"
                 android:onClick="@{()->viewmodel.onClearCommand()}"
                 android:scaleType="fitXY"
-                android:src="@mipmap/icon_colortu_clear"></ImageView>
+                android:src="@mipmap/icon_base_clear"></ImageView>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
