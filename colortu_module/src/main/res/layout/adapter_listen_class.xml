@@ -39,7 +39,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/dimen_8"
             android:scaleType="fitXY"
-            android:src="@mipmap/icon_listen_lock"
+            android:src="@mipmap/icon_base_lock"
             android:visibility="gone" />
     </RelativeLayout>
 </layout>
