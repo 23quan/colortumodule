@@ -42,8 +42,8 @@ public class MineMainViewModel extends BaseActivityViewModel<BaseRequest> {
     public ObservableField<String> vitalitys = new ObservableField<>();
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onCreate() {
+        super.onCreate();
         level.set("Lv1");
 
         islogin.setValue(GetBeanDate.getIsLogin());

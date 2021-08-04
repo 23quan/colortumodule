@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.colortu.colortu_module.colortu_base.core.viewmodel.ImageDetailViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/imagedetail_parentview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_black1">
+
+        <com.colortu.colortu_module.colortu_base.utils.photoview.PhotoView
+            android:id="@+id/imagedetail_photoview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"></com.colortu.colortu_module.colortu_base.utils.photoview.PhotoView>
+
+    </LinearLayout>
+</layout>

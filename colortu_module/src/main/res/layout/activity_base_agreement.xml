@@ -21,7 +21,7 @@
             android:padding="@dimen/dimen_10"
             android:text="@{viewmodel.content}"
             android:textColor="@color/base_black1"
-            android:textSize="@dimen/size_35"
+            android:textSize="@dimen/size_25"
             android:textStyle="bold"></TextView>
 
     </LinearLayout>

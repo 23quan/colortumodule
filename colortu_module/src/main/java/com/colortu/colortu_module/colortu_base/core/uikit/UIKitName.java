@@ -16,6 +16,8 @@ public class UIKitName {
     public static final String BASE_RESTTIMES = "RestTimesActivity";
     //WiFi切换移动流量界面
     public final static String BASE_NETWORK = "NetWorkActivity";
+    //图片详情界面
+    public final static String BASE_IMAGEDETAIL = "ImageDetailActivity";
 
     /**
      * 作业主界面

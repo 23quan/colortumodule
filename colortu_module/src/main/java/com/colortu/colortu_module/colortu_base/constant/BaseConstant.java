@@ -62,6 +62,8 @@ public class BaseConstant {
     public static final String BASE_RESTTIMES = "/base/RestTimesActivity";
     //WiFi切换移动流量界面
     public final static String BASE_NETWORK = "/base/NetWorkActivity";
+    //图片详情界面
+    public final static String BASE_IMAGEDETAIL = "/base/ImageDetailActivity";
 
     /**
      * 作业主界面
