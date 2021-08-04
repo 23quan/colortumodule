@@ -32,6 +32,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
 
+        <!--图片详情界面-->
+        <activity
+            android:name="com.colortu.colortu_module.colortu_base.core.activity.ImageDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+
         <!--休息service-->
         <service android:name="com.colortu.colortu_module.colortu_base.core.service.RestTimesService"></service>
 
