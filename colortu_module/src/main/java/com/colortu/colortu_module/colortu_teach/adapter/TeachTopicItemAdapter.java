@@ -50,7 +50,7 @@ public class TeachTopicItemAdapter extends BaseRecyclerAdapter<TeachTopicItemBea
                     .apply(new RequestOptions().placeholder(R.drawable.base_img_loading))
                     .into(adapterTeachTopicitemBinding.topicitemImg);
 
-            adapterTeachTopicitemBinding.topicitemImg.setOnClickListener(new View.OnClickListener() {
+            adapterTeachTopicitemBinding.topicitemImgview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();

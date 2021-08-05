@@ -21,7 +21,7 @@ import com.colortu.colortu_module.databinding.ActivityBaseImagedetailBinding;
  * @module : ImageDetailActivity
  * @describe :图片详情界面
  */
-@Route(path = BaseConstant.BASE_AGREEMENT)
+@Route(path = BaseConstant.BASE_IMAGEDETAIL)
 public class ImageDetailActivity extends BaseActivity<ImageDetailViewModel, ActivityBaseImagedetailBinding> {
     //bundle传递数据
     @Autowired

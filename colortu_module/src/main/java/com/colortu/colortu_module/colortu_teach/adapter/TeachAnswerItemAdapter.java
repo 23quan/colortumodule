@@ -51,7 +51,7 @@ public class TeachAnswerItemAdapter extends BaseRecyclerAdapter<TeachAnswerItemB
                     .apply(new RequestOptions().placeholder(R.drawable.base_img_loading))
                     .into(adapterTeachAnsweritemBinding.answeritemImg);
 
-            adapterTeachAnsweritemBinding.answeritemImg.setOnClickListener(new View.OnClickListener() {
+            adapterTeachAnsweritemBinding.answeritemImgview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
