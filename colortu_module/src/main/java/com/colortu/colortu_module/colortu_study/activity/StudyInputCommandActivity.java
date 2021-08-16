@@ -71,7 +71,7 @@ public class StudyInputCommandActivity extends BaseActivity<StudyInputCommandVie
                 if (EmptyUtils.stringIsEmpty(viewModel.command.get())) {
                     viewModel.getStudyCommand(viewModel.command.get());
                 } else {
-                    TipToast.tipToastShort(getResources().getString(R.string.studyroom_commandnone));
+                    TipToast.tipToastShort(getResources().getString(R.string.studyroom_commandmpty));
                 }
             }
         });

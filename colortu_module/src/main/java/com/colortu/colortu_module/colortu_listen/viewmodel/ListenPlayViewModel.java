@@ -95,6 +95,8 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
     private int speedtype;
     //播放速度
     private int speedtime;
+    //文件路径
+    private String savePath;
     //下载的音频路径
     private String[] audiourllist;
     //MD5音频路径
@@ -134,7 +136,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
 
         lessonid = listenClassBean.get().get(0).getLessonId();
         //文件路径
-        String savePath = Environment.getExternalStorageDirectory().getAbsolutePath()
+        savePath = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/Colortu/" + subjectname + "/Version_" + versionid.get() + "/Grade_" + gradeid + "/Lesson_" + lessonid;
         //语音路径转md5列表
         for (int i = 0; i < listenClassBean.get().size(); i++) {
@@ -262,6 +264,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                 countDownTimer.cancel();
             }
             Bundle bundle = new Bundle();
+            bundle.putString("savePath",savePath);
             bundle.putSerializable("wordsbean", (Serializable) listenClassBean.get());
             BaseUIKit.startActivity(UIKitName.LISTEN_PLAY, UIKitName.LISTEN_ANSWER,
                     BaseConstant.LISTEN_ANSWER, BaseUIKit.OTHER, bundle);
@@ -390,7 +393,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         //启动息屏app销毁
         SuicideUtils.onStartKill();
         //发送通知栏消息
-        NotificationUtil.createNotification(classname.get(),true);
+        NotificationUtil.createNotification(classname.get(), true);
         playicon.set(R.mipmap.icon_listen_stop);
         playing = false;
         curtime.set(String.valueOf((speedtime / 1000) - 1));
@@ -434,7 +437,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         //取消息屏app销毁
         SuicideUtils.onCancelKill();
         //发送通知栏消息
-        NotificationUtil.createNotification(classname.get(),true);
+        NotificationUtil.createNotification(classname.get(), true);
 
         try {
             mediaPlayer = new MediaPlayer();
@@ -513,7 +516,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                     //启动息屏app销毁
                     SuicideUtils.onStartKill();
                     //发送通知栏消息
-                    NotificationUtil.createNotification(classname.get(),true);
+                    NotificationUtil.createNotification(classname.get(), true);
                 } else {
                     curItem++;
                     curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
