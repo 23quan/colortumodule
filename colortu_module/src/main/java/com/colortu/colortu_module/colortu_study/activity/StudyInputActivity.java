@@ -123,7 +123,7 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
                 isLongClick = true;
                 binding.inputInputview.setKeepScreenOn(true);
                 OnStartRecorder();
-                return true;
+                return false;
             }
         });
         //取消监听
@@ -140,7 +140,7 @@ public class StudyInputActivity extends BaseActivity<StudyInputViewModel, Activi
                         }
                         break;
                 }
-                return true;
+                return false;
             }
         });
     }
