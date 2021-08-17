@@ -110,7 +110,12 @@ public class TeachChooseGradeClassActivity extends BaseActivity<TeachChooseGrade
                 //选择教辅年级数据刷新
                 teachChooseGradeClassAdapter.clear();
                 if (EmptyUtils.listIsEmpty(listBeans)) {
+                    binding.choosegrdeclassNotip.setVisibility(View.GONE);
+                    binding.choosegrdeclassGradelist.setVisibility(View.VISIBLE);
                     teachChooseGradeClassAdapter.addAll(listBeans);
+                } else {
+                    binding.choosegrdeclassGradelist.setVisibility(View.GONE);
+                    binding.choosegrdeclassNotip.setVisibility(View.VISIBLE);
                 }
                 teachChooseGradeClassAdapter.notifyDataSetChanged();
             }

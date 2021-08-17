@@ -39,6 +39,16 @@
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
                 android:scrollbars="none" />
+
+            <TextView
+                android:id="@+id/answer_notip"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_150"
+                android:gravity="center"
+                android:text="@string/update_content"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_30"
+                android:visibility="gone" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

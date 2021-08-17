@@ -30,6 +30,8 @@ import com.colortu.colortu_module.databinding.ActivityStudyCreateBinding;
  */
 @Route(path = BaseConstant.STUDY_AUDIOCREATE)
 public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewModel, ActivityStudyAudiocreateBinding> {
+    //是否长按
+    private boolean isLongClick;
     //权限列表
     private String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -79,19 +81,32 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
             }
         });
 
-        //录音按钮监听
+        initData();
+    }
+
+    public void initData() {
+        //长按录音
+        binding.audiocreateInputview.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                isLongClick = true;
+                binding.audiocreateInputview.setKeepScreenOn(true);
+                OnStartRecorder();
+                return true;
+            }
+        });
+        //取消监听
         binding.audiocreateInputview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN://按下
-                        binding.audiocreateInputview.setKeepScreenOn(true);
-                        OnStartRecorder();
-                        break;
                     case MotionEvent.ACTION_UP://离开or取消
                     case MotionEvent.ACTION_CANCEL:
-                        binding.audiocreateInputview.setKeepScreenOn(false);
-                        OnStopRecorder();
+                        if (isLongClick) {
+                            isLongClick = false;
+                            binding.audiocreateInputview.setKeepScreenOn(false);
+                            OnStopRecorder();
+                        }
                         break;
                 }
                 return true;
