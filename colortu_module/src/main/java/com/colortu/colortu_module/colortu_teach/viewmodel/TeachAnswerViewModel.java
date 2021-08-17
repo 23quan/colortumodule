@@ -63,11 +63,7 @@ public class TeachAnswerViewModel extends BaseActivityViewModel<BaseRequest> {
             @Override
             public void onResponse(Call<TeachTopicAnswerBean> call, Response<TeachTopicAnswerBean> response) {//请求成功
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
-                    if (EmptyUtils.listIsEmpty(response.body().getData().getQuestion())) {
-                        teachTopicAnswerBeanLiveData.setValue(response.body().getData().getQuestion());
-                    } else {
-                        TipToast.tipToastShort(BaseApplication.getContext().getString(R.string.update_content));
-                    }
+                    teachTopicAnswerBeanLiveData.setValue(response.body().getData().getQuestion());
                 } else {
                     TipToast.tipToastShort(BaseApplication.getContext().getString(R.string.update_content));
                 }

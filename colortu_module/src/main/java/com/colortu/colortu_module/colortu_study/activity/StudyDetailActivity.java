@@ -248,6 +248,8 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                     if (EmptyUtils.listIsEmpty(viewModel.plazaDetailLiveData.getValue())) {
                         if (viewModel.plazaDetailLiveData.getValue().get(itemposition).isIsplay()) {
                             viewModel.audioPlayer.onStop();
+                            studyDetailAdapter.setIsplaying(false);
+                            studyDetailAdapter.setUseruuid("");
                             viewModel.plazaDetailLiveData.getValue().get(itemposition).setIsplay(false);
                             studyDetailAdapter.notifyItemChanged(itemposition);
                         }
@@ -368,6 +370,8 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                         Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_stop).into(binding.detailMineplay);
                     } else {
                         //刷新当前item的icon
+                        studyDetailAdapter.setIsplaying(false);
+                        studyDetailAdapter.setUseruuid("");
                         viewModel.plazaDetailLiveData.getValue().get(itemposition).setIsplay(false);
                         studyDetailAdapter.notifyItemChanged(itemposition);
                     }
@@ -477,36 +481,35 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == BaseConstant.REQUEDT_STUDYSIGN) {
-            if (data != null) {
-                signid = data.getStringExtra("id") + "";
-                audiourl = data.getStringExtra("audiourl") + "";
+        if (data != null) {
+            signid = data.getStringExtra("id");
+            audiourl = data.getStringExtra("audiourl");
 
-                hashMap = new HashMap<>();
+            hashMap = new HashMap<>();
+            //个性状态id
+            if (EmptyUtils.stringIsEmpty(signid)) {
+                hashMap.put("userStatusId", signid);
+            } else {
+                hashMap.put("userStatusId", "");
+            }
+            //语音url
+            if (EmptyUtils.stringIsEmpty(signid)) {
+                hashMap.put("userRecordURL", audiourl);
+            } else {
+                hashMap.put("userRecordURL", "");
+            }
+
+            if (resultCode == BaseConstant.REQUEDT_STUDYSIGN) {
                 //自习室id
                 hashMap.put("studyRoomId", viewModel.roomid.get());
                 //用户uuid
                 hashMap.put("uuid", GetBeanDate.getUserUuid());
-                //个性状态id
-                hashMap.put("userStatusId", signid);
-                //语音url
-                hashMap.put("userRecordURL", audiourl);
                 viewModel.getStudyStart(hashMap);
-            }
-        } else if (requestCode == BaseConstant.REQUEDT_STUDYSIGN2) {
-            if (data != null) {
-                signid = data.getStringExtra("id") + "";
-                audiourl = data.getStringExtra("audiourl") + "";
-
-                hashMap = new HashMap<>();
+            } else if (requestCode == BaseConstant.REQUEDT_STUDYSIGN2) {
                 //topuserid
                 hashMap.put("id", viewModel.topUserBeanLiveData.getValue().getId());
                 //用户uuid
                 hashMap.put("uuid", GetBeanDate.getUserUuid());
-                //个性状态id
-                hashMap.put("userStatusId", signid);
-                //语音url
-                hashMap.put("userRecordURL", audiourl);
                 viewModel.getStudyUploadSign(hashMap);
             }
         }

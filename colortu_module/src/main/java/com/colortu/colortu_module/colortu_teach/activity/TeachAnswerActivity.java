@@ -1,6 +1,7 @@
 package com.colortu.colortu_module.colortu_teach.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_teach.adapter.TeachAnswerAdapter;
 import com.colortu.colortu_module.colortu_base.bean.TeachTopicAnswerBean;
 import com.colortu.colortu_module.colortu_teach.viewmodel.TeachAnswerViewModel;
@@ -65,7 +67,14 @@ public class TeachAnswerActivity extends BaseActivity<TeachAnswerViewModel, Acti
             public void onChanged(List<TeachTopicAnswerBean.DataBean.QuestionBean> questionBeans) {
                 //原题答案列表数据刷新
                 teachAnswerAdapter.clear();
-                teachAnswerAdapter.addAll(questionBeans);
+                if (EmptyUtils.listIsEmpty(questionBeans)) {
+                    binding.answerNotip.setVisibility(View.GONE);
+                    binding.answerList.setVisibility(View.VISIBLE);
+                    teachAnswerAdapter.addAll(questionBeans);
+                } else {
+                    binding.answerList.setVisibility(View.GONE);
+                    binding.answerNotip.setVisibility(View.VISIBLE);
+                }
                 teachAnswerAdapter.notifyDataSetChanged();
             }
         });

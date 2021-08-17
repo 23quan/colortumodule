@@ -37,6 +37,8 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
     private int type;
     //科目id
     private int subjectId;
+    //是否长按
+    private boolean isLongClick;
     //权限列表
     private String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -108,27 +110,32 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
         initData();
     }
 
-    /**
-     * 录音按钮监听
-     */
     public void initData() {
-        binding.inputInputview.setEnabled(false);
-        binding.inputInputview.setClickable(false);
+        //长按录音
+        binding.inputInputview.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                isLongClick = true;
+                binding.inputViptip.setVisibility(View.VISIBLE);
+                binding.inputViptip.setText(getResources().getString(R.string.record_message3));
+                binding.inputInputview.setKeepScreenOn(true);
+                OnStartRecorder();
+                return false;
+            }
+        });
+        //取消监听
         binding.inputInputview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN://按下
-                        binding.inputViptip.setVisibility(View.VISIBLE);
-                        binding.inputViptip.setText(getResources().getString(R.string.record_message3));
-                        binding.inputInputview.setKeepScreenOn(true);
-                        OnStartRecorder();
-                        break;
                     case MotionEvent.ACTION_UP://离开or取消
                     case MotionEvent.ACTION_CANCEL:
-                        viewModel.showVipTip();
-                        binding.inputInputview.setKeepScreenOn(false);
-                        OnStopRecorder();
+                        if (isLongClick) {
+                            isLongClick = false;
+                            viewModel.showVipTip();
+                            binding.inputInputview.setKeepScreenOn(false);
+                            OnStopRecorder();
+                        }
                         break;
                 }
                 return true;
