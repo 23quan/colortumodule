@@ -112,19 +112,19 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
 
     public void initData() {
         //长按录音
-        binding.inputInputview.setOnLongClickListener(new View.OnLongClickListener() {
+        binding.inputInputbtn.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 isLongClick = true;
                 binding.inputViptip.setVisibility(View.VISIBLE);
                 binding.inputViptip.setText(getResources().getString(R.string.record_message3));
-                binding.inputInputview.setKeepScreenOn(true);
+                binding.inputInputbtn.setKeepScreenOn(true);
                 OnStartRecorder();
                 return false;
             }
         });
         //取消监听
-        binding.inputInputview.setOnTouchListener(new View.OnTouchListener() {
+        binding.inputInputbtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
@@ -133,12 +133,12 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
                         if (isLongClick) {
                             isLongClick = false;
                             viewModel.showVipTip();
-                            binding.inputInputview.setKeepScreenOn(false);
+                            binding.inputInputbtn.setKeepScreenOn(false);
                             OnStopRecorder();
                         }
                         break;
                 }
-                return true;
+                return false;
             }
         });
     }

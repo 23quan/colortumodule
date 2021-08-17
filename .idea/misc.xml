@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/activity_record_history.xml" value="1.549342105263158" />
+        <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/activity_record_input.xml" value="1.4078947368421053" />
+        <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/activity_study_audiocreate.xml" value="1.4078947368421053" />
+        <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/activity_study_input.xml" value="1.4078947368421053" />
         <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/activity_teach_answer.xml" value="1.0162037037037037" />
         <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/activity_teach_choosegradeclass.xml" value="1.537828947368421" />
         <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/adapter_listen_answer.xml" value="1.0296052631578947" />

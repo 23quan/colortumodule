@@ -92,7 +92,7 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
                 isLongClick = true;
                 binding.audiocreateInputview.setKeepScreenOn(true);
                 OnStartRecorder();
-                return true;
+                return false;
             }
         });
         //取消监听
@@ -109,7 +109,7 @@ public class StudyAudioCreateActivity extends BaseActivity<StudyAudioCreateViewM
                         }
                         break;
                 }
-                return true;
+                return false;
             }
         });
     }
