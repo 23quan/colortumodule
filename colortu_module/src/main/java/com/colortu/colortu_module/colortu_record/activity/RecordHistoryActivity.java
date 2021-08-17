@@ -73,7 +73,12 @@ public class RecordHistoryActivity extends BaseActivity<RecordHistoryViewModel, 
                 //作业历史列表数据刷新
                 recordHistoryAdapter.clear();
                 if (EmptyUtils.listIsEmpty(recordsBeans)) {
+                    binding.historyNohistorytip.setVisibility(View.GONE);
+                    binding.historyList.setVisibility(View.VISIBLE);
                     recordHistoryAdapter.addAll(recordsBeans);
+                } else {
+                    binding.historyList.setVisibility(View.GONE);
+                    binding.historyNohistorytip.setVisibility(View.VISIBLE);
                 }
                 recordHistoryAdapter.notifyDataSetChanged();
             }

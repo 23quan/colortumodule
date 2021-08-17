@@ -44,10 +44,10 @@ public class ListenAnswerAdapter extends BaseRecyclerAdapter<ListenClassBean.Dat
         }
 
         //播放按钮
-        adapterListenAnswerBinding.answerPlay.setOnClickListener(new View.OnClickListener() {
+        adapterListenAnswerBinding.answerItemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickAnswerListener.OnClickAnswer(position,item.isPlaying(),item.getWordAudioUrl());
+                onClickAnswerListener.OnClickAnswer(position, item.isPlaying(), item.getWordAudioUrl());
             }
         });
     }

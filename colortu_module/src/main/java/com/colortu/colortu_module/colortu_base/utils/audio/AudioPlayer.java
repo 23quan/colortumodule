@@ -1,7 +1,9 @@
 package com.colortu.colortu_module.colortu_base.utils.audio;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 
 import java.io.IOException;
 
@@ -40,11 +42,6 @@ public class AudioPlayer {
                 onPlayerListener.playerfailure();
                 return;
             }
-
-            if (mediaPlayer == null) {
-                return;
-            }
-
             mediaPlayer.setLooping(false);
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
@@ -55,7 +52,46 @@ public class AudioPlayer {
                     onPlayerListener.playerfinish();
                 }
             });
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    //播放
+                    mediaPlayer.start();
+                    onPlayerListener.playerstart();
+                }
+            });
+        }
+    }
 
+    /**
+     * 初始化播放
+     */
+    private void onInitPlay(Context context, Uri uri) {
+        if (mediaPlayer != null) {
+            if (isPlay()) {
+                onStop();
+            }
+            mediaPlayer.reset();
+            try {
+                mediaPlayer.setDataSource(context, uri);
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
+                //异常
+                onPlayerListener.playerfailure();
+                return;
+            }
+            mediaPlayer.setLooping(false);
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    //暂停播放
+                    mediaPlayer.stop();
+                    mediaPlayer.reset();
+                    onPlayerListener.playerfinish();
+                }
+            });
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
@@ -78,6 +114,22 @@ public class AudioPlayer {
             } else {
                 isPause = false;
                 onInitPlay(audiourl);
+            }
+            onPlayerListener.playerstart();
+        }
+    }
+
+    /**
+     * 播放
+     */
+    public void onPlay(Context context, Uri uri) {
+        if (mediaPlayer != null) {
+            if (isPause) {
+                isPause = false;
+                mediaPlayer.start();
+            } else {
+                isPause = false;
+                onInitPlay(context, uri);
             }
             onPlayerListener.playerstart();
         }

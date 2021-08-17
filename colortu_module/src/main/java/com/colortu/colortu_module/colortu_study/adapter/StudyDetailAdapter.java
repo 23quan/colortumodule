@@ -23,6 +23,18 @@ import com.colortu.colortu_module.databinding.AdapterStudyDetailBinding;
 public class StudyDetailAdapter extends BaseRecyclerAdapter<StudyDetailBean.DataBean.UserDetailsBean> {
     //上下文
     private Context context;
+    //刷新时是否在播放录音
+    private boolean isplaying = false;
+    //播放录音用户的uuid
+    private String useruuid = "";
+
+    public void setIsplaying(boolean isplaying) {
+        this.isplaying = isplaying;
+    }
+
+    public void setUseruuid(String useruuid) {
+        this.useruuid = useruuid;
+    }
 
     public StudyDetailAdapter(Context context) {
         this.context = context;
@@ -64,10 +76,19 @@ public class StudyDetailAdapter extends BaseRecyclerAdapter<StudyDetailBean.Data
         adapterStudyDetailBinding.studydetailLikenum.setText(String.valueOf(Math.abs(item.getUserLikeNum())));
 
         //是否播放
-        if (item.isIsplay()) {
-            Glide.with(context).load(R.mipmap.icon_play_start).into(adapterStudyDetailBinding.studydetailPlay);
+        if (useruuid.equals(item.getUuid())) {
+            if (isplaying) {
+                item.setIsplay(true);
+                Glide.with(context).load(R.mipmap.icon_play_start).into(adapterStudyDetailBinding.studydetailPlay);
+            } else {
+                Glide.with(context).load(R.mipmap.icon_play_stop).into(adapterStudyDetailBinding.studydetailPlay);
+            }
         } else {
-            Glide.with(context).load(R.mipmap.icon_play_stop).into(adapterStudyDetailBinding.studydetailPlay);
+            if (item.isIsplay()) {
+                Glide.with(context).load(R.mipmap.icon_play_start).into(adapterStudyDetailBinding.studydetailPlay);
+            } else {
+                Glide.with(context).load(R.mipmap.icon_play_stop).into(adapterStudyDetailBinding.studydetailPlay);
+            }
         }
 
         //点赞
@@ -82,7 +103,7 @@ public class StudyDetailAdapter extends BaseRecyclerAdapter<StudyDetailBean.Data
         adapterStudyDetailBinding.studydetailPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickPlayListener.OnClickPlay(position, item.isIsplay(),  Tools.stringIndexOf(item.getUserRecordURL(), BaseConstant.HomeWorkAudioUrl));
+                onClickPlayListener.OnClickPlay(position, item.isIsplay(), item.getUserRecordURL(), item.getUuid());
             }
         });
     }
@@ -104,6 +125,6 @@ public class StudyDetailAdapter extends BaseRecyclerAdapter<StudyDetailBean.Data
     }
 
     public interface OnClickPlayListener {
-        void OnClickPlay(int position, boolean isplay, String audiourl);
+        void OnClickPlay(int position, boolean isplay, String audiourl, String useruuid);
     }
 }

@@ -240,30 +240,34 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         binding.detailMineplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //解绑音频焦点
-                AudioFocusUtils.abandonAudioFocus();
-                viewModel.typeplay.set(true);
-                //刷新当前item的icon
-                if (EmptyUtils.listIsEmpty(viewModel.plazaDetailLiveData.getValue())) {
-                    if (viewModel.plazaDetailLiveData.getValue().get(itemposition).isIsplay()) {
+                if (EmptyUtils.stringIsEmpty(viewModel.topUserBeanLiveData.getValue().getUserRecordURL())) {
+                    //解绑音频焦点
+                    AudioFocusUtils.abandonAudioFocus();
+                    viewModel.typeplay.set(true);
+                    //刷新当前item的icon
+                    if (EmptyUtils.listIsEmpty(viewModel.plazaDetailLiveData.getValue())) {
+                        if (viewModel.plazaDetailLiveData.getValue().get(itemposition).isIsplay()) {
+                            viewModel.audioPlayer.onStop();
+                            viewModel.plazaDetailLiveData.getValue().get(itemposition).setIsplay(false);
+                            studyDetailAdapter.notifyItemChanged(itemposition);
+                        }
+                    }
+                    //播放
+                    if (mineplay) {
+                        mineplay = false;
                         viewModel.audioPlayer.onStop();
-                        viewModel.plazaDetailLiveData.getValue().get(itemposition).setIsplay(false);
-                        studyDetailAdapter.notifyItemChanged(itemposition);
+                        Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_stop).into(binding.detailMineplay);
+                    } else {
+                        if (EmptyUtils.stringIsEmpty(viewModel.topUserBeanLiveData.getValue().getUserRecordURL())) {
+                            //抢占音频焦点
+                            AudioFocusUtils.initAudioFocus(StudyDetailActivity.this);
+                            mineplay = true;
+                            viewModel.audioPlayer.onPlay(Tools.stringIndexOf(viewModel.topUserBeanLiveData.getValue().getUserRecordURL(), BaseConstant.HomeWorkAudioUrl));
+                            Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_start).into(binding.detailMineplay);
+                        }
                     }
-                }
-                //播放
-                if (mineplay) {
-                    mineplay = false;
-                    viewModel.audioPlayer.onStop();
-                    Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_stop).into(binding.detailMineplay);
                 } else {
-                    if (EmptyUtils.stringIsEmpty(viewModel.topUserBeanLiveData.getValue().getUserRecordURL())) {
-                        //抢占音频焦点
-                        AudioFocusUtils.initAudioFocus(StudyDetailActivity.this);
-                        mineplay = true;
-                        viewModel.audioPlayer.onPlay(Tools.stringIndexOf(viewModel.topUserBeanLiveData.getValue().getUserRecordURL(), BaseConstant.HomeWorkAudioUrl));
-                        Glide.with(StudyDetailActivity.this).load(R.mipmap.icon_play_start).into(binding.detailMineplay);
-                    }
+                    TipToast.tipToastShort(getResources().getString(R.string.not_inputaudio));
                 }
             }
         });
@@ -299,7 +303,7 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
         //播放个性签名语音
         studyDetailAdapter.setOnClickPlayListener(new StudyDetailAdapter.OnClickPlayListener() {
             @Override
-            public void OnClickPlay(int position, boolean isplay, String audiourl) {
+            public void OnClickPlay(int position, boolean isplay, String audiourl, String useruuid) {
                 //解绑音频焦点
                 AudioFocusUtils.abandonAudioFocus();
                 viewModel.typeplay.set(false);
@@ -319,14 +323,20 @@ public class StudyDetailActivity extends BaseActivity<StudyDetailViewModel, Acti
                 }
                 //播放
                 if (isplay) {
+                    studyDetailAdapter.setIsplaying(false);
+                    studyDetailAdapter.setUseruuid("");
                     viewModel.plazaDetailLiveData.getValue().get(position).setIsplay(false);
                     viewModel.audioPlayer.onStop();
                 } else {
                     if (EmptyUtils.stringIsEmpty(audiourl)) {
                         //抢占音频焦点
                         AudioFocusUtils.initAudioFocus(StudyDetailActivity.this);
+                        studyDetailAdapter.setIsplaying(true);
+                        studyDetailAdapter.setUseruuid(useruuid);
                         viewModel.plazaDetailLiveData.getValue().get(position).setIsplay(true);
-                        viewModel.audioPlayer.onPlay(audiourl);
+                        viewModel.audioPlayer.onPlay(Tools.stringIndexOf(audiourl, BaseConstant.HomeWorkAudioUrl));
+                    } else {
+                        TipToast.tipToastShort(getResources().getString(R.string.not_inputaudio));
                     }
                 }
                 studyDetailAdapter.notifyItemChanged(position);

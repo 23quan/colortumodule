@@ -11,6 +11,8 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.dialog.DialogAffirm;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
+import com.colortu.colortu_module.colortu_base.utils.TipToast;
 import com.colortu.colortu_module.colortu_record.adapter.RecordKeyBoardAdapter;
 import com.colortu.colortu_module.colortu_record.viewmodel.RecordInputCommandViewModel;
 import com.colortu.colortu_module.databinding.ActivityRecordInputcommandBinding;
@@ -69,7 +71,11 @@ public class RecordInputCommandActivity extends BaseActivity<RecordInputCommandV
 
             @Override
             public void OnClickSure() {//确定按钮
-                viewModel.copyHomeWorkRunnable();
+                if (EmptyUtils.stringIsEmpty(commands)) {
+                    viewModel.copyHomeWorkRunnable();
+                } else {
+                    TipToast.tipToastShort(getResources().getString(R.string.homework_commandempty));
+                }
             }
         });
 

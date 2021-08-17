@@ -86,6 +86,7 @@
 
     <string name="command">口令</string>
     <string name="none_command">暂无口令</string>
+    <string name="homework_commandempty">作业口令不能为空</string>
     <string name="input_command">输入口令</string>
     <string name="share_command">分享作业口令</string>
     <string name="command_message">使用说明：把作业口令告诉你的同学，他输入口令后可以复制你录入的作业哦~\n作业口令一星期有效</string>
@@ -144,6 +145,7 @@
     <string name="data_loading">数据加载中,请稍等~</string>
     <string name="study_finishmessage">你确定结束自习室？再次进入自习室需重新计时</string>
     <string name="input_leaveword">录入自习留言</string>
+    <string name="not_inputaudio">未录入语音</string>
     <string name="not_choosestate">未选择状态或录入语音</string>
 
     <string name="mine_studyroom">我的自习室</string>
@@ -165,7 +167,7 @@
     <string name="command_join">口令参加</string>
     <string name="input_command2">请输入口令</string>
     <string name="studyroom_commanderror">自习室口令错误</string>
-    <string name="studyroom_commandnone">自习室口令不能为空</string>
+    <string name="studyroom_commandmpty">自习室口令不能为空</string>
     <string name="studyroom_commandmessage">将上面口令告诉给您的好友,让您的好友在手表上下载小兔作业,进入我的自习室输入口令,即可一起自习!</string>
 
     <string name="listen">听写</string>

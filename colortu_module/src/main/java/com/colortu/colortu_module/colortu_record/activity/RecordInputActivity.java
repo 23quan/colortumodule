@@ -112,6 +112,8 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
      * 录音按钮监听
      */
     public void initData() {
+        binding.inputInputview.setEnabled(false);
+        binding.inputInputview.setClickable(false);
         binding.inputInputview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

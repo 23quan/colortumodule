@@ -75,9 +75,11 @@ public class RecordSubjectDetailActivity extends BaseActivity<RecordSubjectDetai
                 AudioFocusUtils.abandonAudioFocus();
                 //刷新前一个item的icon
                 if (itemposition != position) {
-                    viewModel.audioPlayer.onStop();
-                    viewModel.recordSubjectDetailBeanLiveData.getValue().get(itemposition).setIsplay(false);
-                    recordSubjectDetailAdapter.notifyItemChanged(itemposition);
+                    if (viewModel.recordSubjectDetailBeanLiveData.getValue().get(itemposition).isIsplay()) {
+                        viewModel.audioPlayer.onStop();
+                        viewModel.recordSubjectDetailBeanLiveData.getValue().get(itemposition).setIsplay(false);
+                        recordSubjectDetailAdapter.notifyItemChanged(itemposition);
+                    }
                 }
 
                 //播放
