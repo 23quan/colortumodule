@@ -87,6 +87,8 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
                     binding.inputViptip.setVisibility(View.GONE);
+                } else {
+                    binding.inputViptip.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -117,7 +119,7 @@ public class RecordInputActivity extends BaseActivity<RecordInputViewModel, Acti
             public boolean onLongClick(View view) {
                 isLongClick = true;
                 binding.inputViptip.setVisibility(View.VISIBLE);
-                binding.inputViptip.setText(getResources().getString(R.string.record_message3));
+                viewModel.viptip.set(getResources().getString(R.string.record_message3));
                 binding.inputInputbtn.setKeepScreenOn(true);
                 OnStartRecorder();
                 return false;
