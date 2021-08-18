@@ -65,7 +65,7 @@ public class TeachAnswerViewModel extends BaseActivityViewModel<BaseRequest> {
                 if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
                     teachTopicAnswerBeanLiveData.setValue(response.body().getData().getQuestion());
                 } else {
-                    TipToast.tipToastShort(BaseApplication.getContext().getString(R.string.update_content));
+                    teachTopicAnswerBeanLiveData.setValue(null);
                 }
             }
 
