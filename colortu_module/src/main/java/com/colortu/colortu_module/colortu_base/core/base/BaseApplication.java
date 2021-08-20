@@ -51,7 +51,7 @@ public class BaseApplication extends Application {
     //是否是debug apk
     private boolean isDebug = false;
     //监听网络状态变化广播
-    public static NetWorkChangReceiver netWorkChangReceiver;
+    public NetWorkChangReceiver netWorkChangReceiver;
     //弱引用activity
     private Stack<WeakReference<Activity>> mActivityStack;
     //1.作业app 2.听写app
@@ -82,11 +82,6 @@ public class BaseApplication extends Application {
             ARouter.openDebug();
         }
         ARouter.init(this);
-        //网络变化广播监听
-        netWorkChangReceiver = new NetWorkChangReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(netWorkChangReceiver, intentFilter);
         //亮屏息屏广播监听
         if (ChannelUtil.isXTC() || ChannelUtil.isHuaWei()) {
             registSreenStatusReceiver();
@@ -184,6 +179,29 @@ public class BaseApplication extends Application {
 
     public static void setIsListen(boolean isListen) {
         BaseApplication.isListen = isListen;
+    }
+
+    /**
+     * 网络变化广播监听
+     */
+    public void netWorkMonitor() {
+        netWorkChangReceiver = new NetWorkChangReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(netWorkChangReceiver, intentFilter);
+    }
+
+    /**
+     * 网络变化广播监听注销
+     */
+    public void unnetWorkMonitor() {
+        if (netWorkChangReceiver != null) {
+            try {
+                unregisterReceiver(netWorkChangReceiver);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
