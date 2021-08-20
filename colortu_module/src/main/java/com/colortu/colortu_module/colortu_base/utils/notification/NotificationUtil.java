@@ -38,6 +38,9 @@ public class NotificationUtil {
     public final static String CLICK_PLAY = "click_play";
     public final static String CLICK_NEXT = "click_next";
 
+    public final static String HUAWEI_3PRO = "HUAWEISIM-AL00";
+    public final static String HUAWEI_4X = "HUAWEINIK-AL00";
+
     //上下文
     private static Context context;
     //通知管理器
@@ -50,14 +53,14 @@ public class NotificationUtil {
     /**
      * 创建通知栏
      */
-    public static void createNotification(String content,boolean showView) {
+    public static void createNotification(String content, boolean showView) {
         if (ChannelUtil.isHuaWei()) {
-            create(content,showView);
+            create(content, showView);
         }
     }
 
     @SuppressLint("NewApi")
-    private static void create(String content,boolean showView) {
+    private static void create(String content, boolean showView) {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//适配一下高版本
@@ -66,6 +69,8 @@ public class NotificationUtil {
             notificationChannel.setSound(null, null);
             notificationManager.createNotificationChannel(notificationChannel);
         }
+
+        String vendor = Build.BRAND + Build.MODEL;
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         //设置小图标
@@ -86,10 +91,14 @@ public class NotificationUtil {
         builder.setPriority(PRIORITY_MAX);
         //设置只提醒一次
         builder.setOnlyAlertOnce(true);
-        //把自定义小的view放上
-        builder.setContent(getSmallRemoteViews(content,showView));
-        //把自定义大的view放上
-        builder.setCustomBigContentView(getBigRemoteViews(content,showView));
+        //把自定义view放上
+        if (vendor.equals(HUAWEI_3PRO)) {
+            builder.setContent(getHuaWei3proRemoteViews(content, showView));
+        } else if (vendor.equals(HUAWEI_4X)) {
+            builder.setContent(getHuaWei4xRemoteViews(content, showView));
+        } else {
+            builder.setContent(getHuaWei3proRemoteViews(content, showView));
+        }
         //整个点击跳转activity
         builder.setContentIntent(getPendingIntent(CLICK_APP));
 
@@ -117,70 +126,70 @@ public class NotificationUtil {
     }
 
     /**
-     * 自定义小的界面
+     * 自定义华为3pro界面
      */
-    private static RemoteViews getSmallRemoteViews(String content, boolean showView) {
+    private static RemoteViews getHuaWei3proRemoteViews(String content, boolean showView) {
         //自定义界面
-        RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_smallplayer);
+        RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_huawei3pro);
         //点击取消通知栏
-        remoteViews.setOnClickPendingIntent(R.id.smallplayer_cancel, getPendingIntent(CLICK_CANCEL));
+        remoteViews.setOnClickPendingIntent(R.id.huawei3pro_cancel, getPendingIntent(CLICK_CANCEL));
         //点击播放暂停
-        remoteViews.setOnClickPendingIntent(R.id.smallplayer_play, getPendingIntent(CLICK_PLAY));
+        remoteViews.setOnClickPendingIntent(R.id.huawei3pro_play, getPendingIntent(CLICK_PLAY));
         if (showView) {
             //点击上一首
-            remoteViews.setImageViewResource(R.id.smallplayer_last, R.mipmap.icon_base_left);
-            remoteViews.setOnClickPendingIntent(R.id.smallplayer_last, getPendingIntent(CLICK_LAST));
+            remoteViews.setImageViewResource(R.id.huawei3pro_lasticon, R.mipmap.icon_base_left);
+            remoteViews.setOnClickPendingIntent(R.id.huawei3pro_last, getPendingIntent(CLICK_LAST));
             //点击下一首
-            remoteViews.setImageViewResource(R.id.smallplayer_next, R.mipmap.icon_base_right);
-            remoteViews.setOnClickPendingIntent(R.id.smallplayer_next, getPendingIntent(CLICK_NEXT));
+            remoteViews.setImageViewResource(R.id.huawei3pro_nexticon, R.mipmap.icon_base_right);
+            remoteViews.setOnClickPendingIntent(R.id.huawei3pro_next, getPendingIntent(CLICK_NEXT));
         }
 
         if (BaseApplication.appType == 1) {
-            remoteViews.setImageViewResource(R.id.smallplayer_icon, R.mipmap.icon_work_huaweilogo);
+            remoteViews.setImageViewResource(R.id.huawei3pro_icon, R.mipmap.icon_work_huaweilogo);
         } else {
-            remoteViews.setImageViewResource(R.id.smallplayer_icon, R.mipmap.icon_listen_logo);
+            remoteViews.setImageViewResource(R.id.huawei3pro_icon, R.mipmap.icon_listen_logo);
         }
-        remoteViews.setTextViewText(R.id.smallplayer_title, content);
+        remoteViews.setTextViewText(R.id.huawei3pro_title, content);
 
         if (BaseApplication.isListen) {
-            remoteViews.setImageViewResource(R.id.smallplayer_play, R.mipmap.icon_play_start);
+            remoteViews.setImageViewResource(R.id.huawei3pro_play, R.mipmap.icon_play_start);
         } else {
-            remoteViews.setImageViewResource(R.id.smallplayer_play, R.mipmap.icon_play_stop);
+            remoteViews.setImageViewResource(R.id.huawei3pro_play, R.mipmap.icon_play_stop);
         }
 
         return remoteViews;
     }
 
     /**
-     * 自定义大的界面
+     * 自定义华为4x界面
      */
-    private static RemoteViews getBigRemoteViews(String content, boolean showView) {
+    private static RemoteViews getHuaWei4xRemoteViews(String content, boolean showView) {
         //自定义界面
-        RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_bigplayer);
+        RemoteViews remoteViews = new RemoteViews(BaseApplication.getContext().getPackageName(), R.layout.notification_base_huawei4x);
         //点击取消通知栏
-        remoteViews.setOnClickPendingIntent(R.id.bigplayer_cancel, getPendingIntent(CLICK_CANCEL));
+        remoteViews.setOnClickPendingIntent(R.id.huawei4x_cancel, getPendingIntent(CLICK_CANCEL));
         //点击播放暂停
-        remoteViews.setOnClickPendingIntent(R.id.bigplayer_play, getPendingIntent(CLICK_PLAY));
+        remoteViews.setOnClickPendingIntent(R.id.huawei4x_play, getPendingIntent(CLICK_PLAY));
         if (showView) {
             //点击上一首
-            remoteViews.setImageViewResource(R.id.bigplayer_last, R.mipmap.icon_base_left);
-            remoteViews.setOnClickPendingIntent(R.id.bigplayer_last, getPendingIntent(CLICK_LAST));
+            remoteViews.setImageViewResource(R.id.huawei4x_last, R.mipmap.icon_base_left);
+            remoteViews.setOnClickPendingIntent(R.id.huawei4x_last, getPendingIntent(CLICK_LAST));
             //点击下一首
-            remoteViews.setImageViewResource(R.id.bigplayer_next, R.mipmap.icon_base_right);
-            remoteViews.setOnClickPendingIntent(R.id.bigplayer_next, getPendingIntent(CLICK_NEXT));
+            remoteViews.setImageViewResource(R.id.huawei4x_next, R.mipmap.icon_base_right);
+            remoteViews.setOnClickPendingIntent(R.id.huawei4x_next, getPendingIntent(CLICK_NEXT));
         }
 
         if (BaseApplication.appType == 1) {
-            remoteViews.setImageViewResource(R.id.bigplayer_icon, R.mipmap.icon_work_huaweilogo);
+            remoteViews.setImageViewResource(R.id.huawei4x_icon, R.mipmap.icon_work_huaweilogo);
         } else {
-            remoteViews.setImageViewResource(R.id.bigplayer_icon, R.mipmap.icon_listen_logo);
+            remoteViews.setImageViewResource(R.id.huawei4x_icon, R.mipmap.icon_listen_logo);
         }
-        remoteViews.setTextViewText(R.id.bigplayer_title, content);
+        remoteViews.setTextViewText(R.id.huawei4x_title, content);
 
         if (BaseApplication.isListen) {
-            remoteViews.setImageViewResource(R.id.bigplayer_play, R.mipmap.icon_play_start);
+            remoteViews.setImageViewResource(R.id.huawei4x_play, R.mipmap.icon_play_start);
         } else {
-            remoteViews.setImageViewResource(R.id.bigplayer_play, R.mipmap.icon_play_stop);
+            remoteViews.setImageViewResource(R.id.huawei4x_play, R.mipmap.icon_play_stop);
         }
 
         return remoteViews;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/base_transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/huawei4x_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/huawei4x_icon"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:scaleType="fitXY"></ImageView>
+
+        <TextView
+            android:id="@+id/huawei4x_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_25"
+            android:textStyle="bold"></TextView>
+
+        <ImageView
+            android:id="@+id/huawei4x_cancel"
+            android:layout_width="@dimen/dimen_50"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_base_cancel"></ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:gravity="center|center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/huawei4x_last"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="@dimen/dimen_60"
+            android:scaleType="fitXY"></ImageView>
+
+        <ImageView
+            android:id="@+id/huawei4x_play"
+            android:layout_width="@dimen/dimen_70"
+            android:layout_height="@dimen/dimen_70"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_play_start"></ImageView>
+
+        <ImageView
+            android:id="@+id/huawei4x_next"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="@dimen/dimen_60"
+            android:scaleType="fitXY"></ImageView>
+    </LinearLayout>
+</LinearLayout>
