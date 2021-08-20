@@ -7,7 +7,6 @@
     <string name="refused_permission">拒绝授权导致功能无法使用</string>
     <string name="no_networt">当前网络不可用</string>
     <string name="networt_wifi">当前网络为wifi</string>
-    <string name="open_wlan">是否开启WLAN</string>
     <string name="networt_mobile">当前网络为移动网络,将使用流量</string>
     <string name="networt_mobile2">当前为非WIFI环境\n是否使用流量</string>
     <string name="rest_message">您已连续使用40分钟，注意休息保护眼睛哦~</string>

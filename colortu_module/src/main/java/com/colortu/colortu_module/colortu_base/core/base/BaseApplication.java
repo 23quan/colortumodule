@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -83,6 +84,9 @@ public class BaseApplication extends Application {
         ARouter.init(this);
         //网络变化广播监听
         netWorkChangReceiver = new NetWorkChangReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(netWorkChangReceiver, intentFilter);
         //亮屏息屏广播监听
         if (ChannelUtil.isXTC() || ChannelUtil.isHuaWei()) {
             registSreenStatusReceiver();

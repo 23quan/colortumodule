@@ -116,7 +116,7 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
         recordsBeanList.clear();
         listenVersionAdapter.clear();
         if (EmptyUtils.listIsEmpty(viewModel.listenVersionBeanLiveData.getValue())) {
-            int grade = GetBeanDate.getChooseGrade() + 1;
+            int grade = GetBeanDate.getChooseGrade();
             for (int i = 1; i < viewModel.listenVersionBeanLiveData.getValue().size(); i++) {
                 if (grade >= Integer.parseInt(viewModel.listenVersionBeanLiveData.getValue().get(i).getMinGrade())) {
                     ListenVersionBean.DataBean.RecordsBean recordsBean = viewModel.listenVersionBeanLiveData.getValue().get(i);
