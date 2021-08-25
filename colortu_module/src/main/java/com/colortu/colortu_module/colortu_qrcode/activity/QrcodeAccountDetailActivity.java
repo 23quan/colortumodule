@@ -1,6 +1,7 @@
 package com.colortu.colortu_module.colortu_qrcode.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.fastjson.JSONObject;
@@ -10,6 +11,7 @@ import com.colortu.colortu_module.colortu_base.bean.QrcodeUserInfoBean;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
+import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.colortu_base.utils.Tools;
 import com.colortu.colortu_module.colortu_qrcode.viewmodel.QrcodeAccountDetailViewModel;
@@ -50,10 +52,16 @@ public class QrcodeAccountDetailActivity extends BaseActivity<QrcodeAccountDetai
                 binding.accountdetailName.setText(userInfoBean.getUserInfo().getNickName());
             }
         }
-        //uuid
-        binding.accountdetailUuid.setText("uuid:" + GetBeanDate.getUserUuid());
-        //openid
-        binding.accountdetailOpenid.setText("openid:" + GetBeanDate.getOpenid());
+
+        if (ChannelUtil.isXiaoMi()) {
+            binding.accountdetailUuid.setVisibility(View.GONE);
+            binding.accountdetailOpenid.setVisibility(View.GONE);
+        } else {
+            //uuid
+            binding.accountdetailUuid.setText("uuid:" + GetBeanDate.getUserUuid());
+            //openid
+            binding.accountdetailOpenid.setText("openid:" + GetBeanDate.getOpenid());
+        }
         //版本号
         binding.accountdetailVersion.setText("版本号:" + Tools.getVersionCode(this));
     }

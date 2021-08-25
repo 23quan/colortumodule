@@ -8,35 +8,22 @@
             type="com.colortu.colortu_module.colortu_teach.viewmodel.TeachBookListViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/booklist_parentview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/base_black1"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical">
+        android:focusableInTouchMode="true">
 
         <LinearLayout
+            android:id="@+id/booklist_titleview"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_70"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/dimen_55"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/booklist_title"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/dimen_70"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:paddingLeft="@dimen/dimen_20"
-                android:paddingRight="@dimen/dimen_20"
-                android:text="@string/english_listen"
-                android:textColor="@color/base_white1"
-                android:textSize="@dimen/size_30"></TextView>
 
             <TextView
                 android:id="@+id/booklist_help"
@@ -47,31 +34,40 @@
                 android:text="@string/help"
                 android:textColor="@color/base_blue9"
                 android:textSize="@dimen/size_25"></TextView>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/booklist_list"
+            <TextView
+                android:id="@+id/booklist_title"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:overScrollMode="never"
-                android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
-
-            <com.colortu.colortu_module.colortu_base.utils.sidebarutils.SideBar
-                android:id="@+id/booklist_sidebar"
-                android:layout_width="@dimen/dimen_30"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:layout_marginRight="@dimen/dimen_20"
-                android:layout_marginBottom="@dimen/dimen_20"
-                android:background="@drawable/base_blue1_bg"></com.colortu.colortu_module.colortu_base.utils.sidebarutils.SideBar>
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingLeft="@dimen/dimen_20"
+                android:paddingRight="@dimen/dimen_20"
+                android:text="@string/english_listen"
+                android:textColor="@color/base_white1"
+                android:textSize="@dimen/size_30"></TextView>
         </LinearLayout>
 
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/booklist_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/booklist_titleview"
+            android:layout_marginRight="@dimen/dimen_55"
+            android:overScrollMode="never"
+            android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
+
+        <com.colortu.colortu_module.colortu_base.utils.sidebarutils.SideBar
+            android:id="@+id/booklist_sidebar"
+            android:layout_width="@dimen/dimen_35"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:background="@drawable/base_blue1_bg"></com.colortu.colortu_module.colortu_base.utils.sidebarutils.SideBar>
+
+    </RelativeLayout>
 </layout>

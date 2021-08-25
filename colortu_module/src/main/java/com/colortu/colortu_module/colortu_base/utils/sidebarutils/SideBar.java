@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,27 +20,22 @@ import android.widget.TextView;
 import com.colortu.colortu_module.R;
 
 @SuppressLint("AppCompatCustomView")
-public class SideBar extends Button {
-
-    private void initView() {
-        dialogSidebarContent = (TextView) findViewById(R.id.dialog_sidebar_content);
-    }
-
-    public interface OnTouchAssortListener {
-        void onTouchAssortListener(String s);
-    }
-
-    // 分类
-    private static final String[] ASSORT_TEXT = {"A", "B", "C", "D", "E", "F", "G",
+public class SideBar extends View {
+    //字母列表
+    private static final String[] letterList = {"A", "B", "C", "D", "E", "F", "G",
             "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
             "U", "V", "W", "X", "Y", "Z", "#"};
-
-    private Paint mPaint = new Paint();
-    private int mSelectIndex = -1;
-    private OnTouchAssortListener mListener = null;
-    private Activity mAttachActivity;
-    PopupWindow mPopupWindow = null;
-    View layoutView;
+    //绘画
+    private Paint paint = new Paint();
+    //滑动下标
+    private int selectIndex = -1;
+    //activity
+    private Activity activity;
+    //显示字符弹窗
+    PopupWindow popupWindow = null;
+    //自定义弹窗view
+    View view;
+    //显示字符textview
     TextView dialogSidebarContent;
 
     public SideBar(Context context) {
@@ -52,89 +48,72 @@ public class SideBar extends Button {
 
     public SideBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mAttachActivity = (Activity) context;
+        activity = (Activity) context;
         init(context);
     }
 
     private void init(Context context) {
-        layoutView = LayoutInflater.from(context).inflate(R.layout.dialog_base_sidebar, null);
-        dialogSidebarContent = (TextView) layoutView.findViewById(R.id.dialog_sidebar_content);
-    }
-
-    public void setOnTouchAssortListener(OnTouchAssortListener listener) {
-        this.mListener = listener;
+        view = LayoutInflater.from(context).inflate(R.layout.dialog_base_sidebar, null);
+        dialogSidebarContent = (TextView) view.findViewById(R.id.dialog_sidebar_content);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int nHeight = getHeight();
-        int hWidth = getWidth();
-        int nAssortCount = ASSORT_TEXT.length;
-        int nInterval = nHeight / nAssortCount;
+        float width = getWidth();
+        float height = getHeight();
+        float letterHeight = height / letterList.length;
 
-        for (int i = 0; i < nAssortCount; i++) {
+        for (int i = 0; i < letterList.length; i++) {
             //抗锯齿
-            mPaint.setAntiAlias(true);
-            //默认粗体
-            mPaint.setTypeface(Typeface.DEFAULT_BOLD);
-            mPaint.setColor(Color.parseColor("#FFFFFF"));
-            if (i == mSelectIndex) {
-                // 被选择的字母改变颜色和粗体
-                mPaint.setColor(Color.parseColor("#000000"));
-                mPaint.setFakeBoldText(true);
-                mPaint.setTextSize(20);
-            }
+            paint.setAntiAlias(true);
+            //设置颜色
+            paint.setColor(i == selectIndex ? Color.BLACK : Color.WHITE);
+            //设置字体大小
+            paint.setTextSize(10);
             //计算字母的X坐标
-            float xPos = hWidth / 2 - mPaint.measureText(ASSORT_TEXT[i]) / 2;
+            float xPos = width / 2 - paint.measureText(letterList[i]) / 2;
             //计算字母的Y坐标
-            float yPos = nInterval * i + nInterval;
-            canvas.drawText(ASSORT_TEXT[i], xPos, yPos, mPaint);
-            mPaint.reset();
+            float yPos = (letterHeight * i) + letterHeight;
+            canvas.drawText(letterList[i], xPos, yPos, paint);
+            paint.reset();
         }
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         //判断是哪一个字母被点击了
-        int nIndex = (int) (event.getY() / getHeight() * ASSORT_TEXT.length);
-        if (nIndex >= 0 && nIndex < ASSORT_TEXT.length) {
+        int nIndex = (int) (event.getY() / getHeight() * letterList.length);
+        if (nIndex >= 0 && nIndex < letterList.length) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_MOVE:
                     //如果滑动改变
-                    if (mSelectIndex != nIndex) {
-                        mSelectIndex = nIndex;
-                        showCharacter(ASSORT_TEXT[mSelectIndex]);
-                        if (mListener != null) {
-                            mListener.onTouchAssortListener(ASSORT_TEXT[mSelectIndex]);
+                    if (selectIndex != nIndex) {
+                        selectIndex = nIndex;
+                        showCharacter(letterList[selectIndex]);
+                        if (onTouchAssortListener != null) {
+                            onTouchAssortListener.onTouchAssortListener(letterList[selectIndex]);
                         }
                     }
                     break;
                 case MotionEvent.ACTION_DOWN:
-                    mSelectIndex = nIndex;
-                    showCharacter(ASSORT_TEXT[mSelectIndex]);
-                    if (mListener != null) {
-                        mListener.onTouchAssortListener(ASSORT_TEXT[mSelectIndex]);
+                    selectIndex = nIndex;
+                    showCharacter(letterList[selectIndex]);
+                    if (onTouchAssortListener != null) {
+                        onTouchAssortListener.onTouchAssortListener(letterList[selectIndex]);
                     }
                     break;
                 case MotionEvent.ACTION_UP:
                     disShowCharacter();
-                    mSelectIndex = -1;
+                    selectIndex = -1;
                     break;
             }
         } else {
-            mSelectIndex = -1;
+            selectIndex = -1;
             disShowCharacter();
         }
         invalidate();
         return true;
-    }
-
-    private void disShowCharacter() {
-        if (mPopupWindow != null) {
-            mPopupWindow.dismiss();
-            mPopupWindow = null;
-        }
     }
 
     /**
@@ -143,12 +122,33 @@ public class SideBar extends Button {
      * @param string
      */
     private void showCharacter(String string) {
-        if (mPopupWindow != null) {
+        if (popupWindow != null) {
             dialogSidebarContent.setText(string);
         } else {
-            mPopupWindow = new PopupWindow(layoutView, 120, 120, false);
-            mPopupWindow.showAtLocation(mAttachActivity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+            popupWindow = new PopupWindow(view, 120, 120, false);
+            popupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
         }
         dialogSidebarContent.setText(string);
+    }
+
+    /**
+     * 取消弹出的字符
+     */
+    private void disShowCharacter() {
+        if (popupWindow != null) {
+            popupWindow.dismiss();
+            popupWindow = null;
+        }
+    }
+
+    //触摸监听
+    private OnTouchAssortListener onTouchAssortListener = null;
+
+    public interface OnTouchAssortListener {
+        void onTouchAssortListener(String s);
+    }
+
+    public void setOnTouchAssortListener(OnTouchAssortListener onTouchAssortListener) {
+        this.onTouchAssortListener = onTouchAssortListener;
     }
 }
