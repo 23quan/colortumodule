@@ -15,6 +15,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseRecyclerAdapter;
 import com.colortu.colortu_module.colortu_base.bean.TeachTopicItemBean;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.databinding.AdapterTeachTopicitemBinding;
 
 /**
@@ -42,23 +43,33 @@ public class TeachTopicItemAdapter extends BaseRecyclerAdapter<TeachTopicItemBea
         if (item.getType().equals("text")) {//文本原题
             adapterTeachTopicitemBinding.topicitemImgview.setVisibility(View.GONE);
             adapterTeachTopicitemBinding.topicitemText.setVisibility(View.VISIBLE);
-            adapterTeachTopicitemBinding.topicitemText.setText(Html.fromHtml(item.getContent()));
+            if (EmptyUtils.stringIsEmpty(item.getContent())) {
+                adapterTeachTopicitemBinding.topicitemText.setText(Html.fromHtml(item.getContent()));
+            } else {
+                adapterTeachTopicitemBinding.topicitemText.setText(context.getResources().getString(R.string.omit));
+            }
         } else {//图片原题
-            adapterTeachTopicitemBinding.topicitemText.setVisibility(View.GONE);
-            adapterTeachTopicitemBinding.topicitemImgview.setVisibility(View.VISIBLE);
-            Glide.with(context).load(BaseConstant.HomeWorkImgUrl + item.getContent())
-                    .apply(new RequestOptions().placeholder(R.drawable.base_img_loading))
-                    .into(adapterTeachTopicitemBinding.topicitemImg);
+            if (EmptyUtils.stringIsEmpty(item.getContent())) {
+                adapterTeachTopicitemBinding.topicitemText.setVisibility(View.GONE);
+                adapterTeachTopicitemBinding.topicitemImgview.setVisibility(View.VISIBLE);
+                Glide.with(context).load(BaseConstant.HomeWorkImgUrl + item.getContent())
+                        .apply(new RequestOptions().placeholder(R.drawable.base_img_loading))
+                        .into(adapterTeachTopicitemBinding.topicitemImg);
 
-            adapterTeachTopicitemBinding.topicitemImgview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("imageurl", BaseConstant.HomeWorkImgUrl + item.getContent());
-                    BaseUIKit.startActivity(UIKitName.TEACH_ANSWER, UIKitName.BASE_IMAGEDETAIL,
-                            BaseConstant.BASE_IMAGEDETAIL, BaseUIKit.OTHER, bundle);
-                }
-            });
+                adapterTeachTopicitemBinding.topicitemImgview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("imageurl", BaseConstant.HomeWorkImgUrl + item.getContent());
+                        BaseUIKit.startActivity(UIKitName.TEACH_ANSWER, UIKitName.BASE_IMAGEDETAIL,
+                                BaseConstant.BASE_IMAGEDETAIL, BaseUIKit.OTHER, bundle);
+                    }
+                });
+            } else {
+                adapterTeachTopicitemBinding.topicitemImgview.setVisibility(View.GONE);
+                adapterTeachTopicitemBinding.topicitemText.setVisibility(View.VISIBLE);
+                adapterTeachTopicitemBinding.topicitemText.setText(context.getResources().getString(R.string.omit));
+            }
         }
     }
 }

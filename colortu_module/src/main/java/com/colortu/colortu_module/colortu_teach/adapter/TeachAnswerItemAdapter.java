@@ -15,6 +15,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseRecyclerAdapter;
 import com.colortu.colortu_module.colortu_base.bean.TeachAnswerItemBean;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
+import com.colortu.colortu_module.colortu_base.utils.EmptyUtils;
 import com.colortu.colortu_module.databinding.AdapterTeachAnsweritemBinding;
 
 /**
@@ -42,24 +43,34 @@ public class TeachAnswerItemAdapter extends BaseRecyclerAdapter<TeachAnswerItemB
         if (item.getType().equals("text")) {//文本答案
             adapterTeachAnsweritemBinding.answeritemImgview.setVisibility(View.GONE);
             adapterTeachAnsweritemBinding.answeritemText.setVisibility(View.VISIBLE);
-            adapterTeachAnsweritemBinding.answeritemText.setText(Html.fromHtml(item.getContent()));
+            if (EmptyUtils.stringIsEmpty(item.getContent())) {
+                adapterTeachAnsweritemBinding.answeritemText.setText(Html.fromHtml(item.getContent()));
+            } else {
+                adapterTeachAnsweritemBinding.answeritemText.setText(context.getResources().getString(R.string.omit));
+            }
         } else {//图片答案
-            adapterTeachAnsweritemBinding.answeritemText.setVisibility(View.GONE);
-            adapterTeachAnsweritemBinding.answeritemImgview.setVisibility(View.VISIBLE);
-            Glide.with(context)
-                    .load(BaseConstant.HomeWorkImgUrl + item.getContent())
-                    .apply(new RequestOptions().placeholder(R.drawable.base_img_loading))
-                    .into(adapterTeachAnsweritemBinding.answeritemImg);
+            if (EmptyUtils.stringIsEmpty(item.getContent())) {
+                adapterTeachAnsweritemBinding.answeritemText.setVisibility(View.GONE);
+                adapterTeachAnsweritemBinding.answeritemImgview.setVisibility(View.VISIBLE);
+                Glide.with(context)
+                        .load(BaseConstant.HomeWorkImgUrl + item.getContent())
+                        .apply(new RequestOptions().placeholder(R.drawable.base_img_loading))
+                        .into(adapterTeachAnsweritemBinding.answeritemImg);
 
-            adapterTeachAnsweritemBinding.answeritemImgview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("imageurl", BaseConstant.HomeWorkImgUrl + item.getContent());
-                    BaseUIKit.startActivity(UIKitName.TEACH_ANSWER, UIKitName.BASE_IMAGEDETAIL,
-                            BaseConstant.BASE_IMAGEDETAIL, BaseUIKit.OTHER, bundle);
-                }
-            });
+                adapterTeachAnsweritemBinding.answeritemImgview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("imageurl", BaseConstant.HomeWorkImgUrl + item.getContent());
+                        BaseUIKit.startActivity(UIKitName.TEACH_ANSWER, UIKitName.BASE_IMAGEDETAIL,
+                                BaseConstant.BASE_IMAGEDETAIL, BaseUIKit.OTHER, bundle);
+                    }
+                });
+            } else {
+                adapterTeachAnsweritemBinding.answeritemImgview.setVisibility(View.GONE);
+                adapterTeachAnsweritemBinding.answeritemText.setVisibility(View.VISIBLE);
+                adapterTeachAnsweritemBinding.answeritemText.setText(context.getResources().getString(R.string.omit));
+            }
         }
     }
 }
