@@ -47,7 +47,7 @@ public class ListenPlayActivity extends BaseActivity<ListenPlayViewModel, Activi
         viewModel.subjectid.set(bundle.getInt("subjectid"));
         viewModel.versionid.set(bundle.getInt("versionid"));
         viewModel.listenClassBean.set((List<ListenClassBean.DataBean.PoetryVOSBean.WordsBean>) bundle.getSerializable("wordsbean"));
-        NotificationUtil.setContext(this);
+        //NotificationUtil.setContext(this);
 
         if (viewModel.listenClassBean.get() != null) {
             if (viewModel.listenClassBean.get().size() == 0) {

@@ -120,7 +120,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         //实例化
         handler = new Handler();
         audioMngHelper = new AudioMngHelper(BaseApplication.getContext());
-        NotificationClickReceiver.setOnNotificationListener(this);
+        //NotificationClickReceiver.setOnNotificationListener(this);
         //音频焦点监听
         AudioFocusUtils.setOnAudioFocusListener(this);
         AudioFocusUtils.initAudioFocus(BaseApplication.getContext());
@@ -147,6 +147,33 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         downloadAudio = new DownloadAudio(this, savePath, audionamelist);
         downloadAudio.isDownloadAudio(BaseConstant.ListenAudioUrl + listenClassBean.get().get(0).getWordAudioUrl(), 0);
 
+        //设置初始数据
+        isPlay.setValue(false);
+        isShowAnswer.setValue(false);
+        curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
+        progress.set(0);
+        speedtype = 2;
+        speedtime = BaseConstant.LISTEN_SPEED_NORMAL;
+        speedtext.set(BaseApplication.getContext().getResources().getString(R.string.normal));
+
+        //蓝牙监听
+        BlueToothReceiver.setOnBluetoothListener(this);
+        //提示语音
+        onStartTipVoice(R.raw.music_play_start);
+        //单词播放
+        handler.postDelayed(initPlay, 8500);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initVolumeIcon();
+    }
+
+    /**
+     * 初始化音量图标
+     */
+    public void initVolumeIcon() {
         //设置媒体音量图标
         try {
             int volume = audioMngHelper.get100CurrentVolume();
@@ -163,22 +190,6 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //设置初始数据
-        isPlay.setValue(false);
-        isShowAnswer.setValue(false);
-        curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
-        progress.set(0);
-        speedtype = 2;
-        speedtime = BaseConstant.LISTEN_SPEED_NORMAL;
-        speedtext.set(BaseApplication.getContext().getResources().getString(R.string.normal));
-
-        //蓝牙监听
-        BlueToothReceiver.setOnBluetoothListener(this);
-        //提示语音
-        onStartTipVoice(R.raw.music_play_start);
-        //单词播放
-        handler.postDelayed(initPlay, 8500);
     }
 
     /**
@@ -264,7 +275,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                 countDownTimer.cancel();
             }
             Bundle bundle = new Bundle();
-            bundle.putString("savePath",savePath);
+            bundle.putString("savePath", savePath);
             bundle.putSerializable("wordsbean", (Serializable) listenClassBean.get());
             BaseUIKit.startActivity(UIKitName.LISTEN_PLAY, UIKitName.LISTEN_ANSWER,
                     BaseConstant.LISTEN_ANSWER, BaseUIKit.OTHER, bundle);
@@ -393,7 +404,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         //启动息屏app销毁
         SuicideUtils.onStartKill();
         //发送通知栏消息
-        NotificationUtil.createNotification(classname.get(), true);
+        //NotificationUtil.createNotification(classname.get(), true);
         playicon.set(R.mipmap.icon_listen_stop);
         playing = false;
         curtime.set(String.valueOf((speedtime / 1000) - 1));
@@ -437,7 +448,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         //取消息屏app销毁
         SuicideUtils.onCancelKill();
         //发送通知栏消息
-        NotificationUtil.createNotification(classname.get(), true);
+        //NotificationUtil.createNotification(classname.get(), true);
 
         try {
             mediaPlayer = new MediaPlayer();
@@ -516,7 +527,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
                     //启动息屏app销毁
                     SuicideUtils.onStartKill();
                     //发送通知栏消息
-                    NotificationUtil.createNotification(classname.get(), true);
+                    //NotificationUtil.createNotification(classname.get(), true);
                 } else {
                     curItem++;
                     curItemText.set((curItem + 1) + "/" + listenClassBean.get().size());
@@ -611,7 +622,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      */
     @Override
     public void onNotificationLast() {
-        onLast();
+        //onLast();
     }
 
     /**
@@ -619,7 +630,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      */
     @Override
     public void onNotificationPlay() {
-        onStartAudio();
+        //onStartAudio();
     }
 
     /**
@@ -627,7 +638,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      */
     @Override
     public void onNotificationNext() {
-        onNext();
+        //onNext();
     }
 
     /**
@@ -645,7 +656,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
      */
     public void onDispose() {
         //销毁通知栏消息
-        NotificationUtil.cancelNotification();
+        //NotificationUtil.cancelNotification();
         //取消倒计时
         if (countDownTimer != null) {
             countDownTimer.cancel();

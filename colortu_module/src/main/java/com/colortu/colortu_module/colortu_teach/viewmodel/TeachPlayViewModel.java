@@ -65,23 +65,12 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         BlueToothReceiver.setOnBluetoothListener(this);
         isPlayLiveData.setValue(false);
         initPlay();
+    }
 
-        //设置媒体音量图标
-        try {
-            int volume = audioMngHelper.get100CurrentVolume();
-            if (volume <= 33) {
-                volumeLevel = 0;
-                volumeicon.set(R.mipmap.icon_listen_volume1);
-            } else if (volume > 33 && volume <= 66) {
-                volumeLevel = 1;
-                volumeicon.set(R.mipmap.icon_listen_volume2);
-            } else if (volume > 66) {
-                volumeLevel = 2;
-                volumeicon.set(R.mipmap.icon_listen_volume3);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initVolumeIcon();
     }
 
     /**
@@ -95,7 +84,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
                 //取消息屏app销毁
                 SuicideUtils.onCancelKill();
                 //发送通知栏消息
-                NotificationUtil.createNotification(classname.get(), false);
+                //NotificationUtil.createNotification(classname.get(), false);
 
                 isPlayLiveData.setValue(true);
             }
@@ -130,9 +119,31 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
         //启动息屏app销毁
         SuicideUtils.onStartKill();
         //发送通知栏消息
-        NotificationUtil.createNotification(classname.get(), false);
+        //NotificationUtil.createNotification(classname.get(), false);
 
         isPlayLiveData.setValue(false);
+    }
+
+    /**
+     * 初始化音量图标
+     */
+    public void initVolumeIcon() {
+        //设置媒体音量图标
+        try {
+            int volume = audioMngHelper.get100CurrentVolume();
+            if (volume <= 33) {
+                volumeLevel = 0;
+                volumeicon.set(R.mipmap.icon_listen_volume1);
+            } else if (volume > 33 && volume <= 66) {
+                volumeLevel = 1;
+                volumeicon.set(R.mipmap.icon_listen_volume2);
+            } else if (volume > 66) {
+                volumeLevel = 2;
+                volumeicon.set(R.mipmap.icon_listen_volume3);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -227,7 +238,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
             //取消息屏app销毁
             SuicideUtils.onCancelKill();
             //发送通知栏消息
-            NotificationUtil.createNotification(classname.get(), false);
+            //NotificationUtil.createNotification(classname.get(), false);
             isLoseFocus = false;
             isPlayLiveData.setValue(true);
             onPlay();
@@ -271,7 +282,7 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
      */
     public void onDispose() {
         //销毁通知栏消息
-        NotificationUtil.cancelNotification();
+        //NotificationUtil.cancelNotification();
         //解绑音频焦点
         AudioFocusUtils.abandonAudioFocus();
 

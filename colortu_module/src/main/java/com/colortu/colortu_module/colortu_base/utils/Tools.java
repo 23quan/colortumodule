@@ -240,11 +240,11 @@ public class Tools {
      */
     public static int checkFreeSpace() {
         //预警值
-        long warning = 100 * 1024 * 1024;
+        long warning = 200;
         //低于退出app值
-        long minimum = 50 * 1024 * 1024;
+        long minimum = 100;
         //内存剩余空间值
-        long freespace = Environment.getExternalStorageDirectory().getFreeSpace();
+        long freespace = Environment.getExternalStorageDirectory().getFreeSpace() / (1024 * 1024);
         if (freespace > warning) {
             return 0;
         } else {
