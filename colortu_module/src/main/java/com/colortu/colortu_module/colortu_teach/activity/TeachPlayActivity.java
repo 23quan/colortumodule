@@ -51,7 +51,7 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
         viewModel.classname.set(bundle.getString("classname"));
         viewModel.examid.set(bundle.getInt("examid"));
         viewModel.audiourl.set(bundle.getString("audiourl"));
-        NotificationUtil.setContext(this);
+        //NotificationUtil.setContext(this);
 
         freecount = GetBeanDate.getFreeExamCount();
         isVip = GetBeanDate.getIsBookVIP();
