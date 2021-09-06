@@ -34,7 +34,7 @@ public class ListenGradeActivity extends BaseActivity<ListenGradeViewModel, Acti
     @Autowired
     public Bundle bundle;
 
-    //1.第一次进来，2.课目列表进来
+    //1.第一次进来，2.课目列表进来，3.教辅列表进来
     private int type;
     //年级列表适配器
     private ListenGradeAdapter listenGradeAdapter;
@@ -84,6 +84,9 @@ public class ListenGradeActivity extends BaseActivity<ListenGradeViewModel, Acti
         if (!GetBeanDate.getIsFirst()) {
             GetBeanDate.putIsFirst(true);
         }
+        if (type == 2 && GetBeanDate.getChooseGrade() != id) {
+            GetBeanDate.putChooseVersion(0);
+        }
         GetBeanDate.putChooseGrade(id);
         switch (type) {
             case 1://第一次进来
@@ -91,6 +94,7 @@ public class ListenGradeActivity extends BaseActivity<ListenGradeViewModel, Acti
                         BaseConstant.LISTEN_SUBJECT, BaseUIKit.OTHER, null);
                 break;
             case 2://课目列表进来
+            case 3://教辅列表进来
                 setResult(BaseConstant.REQUEDT_LISTENCHOOSEGRADE);
                 break;
         }
