@@ -1,5 +1,6 @@
 package com.colortu.colortu_module.colortu_listen.viewmodel;
 
+import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 
 import com.colortu.colortu_module.R;
@@ -27,6 +28,8 @@ public class ListenVersionViewModel extends BaseActivityViewModel<BaseRequest> i
     //获取教材版本请求
     private Call<ListenVersionBean> listenVersionBeanCall;
 
+    //是否释放资源
+    public ObservableField<Boolean> isrelease = new ObservableField<>();
     //版本列表数据
     public MutableLiveData<List<ListenVersionBean.DataBean.RecordsBean>> listenVersionBeanLiveData = new MutableLiveData<>();
 
@@ -39,6 +42,7 @@ public class ListenVersionViewModel extends BaseActivityViewModel<BaseRequest> i
         //播放提示音
         BaseApplication.setOnFinishTipVoiceListener(this);
         BaseApplication.onStartTipVoice(R.raw.music_choose_version);
+        isrelease.set(false);
 
         getVersion("2", "1", "100", GetBeanDate.getUserUuid());
     }
@@ -100,6 +104,8 @@ public class ListenVersionViewModel extends BaseActivityViewModel<BaseRequest> i
         //解绑音频焦点
         AudioFocusUtils.abandonAudioFocus();
         //停止播放，释放资源
-        BaseApplication.onStopTipVoice();
+        if (!isrelease.get()) {
+            BaseApplication.onStopTipVoice();
+        }
     }
 }
