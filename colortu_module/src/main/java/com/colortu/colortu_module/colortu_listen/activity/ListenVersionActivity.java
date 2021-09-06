@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
+import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
@@ -66,6 +67,8 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
         listenVersionAdapter.setOnClickChooseVersionListener(new ListenVersionAdapter.OnClickChooseVersionListener() {
             @Override
             public void OnClickChooseVersion(int id) {
+                viewModel.isrelease.set(true);
+                BaseApplication.onStopTipVoice();
                 GetBeanDate.putChooseVersion(id);
                 if (type == 1) {
                     Bundle bundle = new Bundle();
