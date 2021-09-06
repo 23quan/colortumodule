@@ -94,7 +94,7 @@ public class ListenVersionActivity extends BaseActivity<ListenVersionViewModel, 
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("type", 2);
+                bundle.putInt("type", 3);
                 BaseUIKit.startActivity(UIKitName.LISTEN_VERSION, UIKitName.LISTEN_GRADE, BaseConstant.LISTEN_GRADE,
                         BaseUIKit.OTHER, bundle, ListenVersionActivity.this, BaseConstant.REQUEDT_LISTENCHOOSEGRADE);
             }
