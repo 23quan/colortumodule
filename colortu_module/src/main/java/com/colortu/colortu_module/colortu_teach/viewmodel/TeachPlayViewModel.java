@@ -9,6 +9,7 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothReceiver;
+import com.colortu.colortu_module.colortu_base.core.receiver.VolumeReceiver;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
@@ -29,7 +30,7 @@ import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUt
  * @describe :听力播放界面ViewModel
  */
 public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> implements NotificationClickReceiver.OnNotificationListener,
-        BlueToothReceiver.OnBluetoothListener, AudioFocusUtils.OnAudioFocusListener {
+        BlueToothReceiver.OnBluetoothListener, VolumeReceiver.OnVolumeListener, AudioFocusUtils.OnAudioFocusListener {
     //暂停播放监听
     public MutableLiveData<Boolean> isPlayLiveData = new MutableLiveData<>();
 
@@ -64,13 +65,9 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
 
         BlueToothReceiver.setOnBluetoothListener(this);
         isPlayLiveData.setValue(false);
-        initPlay();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         initVolumeIcon();
+        initPlay();
     }
 
     /**
@@ -275,6 +272,14 @@ public class TeachPlayViewModel extends BaseActivityViewModel<BaseRequest> imple
     @Override
     public void onBluetoothDisConnected() {
         onPlay();
+    }
+
+    /**
+     * 媒体音量变化监听
+     */
+    @Override
+    public void OnVolumeChange() {
+        initVolumeIcon();
     }
 
     /**

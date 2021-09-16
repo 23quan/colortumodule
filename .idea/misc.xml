@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android_colortu/colortu_module/colortu_module/src/main/res/layout/activity_study_plazafiltrate.xml" value="0.36614583333333334" />
+        <entry key="..\:/android_colortu/colortu_module/colortu_module/src/main/res/layout/adapter_study_plazafiltrate.xml" value="0.36614583333333334" />
+        <entry key="..\:/android_colortu/colortu_module/colortu_module/src/main/res/layout/adapter_study_plazafiltrategrade.xml" value="0.36614583333333334" />
         <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/activity_base_network.xml" value="1.006578947368421" />
         <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/activity_listen_class.xml" value="1.0523952095808384" />
         <entry key="..\:/android_colortu/colortumodule/colortu_module/src/main/res/layout/activity_listen_play.xml" value="1.506578947368421" />

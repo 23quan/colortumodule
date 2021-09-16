@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <LinearLayout
+        android:id="@+id/plazafiltrategrade_itemview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_80"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:background="@drawable/base_blue5_bg">
+
+        <TextView
+            android:id="@+id/plazafiltrategrade_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/base_white1"
+            android:textSize="@dimen/size_30"
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+</layout>
