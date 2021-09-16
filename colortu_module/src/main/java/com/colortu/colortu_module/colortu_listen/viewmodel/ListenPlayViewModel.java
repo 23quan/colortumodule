@@ -14,6 +14,7 @@ import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothReceiver;
+import com.colortu.colortu_module.colortu_base.core.receiver.VolumeReceiver;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
 import com.colortu.colortu_module.colortu_base.core.viewmodel.BaseActivityViewModel;
@@ -45,8 +46,8 @@ import retrofit2.Response;
  * @module : ListenPlayViewModel
  * @describe :听力播放界面ViewModel
  */
-public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> implements DownloadAudio.DownloadAudioListener,
-        NotificationClickReceiver.OnNotificationListener, BlueToothReceiver.OnBluetoothListener, AudioFocusUtils.OnAudioFocusListener {
+public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> implements DownloadAudio.DownloadAudioListener, NotificationClickReceiver.OnNotificationListener,
+        BlueToothReceiver.OnBluetoothListener, VolumeReceiver.OnVolumeListener, AudioFocusUtils.OnAudioFocusListener {
     //听写完成接口
     private Call<ListenFinishBean> listenFinishBeanCall;
 
@@ -155,6 +156,7 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         speedtype = 2;
         speedtime = BaseConstant.LISTEN_SPEED_NORMAL;
         speedtext.set(BaseApplication.getContext().getResources().getString(R.string.normal));
+        initVolumeIcon();
 
         //蓝牙监听
         BlueToothReceiver.setOnBluetoothListener(this);
@@ -162,12 +164,6 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         onStartTipVoice(R.raw.music_play_start);
         //单词播放
         handler.postDelayed(initPlay, 8500);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initVolumeIcon();
     }
 
     /**
@@ -649,6 +645,14 @@ public class ListenPlayViewModel extends BaseActivityViewModel<BaseRequest> impl
         if (playing) {
             onStopWords(false);
         }
+    }
+
+    /**
+     * 媒体音量变化监听
+     */
+    @Override
+    public void OnVolumeChange() {
+        initVolumeIcon();
     }
 
     /**

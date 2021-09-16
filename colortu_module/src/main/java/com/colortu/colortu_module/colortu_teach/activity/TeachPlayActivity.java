@@ -10,9 +10,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.constant.BaseConstant;
 import com.colortu.colortu_module.colortu_base.core.base.BaseActivity;
-import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothUtils;
+import com.colortu.colortu_module.colortu_base.core.receiver.BlueToothReceiver;
+import com.colortu.colortu_module.colortu_base.core.receiver.VolumeReceiver;
 import com.colortu.colortu_module.colortu_base.data.GetBeanDate;
-import com.colortu.colortu_module.colortu_base.utils.notification.NotificationUtil;
 import com.colortu.colortu_module.colortu_teach.viewmodel.TeachPlayViewModel;
 import com.colortu.colortu_module.databinding.ActivityTeachPlayBinding;
 
@@ -45,7 +45,9 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
         //适配圆角水滴屏或刘海屏
         viewModel.setAdapteScreen(binding.playParentview);
         //注册蓝牙广播
-        BlueToothUtils.onRegisterBlueTooth(this);
+        BlueToothReceiver.onRegisterBlueTooth(this);
+        //注册媒体音量广播
+        VolumeReceiver.onRegisterVolume(this);
 
         position = bundle.getInt("position");
         viewModel.classname.set(bundle.getString("classname"));
@@ -87,7 +89,9 @@ public class TeachPlayActivity extends BaseActivity<TeachPlayViewModel, Activity
     protected void onDestroy() {
         super.onDestroy();
         //注销蓝牙广播
-        BlueToothUtils.onUnRegisterBlueTooth(this);
+        BlueToothReceiver.unRegisterBlueTooth(this);
+        //注销媒体音量广播
+        VolumeReceiver.unRegisterVolume(this);
         //销毁资源
         viewModel.onDispose();
     }

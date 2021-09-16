@@ -7,7 +7,7 @@ import androidx.databinding.ViewDataBinding;
 
 import com.colortu.colortu_module.R;
 import com.colortu.colortu_module.colortu_base.core.base.BaseRecyclerAdapter;
-import com.colortu.colortu_module.databinding.AdapterStudyPlazafiltrateBinding;
+import com.colortu.colortu_module.databinding.AdapterStudyPlazafiltrategradeBinding;
 
 /**
  * @author : Code23
@@ -28,21 +28,21 @@ public class StudyPlazaFiltrateGradeAdapter extends BaseRecyclerAdapter<String> 
 
     @Override
     public int getLayoutId() {
-        return R.layout.adapter_study_plazafiltrate;
+        return R.layout.adapter_study_plazafiltrategrade;
     }
 
     @Override
     public void bindView(ViewDataBinding binding, final String item, final int position) {
-        final AdapterStudyPlazafiltrateBinding adapterStudyPlazafiltrateBinding = (AdapterStudyPlazafiltrateBinding) binding;
+        final AdapterStudyPlazafiltrategradeBinding adapterStudyPlazafiltrategradeBinding = (AdapterStudyPlazafiltrategradeBinding) binding;
         if (filtrate != null && filtrate.equals(item)) {
-            adapterStudyPlazafiltrateBinding.plazafiltrateItemview.setBackground(context.getResources().getDrawable(R.mipmap.icon_base_btnbg));
+            adapterStudyPlazafiltrategradeBinding.plazafiltrategradeItemview.setBackground(context.getResources().getDrawable(R.mipmap.icon_base_btnbg));
         } else {
-            adapterStudyPlazafiltrateBinding.plazafiltrateItemview.setBackground(context.getResources().getDrawable(R.drawable.base_blue5_bg));
+            adapterStudyPlazafiltrategradeBinding.plazafiltrategradeItemview.setBackground(context.getResources().getDrawable(R.drawable.base_blue5_bg));
         }
-        adapterStudyPlazafiltrateBinding.plazafiltrateText.setText(item);
+        adapterStudyPlazafiltrategradeBinding.plazafiltrategradeText.setText(item);
 
         //item点击监听
-        adapterStudyPlazafiltrateBinding.plazafiltrateItemview.setOnClickListener(new View.OnClickListener() {
+        adapterStudyPlazafiltrategradeBinding.plazafiltrategradeItemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (filtrate != null && filtrate.equals(item)) {

@@ -4,7 +4,7 @@
     <data></data>
 
     <LinearLayout
-        android:id="@+id/plazafiltrate_itemview"
+        android:id="@+id/plazafiltratearea_itemview"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_80"
         android:layout_marginTop="@dimen/dimen_20"
@@ -12,7 +12,7 @@
         android:background="@drawable/base_blue5_bg">
 
         <TextView
-            android:id="@+id/plazafiltrate_text"
+            android:id="@+id/plazafiltratearea_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"

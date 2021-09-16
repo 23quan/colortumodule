@@ -46,7 +46,7 @@ public class QrcodeAccountViewModel extends BaseActivityViewModel<BaseRequest> {
         userInfoBeanCall.enqueue(new Callback<QrcodeUserInfoBean>() {
             @Override
             public void onResponse(Call<QrcodeUserInfoBean> call, Response<QrcodeUserInfoBean> response) {//请求成功
-                if (EmptyUtils.objectIsEmpty(response.body().getData())) {
+                if (EmptyUtils.objectIsEmpty(response.body()) && EmptyUtils.objectIsEmpty(response.body().getData())) {
                     if (EmptyUtils.listIsEmpty(response.body().getData().getUserList())) {
                         userListLiveData.setValue(response.body().getData().getUserList());
                     } else {
