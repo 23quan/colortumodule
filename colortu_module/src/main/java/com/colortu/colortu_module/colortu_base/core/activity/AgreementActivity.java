@@ -1,6 +1,7 @@
 package com.colortu.colortu_module.colortu_base.core.activity;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -37,7 +38,7 @@ public class AgreementActivity extends BaseActivity<AgreementViewModel, Activity
         viewModel.setAdapteScreen(binding.agreementParentview);
 
         content = bundle.getString("content");
-        viewModel.content.set(content);
+        binding.agreementTextview.setText(Html.fromHtml(content));
         binding.agreementTextview.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
 }
