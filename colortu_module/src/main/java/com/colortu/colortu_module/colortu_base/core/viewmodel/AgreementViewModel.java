@@ -11,6 +11,5 @@ import com.colortu.colortu_module.colortu_base.request.BaseRequest;
  * @describe :隐私/用户协议界面ViewModel
  */
 public class AgreementViewModel extends BaseActivityViewModel<BaseRequest> {
-    //文本内容
-    public ObservableField<String> content = new ObservableField<>();
+
 }
