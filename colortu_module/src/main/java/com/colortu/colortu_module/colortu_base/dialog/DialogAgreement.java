@@ -17,6 +17,7 @@ import com.colortu.colortu_module.colortu_base.core.base.BaseApplication;
 import com.colortu.colortu_module.colortu_base.core.base.BaseDialog;
 import com.colortu.colortu_module.colortu_base.core.uikit.BaseUIKit;
 import com.colortu.colortu_module.colortu_base.core.uikit.UIKitName;
+import com.colortu.colortu_module.colortu_base.utils.ChannelUtil;
 import com.colortu.colortu_module.databinding.DialogBaseAgreementBinding;
 
 /**
@@ -43,12 +44,19 @@ public class DialogAgreement extends BaseDialog<DialogBaseAgreementBinding> {
         mdialogbinding.setViewmodel(this);
         if (BaseApplication.appType == 1) {//作业
             title = context.getResources().getString(R.string.work_agreement_content);
-            agreement = BaseApplication.getContext().getResources().getString(R.string.work_useragreement);
             policy = BaseApplication.getContext().getResources().getString(R.string.work_privacypolicy);
+            if (!ChannelUtil.isHuaWei()) {
+                agreement = BaseApplication.getContext().getResources().getString(R.string.work_useragreement);
+            }
         } else {//听写
             title = context.getResources().getString(R.string.listen_agreement_content);
-            agreement = BaseApplication.getContext().getResources().getString(R.string.listen_useragreement);
             policy = BaseApplication.getContext().getResources().getString(R.string.listen_privacypolicy);
+            if (!ChannelUtil.isHuaWei()) {
+                agreement = BaseApplication.getContext().getResources().getString(R.string.listen_useragreement);
+            }
+        }
+        if (ChannelUtil.isHuaWei()) {
+            agreement = BaseApplication.getContext().getResources().getString(R.string.agreement_huawei);
         }
 
         //SpannableStringBuilder实例化
